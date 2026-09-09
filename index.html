@@ -27,7 +27,7 @@
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.3.1';
+const CONTALOG_VERSION='1.3.2';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -45,14 +45,33 @@ async function _loadRemote(){
   const c=_supabase(); if(!c){_remoteStatus('● OFFLINE · Supabase indisponível',false);return false}
   try{
     _remoteLoading=true;
+    const localSnapshot=JSON.parse(JSON.stringify(DB));
     const {data,error}=await c.from(CONTALOG_TABLE).select('state,updated_at').eq('key',CONTALOG_STATE_KEY).maybeSingle();
     if(error) throw error;
     if(data?.state){
-      DB=data.state;
+      const remote=JSON.parse(JSON.stringify(data.state));
+      const remoteUsers=Array.isArray(remote.usuarios)?remote.usuarios:[];
+      const localUsers=Array.isArray(localSnapshot.usuarios)?localSnapshot.usuarios:[];
+      const users=[...remoteUsers];
+      localUsers.forEach(lu=>{
+        const exists=users.some(ru=>String(ru.nome||'').trim().toLowerCase()===String(lu.nome||'').trim().toLowerCase());
+        if(!exists) users.push(lu);
+      });
+      remote.usuarios=users;
+      const remoteEmpty=!((remote.estoque||[]).length||(remote.enderecos||[]).length||(remote.inventarios||[]).length);
+      const localHasData=!!((localSnapshot.estoque||[]).length||(localSnapshot.enderecos||[]).length||(localSnapshot.inventarios||[]).length);
+      if(remoteEmpty&&localHasData){
+        remote.estoque=localSnapshot.estoque||[];
+        remote.enderecos=localSnapshot.enderecos||[];
+        remote.inventarios=localSnapshot.inventarios||[];
+        if(localSnapshot.tarifas) remote.tarifas=localSnapshot.tarifas;
+      }
+      DB=remote;
       _remoteUpdatedAt=new Date(data.updated_at||0).getTime()||0;
       localStorage.setItem(KEY,JSON.stringify(DB));
       _remoteReady=true;
       _remoteStatus('● ONLINE · DADOS CENTRAIS',true);
+      if(users.length!==remoteUsers.length||remoteEmpty&&localHasData) await _persistRemote();
       return true;
     }
     _remoteReady=true;
