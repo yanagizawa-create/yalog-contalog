@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.4.0 · WMS Online Architecture</title>
+<meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
+<title>ContaLog · v1.5.0 · WMS SSO Multiusuário</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -11,7 +11,7 @@
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()">ENTRAR</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b style="color:#4ade80">MULTIUSUÁRIO RC · acesso online · dados centralizados no Supabase</b></div></div></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div>
 <div class="nav-grp">Gestão</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.3.1<br>YALOG-CONTA-001 • v1.3.1 Build 001 · MULTIUSUÁRIO RC</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.5.0<br>YALOG-CONTA-001 • v1.5.0 Build 002 · WMS SSO / MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -28,7 +28,7 @@
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.4.0';
+const CONTALOG_VERSION='1.5.0';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -692,33 +692,179 @@ function renderUsers(){document.getElementById('usersBody').innerHTML=DB.usuario
 function adicionarUsuario(){let nome=prompt('Nome do usuário:','');if(!nome)return;let p=(prompt('Perfil: MASTER ou CONTADOR','CONTADOR')||'CONTADOR').toUpperCase();if(!['MASTER','CONTADOR'].includes(p))return toast('Perfil inválido',false);DB.usuarios.push({nome,perfil:p,ativo:true,ultimoAcesso:null});save();renderUsers();toast('Usuário cadastrado')}
 function openModal(){document.getElementById('modal').classList.add('open')}function closeModal(){document.getElementById('modal').classList.remove('open')}
 
-function initLogin(clear=true){const ov=document.getElementById('loginOverlay');if(ov)ov.style.display='flex';if(clear){['loginCompany','loginUser','loginPass'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''})}}
-function _saveSession(){if(!usuarioAtual)return;sessionStorage.setItem(CONTALOG_SESSION_KEY,JSON.stringify({company_id:usuarioAtual.company_id,id:usuarioAtual.id,nome:usuarioAtual.nome,login:usuarioAtual.login,perfil:usuarioAtual.perfil,ts:Date.now()}))}
+async function _validarAcessoContaLog(companyId){
+  const c=_platformClient();
+  if(!c) return {ok:false,motivo:'sem-conexao'};
+  try{
+    const [rEmpresa,rLicenca,rModulo]=await Promise.all([
+      c.from('empresas').select('*').eq('company_id',companyId),
+      c.from('licencas').select('*').eq('company_id',companyId),
+      c.from('modulos').select('*').eq('company_id',companyId).eq('modulo','contalog')
+    ]);
+    if(rEmpresa.error||rLicenca.error||rModulo.error){
+      console.warn('[ContaLog Platform] falha de consulta:',rEmpresa.error||rLicenca.error||rModulo.error);
+      return {ok:false,motivo:'erro-validacao'};
+    }
+    const empresa=rEmpresa.data?.[0]||null;
+    const licenca=rLicenca.data?.[0]||null;
+    const modulo=rModulo.data?.[0]||null;
+    console.log('[ContaLog Platform] acesso:',{companyId,empresa:!!empresa,licenca:licenca?.status,modulo:modulo?.status});
+    if(!empresa||empresa.ativo===false) return {ok:false,motivo:'empresa-inativa'};
+    if(!licenca||licenca.status!=='ATIVA') return {ok:false,motivo:'licenca-inativa'};
+    if(licenca.validade && new Date(licenca.validade)<new Date()) return {ok:false,motivo:'licenca-vencida'};
+    if(!modulo||modulo.status!=='LIBERADO') return {ok:false,motivo:'modulo-bloqueado'};
+    return {ok:true,empresa,licenca,modulo};
+  }catch(e){
+    console.error('[ContaLog Platform] exceção:',e);
+    return {ok:false,motivo:'erro-validacao'};
+  }
+}
+
+async function _validarSessaoModuloContaLog(token){
+  if(!token)return null;
+  const c=_supabaseClient(); if(!c)return null;
+  try{
+    const {data,error}=await c.rpc('validar_sessao_modulo',{p_token:token,p_modulo:'contalog'});
+    if(error){console.warn('[ContaLog SSO] validar_sessao_modulo:',error.message||error);return null;}
+    return Array.isArray(data)?(data[0]||null):null;
+  }catch(e){console.warn('[ContaLog SSO] exceção sessão:',e);return null}
+}
+
+async function _entrarContaLogPorSSO(identidade,moduleSessionToken){
+  if(!identidade||!moduleSessionToken)return false;
+  const perfilBruto=String(identidade.perfil||'').toUpperCase();
+  const perfil=['MASTER','ADMIN','ADMINISTRADOR'].includes(perfilBruto)?'MASTER':'CONTADOR';
+  usuarioAtual={
+    id:identidade.id||('sso-'+identidade.company_id+'-'+identidade.login),
+    nome:identidade.nome||identidade.login,
+    login:identidade.login,
+    perfil,
+    company_id:identidade.company_id,
+    platformRole:identidade.perfil||null,
+    ativo:true,
+    _sso:true,
+    _moduleSessionToken:moduleSessionToken
+  };
+  _companyIdLocalAtual=identidade.company_id;
+  window.contalogCompanyId=identidade.company_id;
+  sessionStorage.setItem(CONTALOG_SESSION_KEY,JSON.stringify({
+    company_id:identidade.company_id,id:usuarioAtual.id,nome:usuarioAtual.nome,
+    login:usuarioAtual.login,perfil:usuarioAtual.perfil,ts:Date.now(),
+    module_session_token:moduleSessionToken,sso:true
+  }));
+  await _loadRemote(identidade.company_id);
+  document.getElementById('loginOverlay').style.display='none';
+  document.getElementById('loginPass').value='';
+  const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+identidade.company_id;
+  aplicarPermissoes();
+  renderEstoque();renderEnd();renderInv();renderTarefas();renderDash();renderUsers();
+  toast('Acesso autorizado · '+usuarioAtual.nome+' · '+usuarioAtual.perfil);
+  return true;
+}
+
+async function _tentarSSOHandoffContaLog(){
+  const handoff=new URLSearchParams(window.location.search).get('handoff');
+  if(!handoff)return false;
+  const c=_supabaseClient();if(!c)return false;
+  try{
+    const {data,error}=await c.rpc('validar_handoff_modulo',{p_token:handoff});
+    if(error){console.warn('[ContaLog SSO] handoff:',error.message||error);return false;}
+    const identidade=Array.isArray(data)?(data[0]||null):null;
+    if(!identidade?.module_session_token)return false;
+    try{history.replaceState({},document.title,location.origin+location.pathname)}catch(e){}
+    return await _entrarContaLogPorSSO(identidade,identidade.module_session_token);
+  }catch(e){console.warn('[ContaLog SSO] exceção handoff:',e);return false}
+}
+
+async function _restaurarSessaoContaLog(){
+  try{
+    const raw=sessionStorage.getItem(CONTALOG_SESSION_KEY);if(!raw)return false;
+    const ss=JSON.parse(raw);
+    if(!ss?.company_id||!ss?.login)return false;
+    if(ss.module_session_token){
+      const identidade=await _validarSessaoModuloContaLog(ss.module_session_token);
+      if(!identidade){sessionStorage.removeItem(CONTALOG_SESSION_KEY);return false;}
+      return await _entrarContaLogPorSSO(identidade,ss.module_session_token);
+    }
+    // Sessão de login direto: restaura apenas na mesma aba/sessão do navegador.
+    const vr=await _validarAcessoContaLog(ss.company_id);
+    if(!vr.ok){sessionStorage.removeItem(CONTALOG_SESSION_KEY);return false;}
+    usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true};
+    _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;
+    await _loadRemote(ss.company_id);
+    const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
+    document.getElementById('loginOverlay').style.display='none';
+    aplicarPermissoes();return true;
+  }catch(e){sessionStorage.removeItem(CONTALOG_SESSION_KEY);return false}
+}
+
+function initLogin(clear=true){
+  const ov=document.getElementById('loginOverlay');if(ov)ov.style.display='flex';
+  if(clear)['loginCompany','loginUser','loginPass'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
+}
+function _saveSession(){if(!usuarioAtual)return;sessionStorage.setItem(CONTALOG_SESSION_KEY,JSON.stringify({company_id:usuarioAtual.company_id,id:usuarioAtual.id,nome:usuarioAtual.nome,login:usuarioAtual.login,perfil:usuarioAtual.perfil,ts:Date.now(),module_session_token:usuarioAtual._moduleSessionToken||null,sso:!!usuarioAtual._sso}))}
 function _clearSession(){sessionStorage.removeItem(CONTALOG_SESSION_KEY)}
-async function _restoreSession(){try{const raw=sessionStorage.getItem(CONTALOG_SESSION_KEY);if(!raw)return false;const ss=JSON.parse(raw);if(!ss?.company_id||!ss?.login)return false;const empresa=await _validarEmpresaContaLog(ss.company_id);if(!empresa.ok)return false;usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true};window.contalogCompanyId=ss.company_id;await _loadRemote(ss.company_id);const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;const ov=document.getElementById('loginOverlay');if(ov)ov.style.display='none';aplicarPermissoes();return true}catch(e){console.warn('[ContaLog Session]',e);_clearSession();return false}}
+
 async function entrarContaLog(){
-  const empresa=(document.getElementById('loginCompany')?.value||'').trim().toUpperCase(),login=(document.getElementById('loginUser')?.value||'').trim().toLowerCase(),senha=document.getElementById('loginPass')?.value||'';
-  if(!empresa){toast('Informe o ID da empresa.',false);return}if(!login){toast('Informe o usuário.',false);return}if(!senha){toast('Informe a senha.',false);return}
-  const btn=document.querySelector('#loginOverlay button[onclick*="entrarContaLog"]');if(btn){btn.disabled=true;btn.textContent='VALIDANDO...'}_remoteStatus('● VALIDANDO EMPRESA...',true);
+  const empresa=(document.getElementById('loginCompany')?.value||'').trim().toUpperCase();
+  const login=(document.getElementById('loginUser')?.value||'').trim().toLowerCase();
+  const senha=document.getElementById('loginPass')?.value||'';
+  if(!empresa||!login||!senha){toast('Informe ID da empresa, usuário e senha.',false);return}
+  const btn=document.querySelector('#loginOverlay button[onclick*="entrarContaLog"]');
+  if(btn){btn.disabled=true;btn.textContent='VALIDANDO...'}
   try{
     await _waitSupabase();
-    const vr=await _validarEmpresaContaLog(empresa);if(!vr.ok){toast(vr.motivo==='empresa-inativa'?'Empresa não encontrada ou inativa.':'Não foi possível validar a empresa. Verifique a conexão.',false);return}
+    const vr=await _validarAcessoContaLog(empresa);
+    if(!vr.ok){
+      const m={'empresa-inativa':'Empresa não encontrada ou inativa.','licenca-inativa':'Licença do ContaLog inativa.','licenca-vencida':'Licença do ContaLog vencida.','modulo-bloqueado':'Módulo ContaLog não liberado para esta empresa.','erro-validacao':'Não foi possível validar o acesso do ContaLog agora.','sem-conexao':'Sem conexão com o Supabase.'};
+      toast(m[vr.motivo]||'Acesso não autorizado.',false);return;
+    }
     let auth=await _autenticarContadorContaLog(empresa,login,senha);
-    if(!auth.ok && ['nao-encontrado','perfil-nao-autorizado'].includes(auth.motivo)) auth=await _autenticarMasterContaLog(empresa,login,senha);
-    if(!auth.ok){const m={inativo:'Usuário desativado.','senha-invalida':'Senha incorreta.','nao-encontrado':'Usuário não encontrado.','erro-consulta':'Não foi possível consultar o usuário no Supabase.','sem-conexao':'Sem conexão com o Supabase.'};toast(m[auth.motivo]||'Não foi possível entrar.',false);return}
+    if(!auth.ok && ['nao-encontrado','perfil-nao-autorizado'].includes(auth.motivo))auth=await _autenticarMasterContaLog(empresa,login,senha);
+    if(!auth.ok){
+      const m={'inativo':'Usuário desativado.','senha-invalida':'Senha incorreta.','nao-encontrado':'Usuário não encontrado.','erro-consulta':'Não foi possível consultar o usuário no Supabase.','sem-conexao':'Sem conexão com o Supabase.','perfil-nao-autorizado':'Perfil não autorizado.'};
+      toast(m[auth.motivo]||'Não foi possível entrar.',false);return;
+    }
     usuarioAtual=auth.usuario;window.contalogCompanyId=empresa;_companyIdLocalAtual=empresa;_saveSession();
     await _loadRemote(empresa);
-    const u=DB.usuarios.find(x=>String(x.nome||'').trim().toLowerCase()===String(usuarioAtual.nome||'').trim().toLowerCase());if(u){u.ultimoAcesso=now();}else{DB.usuarios.push({id:usuarioAtual.id,nome:usuarioAtual.nome,login:usuarioAtual.login,perfil:usuarioAtual.perfil,company_id:empresa,ativo:true,ultimoAcesso:now()});}
-    if(!_remoteReady){_remoteReady=true;await _persistRemote();}
-    else await _persistRemote();
+    if(!_remoteReady){toast('Não foi possível carregar os dados centrais do ContaLog.',false);_clearSession();usuarioAtual=null;_companyIdLocalAtual=null;return;}
+    const u=DB.usuarios.find(x=>String(x.nome||'').trim().toLowerCase()===String(usuarioAtual.nome||'').trim().toLowerCase());
+    if(u)u.ultimoAcesso=now();else DB.usuarios.push({id:usuarioAtual.id,nome:usuarioAtual.nome,login:usuarioAtual.login,perfil:usuarioAtual.perfil,company_id:empresa,ativo:true,ultimoAcesso:now()});
+    await _persistRemote();
     const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+empresa;
-    document.getElementById('loginOverlay').style.display='none';ondaAtual=null;tarefaAtual=null;aplicarPermissoes();renderEstoque();renderEnd();renderInv();renderTarefas();renderDash();renderUsers();
+    document.getElementById('loginOverlay').style.display='none';ondaAtual=null;tarefaAtual=null;aplicarPermissoes();
+    renderEstoque();renderEnd();renderInv();renderTarefas();renderDash();renderUsers();
     toast('Acesso autorizado · '+usuarioAtual.nome+' · '+usuarioAtual.perfil);
   }finally{if(btn){btn.disabled=false;btn.textContent='ENTRAR'}}
 }
-['loginCompany','loginUser','loginPass'].forEach((id,i)=>document.getElementById(id)?.addEventListener('keydown',e=>{if(e.key==='Enter'){if(id==='loginCompany')document.getElementById('loginUser')?.focus();else if(id==='loginUser')document.getElementById('loginPass')?.focus();else entrarContaLog()}}));
-async function sairContaLog(){if(!usuarioAtual)return;if(!confirm('Deseja sair do ContaLog?'))return;_clearSession();usuarioAtual=null;window.contalogCompanyId=null;_companyIdLocalAtual=null;_remoteReady=false;ondaAtual=null;tarefaAtual=null;const su=document.getElementById('sessionUser');if(su)su.textContent='';initLogin(true);_remoteStatus('● AGUARDANDO LOGIN',true);toast('Sessão encerrada')}
+
+['loginCompany','loginUser','loginPass'].forEach((id)=>document.getElementById(id)?.addEventListener('keydown',e=>{if(e.key==='Enter'){if(id==='loginCompany')document.getElementById('loginUser')?.focus();else if(id==='loginUser')document.getElementById('loginPass')?.focus();else entrarContaLog()}}));
+
+async function sairContaLog(){
+  if(!usuarioAtual)return;
+  if(!confirm('Deseja sair do ContaLog?'))return;
+  try{
+    const token=usuarioAtual._moduleSessionToken||JSON.parse(sessionStorage.getItem(CONTALOG_SESSION_KEY)||'{}')?.module_session_token;
+    if(token){const c=_supabaseClient();if(c)await c.rpc('revogar_sessao_modulo',{p_token:token})}
+  }catch(e){console.warn('[ContaLog SSO] revogação:',e)}
+  _clearSession();usuarioAtual=null;window.contalogCompanyId=null;_companyIdLocalAtual=null;_remoteReady=false;ondaAtual=null;tarefaAtual=null;
+  const su=document.getElementById('sessionUser');if(su)su.textContent='';initLogin(true);_remoteStatus('● AGUARDANDO LOGIN',true);toast('Sessão encerrada');
+}
 function aplicarPermissoes(){let master=usuarioAtual?.perfil==='MASTER';document.querySelectorAll('[data-master-only]').forEach(e=>e.style.display=master?'flex':'none');if(!master){document.querySelectorAll('.ni').forEach(n=>{let oc=n.getAttribute('onclick')||'';if(/go\('(estoque|enderecos|inventario|conciliacao|dashboard|usuarios)'\)/.test(oc))n.style.display='none'});go('tarefas')}}
+
+async function bootContaLog(){
+  if(window.__contalogBooted)return;window.__contalogBooted=true;initLogin(false);_remoteStatus('● PREPARANDO ACESSO ONLINE...',true);
+  try{
+    await _waitSupabase();
+    if(await _tentarSSOHandoffContaLog())return;
+    if(await _restaurarSessaoContaLog()){renderEstoque();renderEnd();renderInv();renderUsers();renderDash();renderTarefas();return;}
+    initLogin(false);_remoteStatus('● ONLINE · AGUARDANDO LOGIN',true);
+  }catch(e){console.warn('[ContaLog Boot]',e);initLogin(false);_remoteStatus('● ERRO DE CONEXÃO · TENTE NOVAMENTE',false)}
+  setInterval(()=>{if(!usuarioAtual)return;if(document.getElementById('s-inventario')?.classList.contains('active'))renderInv();if(document.getElementById('s-tarefas')?.classList.contains('active'))renderTarefas();if(document.getElementById('s-dashboard')?.classList.contains('active'))renderDash()},2000);
+  setInterval(_syncRemote,30000);
+}
+window.addEventListener('DOMContentLoaded',bootContaLog);
+setTimeout(()=>{if(!window.__contalogBooted)bootContaLog()},4000);
 function liberarTarefa(invId,tid){if(usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode liberar tarefas.',false);return}let inv=DB.inventarios.find(x=>x.id===invId),t=inv?.tarefas.find(x=>x.id===tid);if(!t)return;if(t.status==='AGUARDANDO'||t.status==='AGUARDANDO_APROV')t.status='LIBERADA';save();renderTarefas();toast('Tarefa '+tid+' liberada')}
 function cancelarTarefa(invId,tid){if(usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER.',false);return}let inv=DB.inventarios.find(x=>x.id===invId),t=inv?.tarefas.find(x=>x.id===tid);if(!t)return;if(!confirm('Cancelar esta contagem/tarefa?'))return;t.status='CANCELADO';t.canceladoEm=now();t.canceladoPor=usuarioAtual.nome;t.contador=null;save();renderTarefas();renderInv();renderDash();toast('Contagem específica cancelada')}
 async function bootContaLog(){if(window.__contalogBooted)return;window.__contalogBooted=true;initLogin(false);_remoteStatus('● PREPARANDO ACESSO ONLINE...',true);try{await _waitSupabase();if(await _restoreSession()){renderEstoque();renderEnd();renderInv();renderUsers();renderDash();renderTarefas();}else{initLogin(false);_remoteStatus('● ONLINE · AGUARDANDO LOGIN',true)}}catch(e){console.warn('[ContaLog Boot]',e);initLogin(false);_remoteStatus('● ERRO DE CONEXÃO · TENTE NOVAMENTE',false)}setInterval(()=>{if(!usuarioAtual)return;if(document.getElementById('s-inventario')?.classList.contains('active'))renderInv();if(document.getElementById('s-tarefas')?.classList.contains('active'))renderTarefas();if(document.getElementById('s-dashboard')?.classList.contains('active'))renderDash()},2000);setInterval(_syncRemote,30000)}
