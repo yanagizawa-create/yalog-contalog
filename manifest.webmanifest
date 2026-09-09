@@ -1,0 +1,9 @@
+{
+  "name": "ContaLog · YALog",
+  "short_name": "ContaLog",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0F1221",
+  "theme_color": "#0F1221",
+  "description": "Sistema de contagem e controle de inventário da YALog."
+}
