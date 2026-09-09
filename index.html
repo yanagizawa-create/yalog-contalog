@@ -80,7 +80,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-y:auto}
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.5.8<br>YALOG-CONTA-001 • v1.5.8 Build 010 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.5.9<br>YALOG-CONTA-001 • v1.5.9 Build 011 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -146,7 +146,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-y:auto}
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.5.8';
+const CONTALOG_VERSION='1.5.9';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -525,14 +525,17 @@ function _renderTaskReleaseBoard(inv){
     const status=completed?`<span class="release-pill ok">Concluído</span>`:frozen?`<span class="release-pill a">ONDA CONGELADA</span>`:q.canceladas===q.total?`<span class="release-pill div">ONDA CANCELADA</span>`:released?`<span class="release-pill and">ONDA LIBERADA</span>`:`<span class="release-pill">${q.aguardar} à liberar</span>`;
     const emptyCount=g.ts.filter(t=>(t.status==='AGUARDANDO'||t.status==='LIBERADA'||t.status==='CONGELADA')&&!(t.itens||[]).length).length;
     const actions=[];
-    if(canRelease)actions.push(`<button class="btn btn-p" onclick="liberarOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Liberar onda</button>`);
+    const canceled=q.canceladas>0 && !canRelease && !canFreeze && !canCancel;
+    if(canRelease || canceled)actions.push(`<button class="btn btn-p" onclick="liberarOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Liberar onda</button>`);
     if(canFreeze&&!frozen)actions.push(`<button class="btn btn-b" onclick="congelarOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Congelar onda</button>`);
     if(frozen)actions.push(`<button class="btn btn-b" onclick="descongelarOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Descongelar onda</button>`);
     if(canCancel)actions.push(`<button class="btn btn-r" onclick="cancelarOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Cancelar onda</button>`);
-    if(canDelete)actions.push(`<button class="btn btn-r" onclick="excluirOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Excluir onda</button>`);
+    if(canceled)actions.push(`<button class="btn btn-r" onclick="cancelarOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Cancelar onda</button>`);
+    const showDelete=!completed && (canDelete || released || frozen || canceled);
+    if(showDelete)actions.push(`<button class="btn btn-r" onclick="excluirOnda('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Excluir onda</button>`);
     if(emptyCount)actions.push(`<button class="btn btn-b" onclick="finalizarOndaVazios('${esc(inv.id)}','${esc(g.rua)}','${esc(g.lado)}','${esc(g.nivel)}')">Finalizar ${emptyCount} vazios</button>`);
     return `<div class="${cls}"><div class="rc-head"><div><div class="rc-title">RUA ${esc(g.rua)}</div><div class="rc-sub">LADO ${esc(g.lado)} · NÍVEL ${esc(g.nivel)}</div></div>${status}</div><div class="rc-grid"><div class="rc-metric"><b>${q.total}</b><span>Total</span></div><div class="rc-metric"><b style="color:var(--orange2)">${q.aguardar}</b><span>À liberar</span></div><div class="rc-metric"><b>${q.liberadas}</b><span>Liberadas</span></div><div class="rc-metric"><b>${q.andamento}</b><span>Em contagem</span></div></div><div class="rc-foot"><div class="release-mini">${q.concluidas} concluídas · ${q.congeladas} congeladas · ${q.canceladas} canceladas</div>${usuarioAtual?.perfil==='MASTER'?`<div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">${actions.join('')}</div>`:`<span class="release-mini">${q.total?Math.round(q.concluidas/q.total*100):0}% concluído</span>`}</div></div>`
-  }).join('')}</div><div class="info"><b>Gestão da onda:</b> o MASTER pode <b>LIBERAR</b>, <b>CONGELAR</b>, <b>DESCONGELAR</b>, <b>CANCELAR</b> ou <b>EXCLUIR</b> uma onda. Congelar pausa a execução sem apagar o histórico; cancelar encerra a onda; excluir é permitido somente quando ainda não houve execução/contagem.</div>`;
+  }).join('')}</div><div class="info"><b>Gestão da onda:</b> o MASTER pode <b>LIBERAR</b>, <b>CONGELAR</b>, <b>DESCONGELAR</b>, <b>CANCELAR</b> ou <b>EXCLUIR</b> uma onda. Congelar pausa a execução e permite retomar do ponto exato; cancelar encerra a execução atual e, se liberada novamente, reinicia desde o início; excluir é permitido somente quando não houve execução/contagem.</div>`;
 }
 function _waveRef(invId,rua,lado,nivel){const inv=DB.inventarios.find(i=>i.id===invId);return {inv,grupo:_waveTasks(inv,rua,lado,nivel)}}
 function congelarOnda(invId,rua,lado,nivel){
@@ -554,11 +557,12 @@ function descongelarOnda(invId,rua,lado,nivel){
 function cancelarOnda(invId,rua,lado,nivel){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER pode cancelar ondas.',false);
   const {inv,grupo}=_waveRef(invId,rua,lado,nivel);if(!inv||!grupo.length)return toast('Onda não encontrada.',false);
-  const alvo=grupo.filter(t=>!['CONCLUIDO','CANCELADO','AGUARDANDO'].includes(t.status));if(!alvo.length)return toast('Não há tarefas liberadas para cancelar nesta onda.',false);
-  if(!confirm('CANCELAR a onda RUA '+rua+' · LADO '+lado+' · NÍVEL '+nivel+'?\n\nAs tarefas ainda não concluídas serão encerradas e não poderão mais ser assumidas.'))return;
-  const stamp=now();alvo.forEach(t=>{t.status='CANCELADO';t.canceladoEm=stamp;t.canceladoPor=usuarioAtual.nome;t.contador=null;t.cancelamentoOnda=true});
-  if((inv.tarefas||[]).length&&inv.tarefas.every(t=>['CONCLUIDO','CANCELADO'].includes(t.status)||t.status==='FORA_CICLO'))inv.status='CONCLUIDO';
-  save();renderTarefas();renderInv();renderDash();if(usuarioAtual?.perfil==='MASTER')renderVisaoTarefas();toast('Onda cancelada · '+alvo.length+' tarefa(s) encerrada(s).');
+  const alvo=grupo.filter(t=>!['CONCLUIDO','CANCELADO','AGUARDANDO'].includes(t.status));
+  if(!alvo.length)return toast('Esta onda já está cancelada ou ainda não foi liberada.',false);
+  if(!confirm('CANCELAR a onda RUA '+rua+' · LADO '+lado+' · NÍVEL '+nivel+'?\n\nA execução atual será encerrada. Se esta onda for liberada novamente, as tarefas canceladas começarão uma nova execução desde o início.'))return;
+  const stamp=now();alvo.forEach(t=>{t.status='CANCELADO';t.canceladoEm=stamp;t.canceladoPor=usuarioAtual.nome;t.contador=null;t.contadorId=null;t.contadorLogin=null;t.cancelamentoOnda=true;t.reiniciarAoLiberar=true});
+  inv.status='CONTANDO';
+  save();renderTarefas();renderInv();renderDash();if(usuarioAtual?.perfil==='MASTER')renderVisaoTarefas();toast('Onda cancelada · '+alvo.length+' tarefa(s) encerrada(s) e marcadas para reinício.');
 }
 function excluirOnda(invId,rua,lado,nivel){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER pode excluir ondas.',false);
@@ -573,14 +577,26 @@ function excluirOnda(invId,rua,lado,nivel){
 function liberarOnda(invId,rua,lado,nivel){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER pode liberar ondas.',false);
   const inv=DB.inventarios.find(i=>i.id===invId);if(!inv)return toast('Inventário não encontrado.',false);
-  const grupo=(inv.tarefas||[]).filter(t=>t.status==='AGUARDANDO'&&String(t.rua||'')===String(rua)&&String(t.lado||'')===String(lado)&&String(t.nivel||'')===String(nivel));
-  if(!grupo.length)return toast('Esta onda já foi liberada ou não possui tarefas pendentes.',false);
-  if(!confirm('Liberar TODOS os '+grupo.length+' endereço(s) da onda RUA '+rua+' · LADO '+lado+' · NÍVEL '+nivel+'?'))return;
+  const grupo=(inv.tarefas||[]).filter(t=>['AGUARDANDO','CANCELADO'].includes(t.status)&&String(t.rua||'')===String(rua)&&String(t.lado||'')===String(lado)&&String(t.nivel||'')===String(nivel));
+  if(!grupo.length)return toast('Esta onda não possui tarefas aguardando nova liberação.',false);
+  const reinicio=grupo.some(t=>t.status==='CANCELADO');
+  if(!confirm((reinicio?'REINICIAR E LIBERAR':'LIBERAR')+' a onda RUA '+rua+' · LADO '+lado+' · NÍVEL '+nivel+'?'+(reinicio?'\n\nAs tarefas canceladas serão reiniciadas desde o início. A execução anterior permanece registrada no histórico, mas não será retomada.':'')))return;
   inv.tipo='BASE';inv.modoContagem='CEGA_100';inv.status='CONTANDO';
-  grupo.forEach(t=>{t.status='LIBERADA';t.rodada=t.rodada||1;t.modeloContagem='CEGA';t.liberadoEm=now();t.liberadoPor=usuarioAtual.nome});
+  grupo.forEach(t=>{
+    if(t.status==='CANCELADO'){
+      t.status='AGUARDANDO';
+      t.contador=null;t.contadorId=null;t.contadorLogin=null;
+      t.iniciadoEm=null;t.iniciadoEmMs=null;t.rodadaInicioMs=null;
+      t.contagemVazia=null;
+      t.contagens=[];
+      t.rodada=1;
+      t.reiniciadoEm=now();t.reiniciadoPor=usuarioAtual.nome;
+    }
+    t.status='LIBERADA';t.rodada=t.rodada||1;t.modeloContagem='CEGA';t.liberadoEm=now();t.liberadoPor=usuarioAtual.nome;t.reiniciarAoLiberar=false;
+  });
   inv.enderecosLiberados=(inv.tarefas||[]).filter(t=>['LIBERADA','ANDAMENTO','CONCLUIDO','CONGELADA'].includes(t.status)).length;
-  save();renderTarefas();renderInv();renderDash();
-  toast('Onda liberada · '+grupo.length+' endereço(s) disponíveis para contagem.');
+  save();renderTarefas();renderInv();renderDash();if(usuarioAtual?.perfil==='MASTER')renderVisaoTarefas();
+  toast((reinicio?'Onda reiniciada e liberada · ':'Onda liberada · ')+grupo.length+' endereço(s) disponíveis para contagem.');
 }
 
 function finalizarOndaVazios(invId,rua,lado,nivel){
