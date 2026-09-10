@@ -131,7 +131,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 
 <section class="screen" id="s-visaoTarefas"><div class="ph"><div><div class="ph-eye">ContaLog · Gestão</div><div class="ph-title">Visão de <em>Tarefas</em></div><div class="ph-sub">Acompanhamento gerencial das tarefas liberadas pelo MASTER, execução por contador e saldo ainda não iniciado.</div></div><div class="acts"><button class="btn btn-b" onclick="renderVisaoTarefas()">↻ Atualizar</button></div></div><div class="info"><b>Regra operacional:</b> cada contador pode manter <b>uma única tarefa/onda pendente por vez</b>. Enquanto houver tarefa em execução, reconferência ou aprovação vinculada ao contador, uma nova assunção fica bloqueada.</div><div class="kpis" id="visaoTaskKpis"></div><div class="g2" style="margin-top:14px"><div class="card"><div class="sec-t">Execução por Contador</div><div class="mini" style="margin-bottom:12px">Percentual de conclusão das tarefas liberadas e atribuídas a cada contador.</div><div id="visaoTaskUsers"></div></div><div class="card"><div class="sec-t">Status das Tarefas Liberadas</div><div class="mini" style="margin-bottom:12px">Visão consolidada do que o MASTER já liberou.</div><div id="visaoTaskStatus"></div></div></div><div class="card" style="margin-top:14px"><div class="sec-t">Tarefas ainda não iniciadas</div><div class="mini" style="margin-bottom:12px">Tarefas já liberadas pelo MASTER que ainda aguardam a primeira assunção.</div><div class="tw"><table class="dt"><thead><tr><th>TAREFA</th><th>INVENTÁRIO</th><th>RUA</th><th>LADO</th><th>NÍVEL</th><th>STATUS</th><th>LIBERADO EM</th></tr></thead><tbody id="visaoTaskPending"></tbody></table></div></div></section>
 
-<section class="screen" id="s-conciliacao"><div class="ph"><div><div class="ph-eye">ContaLog · Gestão</div><div class="ph-title"><em>Conciliação</em> de Inventário</div><div class="ph-sub">Análise executiva, composição financeira e quantitativa das divergências.</div></div><div class="acts"><button class="btn btn-b" onclick="renderConc()">↻ Atualizar</button></div></div><div class="info">Somente o perfil <b>MASTER</b> pode aprovar divergências, liberar rodadas, cancelar inventários e fechar inventários.</div><div class="card" style="margin-bottom:14px"><div class="conc-toolbar"><div><div class="sec-t" style="margin-bottom:4px">Resumo da Conciliação</div><div class="mini">Visão executiva baseada na comparação entre <b>WMS × posição física</b>, com destaque para quantidade, valor, acuracidade e impacto das divergências.</div></div><div class="conc-actions"><button type="button" class="btn btn-b" onclick="abrirVisualizacaoDivergencias()">⌕ VISUALIZAR DIVERGÊNCIAS</button></div></div><div class="conc-kpis" id="concResumoKpis"></div><div id="concResumoStatus" style="margin-top:12px"></div></div><div class="conc-main-grid"><div class="card conc-composition"><div class="conc-composition-head"><div><div class="sec-t">Composição da Conciliação</div><div class="mini">Resumo financeiro e quantitativo para leitura gerencial e composição do relatório final.</div></div><span class="badge pen">WMS × FÍSICO</span></div><div class="conc-table-wrap"><table class="conc-table"><thead><tr><th>INDICADOR</th><th>VALOR / QTDE</th><th>% SOBRE O TOTAL</th><th>OBSERVAÇÃO</th></tr></thead><tbody id="concComposicaoBody"></tbody></table></div><div class="conc-note mini"><b>Critérios:</b> sobra = físico acima do WMS; falta = físico abaixo do WMS; divergência financeira = sobra + falta em valor absoluto; acuracidade de valor = 100% − (% de divergências sobre o estoque contábil); acuracidade de quantidade = 100% − (% de unidades divergentes sobre as unidades WMS).</div></div><div class="card"><div class="sec-t">Indicadores Financeiros</div><div id="concFinanceiro" class="conc-financial"></div><div class="conc-report-note mini">A composição detalhada também será incorporada ao <b>Relatório Oficial de Inventário</b>, em uma aba própria para auditoria e análise.</div></div></div><div class="card" style="margin-bottom:14px"><div class="sec-t">Método de Conciliação</div><div class="mini" style="line-height:1.7"><b>1º nível:</b> SKU + LOTE + UNIDADE DE MEDIDA + QUANTIDADE &nbsp;→&nbsp; <span style="color:#4ade80">MATCH EXATO</span><br><b>2º nível:</b> SKU + UNIDADE DE MEDIDA + QUANTIDADE &nbsp;→&nbsp; ignora o lote para validar a correspondência<br><b>3º nível:</b> SKU + QUANTIDADE &nbsp;→&nbsp; ignora lote e unidade de medida para validar a correspondência<br><b>Sem correspondência:</b> permanece como <span style="color:#f87171">DIVERGENTE</span> para análise do MASTER.</div></div><div class="tw"><table class="dt"><thead><tr><th>INV.</th><th>ENDEREÇO</th><th>SKU</th><th>LOTE</th><th>UM</th><th>SISTEMA</th><th>ÚLTIMA CONT.</th><th>DIF.</th><th>MÉTODO</th><th>STATUS</th><th>AÇÃO</th></tr></thead><tbody id="concBody"></tbody></table></div></section>
+<section class="screen" id="s-conciliacao"><div class="ph"><div><div class="ph-eye">ContaLog · Gestão</div><div class="ph-title"><em>Conciliação</em> de Inventário</div><div class="ph-sub">Análise executiva, composição financeira e quantitativa das divergências.</div></div><div class="acts"><button class="btn btn-b" onclick="renderConc()">↻ Atualizar</button></div></div><div class="info">Somente o perfil <b>MASTER</b> pode aprovar divergências, liberar rodadas, cancelar inventários e fechar inventários.</div><div class="card" style="margin-bottom:14px"><div class="conc-toolbar"><div><div class="sec-t" style="margin-bottom:4px">Resumo da Conciliação</div><div class="mini">Visão executiva baseada na comparação entre <b>SISTEMA × posição física</b>, com destaque para quantidade, valor, acuracidade e impacto das divergências.</div></div><div class="conc-actions"><button type="button" class="btn btn-b" onclick="abrirVisualizacaoDivergencias()">⌕ VISUALIZAR DIVERGÊNCIAS</button></div></div><div class="conc-kpis" id="concResumoKpis"></div><div id="concResumoStatus" style="margin-top:12px"></div></div><div class="conc-main-grid"><div class="card conc-composition"><div class="conc-composition-head"><div><div class="sec-t">Composição da Conciliação</div><div class="mini">Resumo financeiro e quantitativo para leitura gerencial e composição do relatório final.</div></div><span class="badge pen">SISTEMA × FÍSICO</span></div><div class="conc-table-wrap"><table class="conc-table"><thead><tr><th>INDICADOR</th><th>VALOR / QTDE</th><th>% SOBRE O TOTAL</th><th>OBSERVAÇÃO</th></tr></thead><tbody id="concComposicaoBody"></tbody></table></div><div class="conc-note mini"><b>Critérios:</b> sobra = físico acima do SISTEMA; falta = físico abaixo do SISTEMA; divergência financeira = sobra + falta em valor absoluto; acuracidade de valor = 100% − (% de divergências sobre o estoque contábil); acuracidade de quantidade = 100% − (% de unidades divergentes sobre as unidades SISTEMA).</div></div><div class="card"><div class="sec-t">Indicadores Financeiros</div><div id="concFinanceiro" class="conc-financial"></div><div class="conc-report-note mini">A composição detalhada também será incorporada ao <b>Relatório Oficial de Inventário</b>, em uma aba própria para auditoria e análise.</div></div></div><div class="card" style="margin-bottom:14px"><div class="sec-t">Método de Conciliação</div><div class="mini" style="line-height:1.7"><b>1º nível:</b> SKU + LOTE + UNIDADE DE MEDIDA + QUANTIDADE &nbsp;→&nbsp; <span style="color:#4ade80">MATCH EXATO</span><br><b>2º nível:</b> SKU + UNIDADE DE MEDIDA + QUANTIDADE &nbsp;→&nbsp; ignora o lote para validar a correspondência<br><b>3º nível:</b> SKU + QUANTIDADE &nbsp;→&nbsp; ignora lote e unidade de medida para validar a correspondência<br><b>Sem correspondência:</b> permanece como <span style="color:#f87171">DIVERGENTE</span> para análise do MASTER.</div></div><div class="tw"><table class="dt"><thead><tr><th>INV.</th><th>ENDEREÇO</th><th>SKU</th><th>LOTE</th><th>UM</th><th>SISTEMA</th><th>ÚLTIMA CONT.</th><th>DIF.</th><th>MÉTODO</th><th>STATUS</th><th>AÇÃO</th></tr></thead><tbody id="concBody"></tbody></table></div></section>
 <section class="screen" id="s-dashboard"><div class="ph"><div><div class="ph-eye">ContaLog · Gestão</div><div class="ph-title">Dashboard de <em>Inventários</em></div><div class="ph-sub">Painel operacional em tempo real: execução física, completude, acuracidade, divergências, produtividade e previsão de término.</div></div><div class="acts"><button class="btn btn-b" onclick="renderDash()">↻ Atualizar</button></div></div><div class="info" id="dashLiveInfo">● ATUALIZAÇÃO ON-TIME · Última atualização: —</div><div class="kpis" id="dashKpis"></div><div class="g3"><div class="card"><div class="sec-t">Acuracidade Atual</div><div class="dash-highlight" id="dashAcc">0,00%</div><div class="metric-note" id="dashAccNote">Sem contagens realizadas.</div><div style="margin-top:14px" class="progress"><span id="dashAccBar" style="width:0%"></span></div></div><div class="card"><div class="sec-t">% Endereços Contabilizados</div><div class="dash-highlight" id="dashAddrProg">0,00%</div><div class="metric-note" id="dashAddrProgNote">0 / 0 endereços</div><div style="margin-top:14px" class="progress"><span id="dashAddrProgBar" style="width:0%"></span></div></div><div class="card"><div class="sec-t">Expectativa de Finalização</div><div class="dash-highlight" id="dashEta">—</div><div class="metric-note" id="dashEtaNote">Aguardando produtividade.</div><div style="margin-top:14px" class="progress"><span id="dashEtaBar" style="width:0%"></span></div></div></div><div class="g3" style="margin-top:14px"><div class="card"><div class="sec-t">Endereços · Total × Contabilizados</div><div class="dash-highlight" id="dashAddrCount">0 / 0</div><div class="metric-note" id="dashAddrCountNote">À liberar: 0 · Em contagem: 0</div></div><div class="card"><div class="sec-t">Endereços Vazios</div><div class="dash-highlight" id="dashEmpty">0</div><div class="metric-note" id="dashEmptyNote">0,00% da estrutura contabilizada</div></div><div class="card"><div class="sec-t">Endereços Divergentes</div><div class="dash-highlight" id="dashDivAddr">0</div><div class="metric-note" id="dashDivAddrNote">Nenhuma divergência identificada.</div></div></div><div class="g3" style="margin-top:14px"><div class="card"><div class="sec-t">2ª Contagem</div><div class="dash-highlight" id="dashSecond">0</div><div class="metric-note" id="dashSecondNote">Endereços aguardando reconferência.</div></div><div class="card"><div class="sec-t">3ª Contagem / Aprovação</div><div class="dash-highlight" id="dashThird">0</div><div class="metric-note" id="dashThirdNote">Endereços em etapa final.</div></div><div class="card"><div class="sec-t">Contadores Ativos</div><div class="dash-highlight" id="dashActiveCounters">0</div><div class="metric-note" id="dashActiveCountersNote">0 ondas em execução.</div></div></div><div class="g3" style="margin-top:14px"><div class="card"><div class="sec-t">Produtividade</div><div class="dash-highlight" id="dashProd">0,0</div><div class="metric-note" id="dashProdNote">Itens/h · 0,0 endereços/h</div></div><div class="card"><div class="sec-t">Tempo Médio</div><div class="dash-highlight" id="dashTempo">—</div><div class="metric-note" id="dashTempoNote">Por item · — por endereço</div></div><div class="card"><div class="sec-t">Restantes</div><div class="dash-highlight" id="dashRest">0</div><div class="metric-note" id="dashRestNote">0 itens · 0 endereços</div></div></div><div class="g2" style="margin-top:14px"><div class="card"><div class="sec-t">Progresso por Inventário</div><div id="dashInv"></div></div><div class="card"><div class="sec-t">Desempenho por Contador</div><div id="dashUser"></div></div></div></section>
 <section class="screen" id="s-usuarios"><div class="ph"><div><div class="ph-eye">ContaLog · Segurança Operacional</div><div class="ph-title">Usuários e <em>Perfis</em></div><div class="ph-sub">Gestão centralizada de usuários, perfis, status e credenciais.</div></div><div class="acts"><button class="btn btn-b" onclick="renderUsers(true)">↻ Atualizar</button><button class="btn btn-p" onclick="adicionarUsuario()">＋ Novo Usuário</button></div></div><div class="info"><b>MASTER:</b> pode cadastrar, editar, alterar senha, alterar perfil e excluir usuários. <b>CONTADOR:</b> acesso restrito às tarefas e contagem. A gestão abaixo consulta a fonte online de usuários da empresa.</div><div class="tw"><table class="dt"><thead><tr><th>NOME</th><th>LOGIN</th><th>PERFIL</th><th>STATUS</th><th>ÚLTIMO ACESSO</th><th>AÇÕES</th></tr></thead><tbody id="usersBody"></tbody></table></div></section>
 </div></main></div>
@@ -998,42 +998,49 @@ async function _invRelatorioOficial(invId){
   XLSX.utils.book_append_sheet(wb,wsR,'Resumo');
 
   // Composição financeira e quantitativa da conciliação — também compõe o relatório final.
-  const comp={sobra:0,falta:0,valorSobra:0,valorFalta:0,estoqueContabil:0,unidadesWms:0,unidadesDivergentes:0,itensSobra:0,itensFalta:0,itensInventariados:allItems.length};
+  const comp={sobra:0,falta:0,valorSobra:0,valorFalta:0,estoqueContabil:0,unidadesSistema:0,unidadesDivergentes:0,itensSobra:0,itensFalta:0,itensInventariados:allItems.length,valorDivergenciaSemPreco:false};
+  const estoqueCompleto=DB.estoque||[];
+  comp.estoqueContabil=estoqueCompleto.reduce((a,x)=>a+_num(x.QUANTIDADE)*Number(x.VALOR_UNIT||0),0);
+  comp.unidadesSistema=estoqueCompleto.reduce((a,x)=>a+_num(x.QUANTIDADE),0);
   allItems.forEach(x=>{
     const qSys=Number(x.it.qtdSistema)||0, qFis=x.lc?Number(x.lc.q):(x.it.qtdFisicaImportada!=null?Number(x.it.qtdFisicaImportada):qSys), diff=qFis-qSys, vu=_concValorUnitario(x.it);
-    comp.estoqueContabil+=qSys*vu; comp.unidadesWms+=qSys; comp.unidadesDivergentes+=Math.abs(diff);
-    if(diff>0){comp.sobra+=diff;comp.itensSobra++;comp.valorSobra+=diff*vu}
-    if(diff<0){comp.falta+=Math.abs(diff);comp.itensFalta++;comp.valorFalta+=Math.abs(diff)*vu}
+    if(Math.abs(diff)>0.000001){
+      comp.unidadesDivergentes+=Math.abs(diff);
+      if(diff>0){comp.sobra+=diff;comp.itensSobra++;}
+      if(diff<0){comp.falta+=Math.abs(diff);comp.itensFalta++;}
+      if(vu>0){if(diff>0)comp.valorSobra+=diff*vu;else comp.valorFalta+=Math.abs(diff)*vu;}
+      else comp.valorDivergenciaSemPreco=true;
+    }
   });
   comp.valorDivergencias=comp.valorSobra+comp.valorFalta;
   comp.pctFalta=comp.estoqueContabil?comp.valorFalta/comp.estoqueContabil:0;
   comp.pctSobra=comp.estoqueContabil?comp.valorSobra/comp.estoqueContabil:0;
   comp.pctDivValor=comp.estoqueContabil?comp.valorDivergencias/comp.estoqueContabil:0;
-  comp.accValor=Math.max(0,1-comp.pctDivValor);
-  comp.pctDivQtd=comp.unidadesWms?comp.unidadesDivergentes/comp.unidadesWms:0;
-  comp.accQtd=Math.max(0,1-comp.pctDivQtd);
+  comp.accValor=(comp.estoqueContabil>0&&!comp.valorDivergenciaSemPreco)?Math.max(0,1-comp.pctDivValor):null;
+  comp.pctDivQtd=comp.unidadesSistema?comp.unidadesDivergentes/comp.unidadesSistema:0;
+  comp.accQtd=comp.unidadesSistema?Math.max(0,1-comp.pctDivQtd):null;
   const wsComp=XLSX.utils.aoa_to_sheet([
     ['COMPOSIÇÃO DA CONCILIAÇÃO — RESUMO FINANCEIRO E QUANTITATIVO'],
     ['INDICADOR','VALOR / QTDE','% SOBRE O TOTAL','OBSERVAÇÃO'],
-    ['VALOR TOTAL DA SOBRA',comp.valorSobra,comp.pctSobra,'Físico acima do WMS'],
-    ['VALOR TOTAL DA FALTA',-comp.valorFalta,comp.pctFalta,'Físico abaixo do WMS'],
-    ['VALOR TOTAL DO ESTOQUE CONTÁBIL',comp.estoqueContabil,1,'Base de valor do WMS'],
+    ['VALOR TOTAL DA SOBRA',comp.valorSobra,comp.pctSobra,'Físico acima do SISTEMA'],
+    ['VALOR TOTAL DA FALTA',-comp.valorFalta,comp.pctFalta,'Físico abaixo do SISTEMA'],
+    ['VALOR TOTAL DO ESTOQUE CONTÁBIL',comp.estoqueContabil,1,'Base de valor do SISTEMA'],
     ['% DO VALOR DA FALTA',comp.pctFalta,'','Sobre o estoque contábil'],
     ['% DO VALOR DA SOBRA',comp.pctSobra,'','Sobre o estoque contábil'],
     ['% DO VALOR DAS DIVERGÊNCIAS',comp.pctDivValor,'','Sobra + falta sobre o estoque contábil'],
-    ['% DE ACURACIDADE (R$)',comp.accValor,'','100% − % do valor das divergências'],
+    ['% DE ACURACIDADE (R$)',comp.accValor===null?'N/D':comp.accValor,'','100% − % do valor das divergências; N/D quando não há base financeira suficiente'],
     ['TOTAL DE ITENS C/SOBRA',comp.itensSobra,'','Itens com saldo a maior'],
     ['TOTAL DE ITENS C/FALTA',comp.itensFalta,'','Itens com saldo a menor'],
     ['TOTAL DE ITENS INVENTARIADOS',comp.itensInventariados,'','Itens considerados'],
-    ['TOTAL DE UNIDADES DIVERGENTES',comp.unidadesDivergentes,'','Diferença absoluta físico × WMS'],
-    ['TOTAL DE UNIDADES WMS',comp.unidadesWms,'','Quantidade total no sistema'],
-    ['% DE ESTOQUE COM DIVERGÊNCIA',comp.pctDivQtd,'','Unidades divergentes / unidades WMS'],
-    ['% DE ACURACIDADE (QTDE)',comp.accQtd,'','100% − % de estoque com divergência'],
+    ['TOTAL DE UNIDADES DIVERGENTES',comp.unidadesDivergentes,'','Diferença absoluta físico × SISTEMA'],
+    ['TOTAL DE UNIDADES SISTEMA',comp.unidadesSistema,'','Quantidade total no Sistema'],
+    ['% DE ESTOQUE COM DIVERGÊNCIA',comp.pctDivQtd,'','Unidades divergentes / unidades SISTEMA'],
+    ['% DE ACURACIDADE (QTDE)',comp.accQtd,'','100% − % de quantidade com divergência'],
     [],['CRITÉRIOS'],
     ['Acuracidade R$','1 − (valor sobra + valor falta) / estoque contábil'],
-    ['Acuracidade QTD','1 − unidades divergentes / unidades WMS'],
-    ['Sobra','Quantidade física acima da quantidade WMS'],
-    ['Falta','Quantidade física abaixo da quantidade WMS']
+    ['Acuracidade QTD','1 − unidades divergentes / unidades SISTEMA'],
+    ['Sobra','Quantidade física acima da quantidade SISTEMA'],
+    ['Falta','Quantidade física abaixo da quantidade SISTEMA']
   ]);
   wsComp['!cols']=[{wch:38},{wch:24},{wch:20},{wch:52}];
   ['C3','C4','C5','C6','C7','C8','C9','C15','C16'].forEach(a=>{if(wsComp[a])wsComp[a].z='0.00%'});
@@ -1078,28 +1085,45 @@ function _concValorUnitario(it){
 function _fmtMoney(v){return 'R$ '+Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function _getConcComposicao(sourceItems){
   const items=sourceItems||[];
-  let sobra=0,falta=0,valorSobra=0,valorFalta=0,estoqueContabil=0,unidadesWms=0,unidadesDivergentes=0;
+  let sobra=0,falta=0,valorSobra=0,valorFalta=0,unidadesDivergentes=0;
   let itensSobra=0,itensFalta=0,itensInventariados=items.length;
+  let valorDivergenciaSemPreco=false;
+
   items.forEach(({it})=>{
     const qSys=Number(it.qtdSistema)||0;
     const lc=_latestCount(it);
     const qFis=lc?Number(lc.q):(it.qtdFisicaImportada!=null?Number(it.qtdFisicaImportada):qSys);
     const diff=qFis-qSys;
     const vu=_concValorUnitario(it);
-    estoqueContabil+=qSys*vu;
-    unidadesWms+=qSys;
-    unidadesDivergentes+=Math.abs(diff);
-    if(diff>0){sobra+=diff;itensSobra++;valorSobra+=diff*vu}
-    if(diff<0){falta+=Math.abs(diff);itensFalta++;valorFalta+=Math.abs(diff)*vu}
+    if(Math.abs(diff)>0.000001){
+      unidadesDivergentes+=Math.abs(diff);
+      if(diff>0){sobra+=diff;itensSobra++;}
+      if(diff<0){falta+=Math.abs(diff);itensFalta++;}
+      if(vu>0){
+        if(diff>0)valorSobra+=diff*vu;
+        else valorFalta+=Math.abs(diff)*vu;
+      }else{
+        valorDivergenciaSemPreco=true;
+      }
+    }
   });
+
+  // Financial and quantitative denominators must use the COMPLETE loaded stock,
+  // not only the subset that generated reconciliation tasks.
+  const estoqueCompleto=DB.estoque||[];
+  const estoqueContabil=estoqueCompleto.reduce((a,x)=>a+_num(x.QUANTIDADE)*Number(x.VALOR_UNIT||0),0);
+  const unidadesSistema=estoqueCompleto.reduce((a,x)=>a+_num(x.QUANTIDADE),0);
   const valorDivergencias=valorSobra+valorFalta;
-  const unidadesFisicas=items.reduce((a,{it})=>{const lc=_latestCount(it);return a+(lc?Number(lc.q):(it.qtdFisicaImportada!=null?Number(it.qtdFisicaImportada):Number(it.qtdSistema)||0))},0);
   const pct=(v,t)=>t?Math.abs(v)/t*100:0;
   const pctFalta=pct(valorFalta,estoqueContabil),pctSobra=pct(valorSobra,estoqueContabil),pctDivValor=pct(valorDivergencias,estoqueContabil);
-  const accValor=Math.max(0,100-pctDivValor),pctDivQtd=pct(unidadesDivergentes,unidadesWms),accQtd=Math.max(0,100-pctDivQtd);
-  return {sobra,falta,valorSobra,valorFalta,valorDivergencias,estoqueContabil,unidadesWms,unidadesDivergentes,itensSobra,itensFalta,itensInventariados,unidadesFisicas,pctFalta,pctSobra,pctDivValor,accValor,pctDivQtd,accQtd};
+  const temBaseValor=estoqueContabil>0 && !valorDivergenciaSemPreco;
+  const accValor=temBaseValor?Math.max(0,100-pctDivValor):null;
+  const pctDivQtd=pct(unidadesDivergentes,unidadesSistema);
+  const accQtd=unidadesSistema>0?Math.max(0,100-pctDivQtd):null;
+  const unidadesFisicas=unidadesSistema-unidadesDivergentes+sobra-falta;
+  return {sobra,falta,valorSobra,valorFalta,valorDivergencias,estoqueContabil,unidadesSistema:unidadesSistema,unidadesDivergentes,itensSobra,itensFalta,itensInventariados,unidadesFisicas,pctFalta,pctSobra,pctDivValor,accValor,pctDivQtd,accQtd,temBaseValor,valorDivergenciaSemPreco};
 }
-function _fmtPct(v){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
+function _fmtPct(v){return v===null||v===undefined||!Number.isFinite(Number(v))?'N/D':Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'}
 function _renderConcResumo(){
   const el=document.getElementById('concResumoKpis'), statusEl=document.getElementById('concResumoStatus'), compEl=document.getElementById('concComposicaoBody'), finEl=document.getElementById('concFinanceiro');
   if(!el)return;
@@ -1120,7 +1144,7 @@ function _renderConcResumo(){
   const k=(v,l,style='')=>`<div class="kpi"><div class="v" style="${style}">${v}</div><div class="l">${l}</div></div>`;
   el.innerHTML=k(divergenciasIniciais.length?'SIM':'NÃO','Há divergência',divergenciasIniciais.length?'color:#f87171':'color:#4ade80')
     +k(_fmtPct(c.accQtd),'Acuracidade (QTD)','color:#4ade80')
-    +k(_fmtPct(c.accValor),'Acuracidade (R$)','color:#4ade80')
+    +k(_fmtPct(c.accValor),'Acuracidade (R$)',c.accValor===null?'color:#fbbf24':'color:#4ade80')
     +k(c.itensSobra,'Itens c/ sobra','color:#fbbf24')
     +k(c.itensFalta,'Itens c/ falta','color:#f87171')
     +k(c.unidadesDivergentes.toLocaleString('pt-BR',{maximumFractionDigits:3}),'Unidades divergentes','color:#f87171')
@@ -1128,11 +1152,11 @@ function _renderConcResumo(){
   const statusText=divergenciasIniciais.length
     ? `<b>ATENÇÃO: ${divergenciasIniciais.length} registro(s) divergente(s) identificado(s).</b> ${useCurrent?`Já existem ${counted.length} item(ns) com contagem registrada; os indicadores financeiros e quantitativos usam a última contagem disponível.`:'Ainda não há contagem física registrada; a composição usa a posição física importada como referência inicial.'}`
     : '<b>CONCILIAÇÃO INICIAL SEM DIVERGÊNCIA.</b> Nenhuma tarefa de revisão foi identificada.';
-  statusEl.innerHTML=`<div class="info" style="margin:0;border-left:3px solid ${divergenciasIniciais.length?'#f97316':'#4ade80'}">${statusText}<br><span class="mini">Base: ${c.itensInventariados.toLocaleString('pt-BR')} itens · ${c.unidadesWms.toLocaleString('pt-BR',{maximumFractionDigits:3})} unidades WMS · Estoque contábil: <b>${_fmtMoney(c.estoqueContabil)}</b>.</span></div>`;
+  statusEl.innerHTML=`<div class="info" style="margin:0;border-left:3px solid ${divergenciasIniciais.length?'#f97316':'#4ade80'}">${statusText}<br><span class="mini">Base: ${c.itensInventariados.toLocaleString('pt-BR')} itens · ${c.unidadesSistema.toLocaleString('pt-BR',{maximumFractionDigits:3})} unidades SISTEMA · Estoque contábil: <b>${_fmtMoney(c.estoqueContabil)}</b>.</span></div>`;
   const rows=[
-    ['VALOR TOTAL DA SOBRA',_fmtMoney(c.valorSobra),_fmtPct(c.pctSobra),'Itens a maior (físico acima do WMS)'],
-    ['VALOR TOTAL DA FALTA',_fmtMoney(-c.valorFalta),_fmtPct(c.pctFalta),'Itens a menor (físico abaixo do WMS)'],
-    ['VALOR TOTAL DO ESTOQUE CONTÁBIL',_fmtMoney(c.estoqueContabil),'100,00%','Base de valor do WMS'],
+    ['VALOR TOTAL DA SOBRA',_fmtMoney(c.valorSobra),_fmtPct(c.pctSobra),'Itens a maior (físico acima do SISTEMA)'],
+    ['VALOR TOTAL DA FALTA',_fmtMoney(-c.valorFalta),_fmtPct(c.pctFalta),'Itens a menor (físico abaixo do SISTEMA)'],
+    ['VALOR TOTAL DO ESTOQUE CONTÁBIL',_fmtMoney(c.estoqueContabil),c.estoqueContabil>0?_fmtPct(100):'N/D','Base de valor do Sistema'],
     ['% DO VALOR DA FALTA',_fmtPct(c.pctFalta),'—','Sobre o estoque contábil'],
     ['% DO VALOR DA SOBRA',_fmtPct(c.pctSobra),'—','Sobre o estoque contábil'],
     ['% DO VALOR DAS DIVERGÊNCIAS',_fmtPct(c.pctDivValor),'—','(Sobra + Falta) sobre o estoque contábil'],
@@ -1140,13 +1164,44 @@ function _renderConcResumo(){
     ['TOTAL DE ITENS C/SOBRA',c.itensSobra.toLocaleString('pt-BR'),'—','SKUs/posições com saldo a maior'],
     ['TOTAL DE ITENS C/FALTA',c.itensFalta.toLocaleString('pt-BR'),'—','SKUs/posições com saldo a menor'],
     ['TOTAL DE ITENS INVENTARIADOS',c.itensInventariados.toLocaleString('pt-BR'),'—','Itens considerados na conciliação'],
-    ['TOTAL DE UNIDADES DIVERGENTES',c.unidadesDivergentes.toLocaleString('pt-BR',{maximumFractionDigits:3}),'—','Diferença absoluta entre físico e WMS'],
-    ['TOTAL DE UNIDADES WMS',c.unidadesWms.toLocaleString('pt-BR',{maximumFractionDigits:3}),'—','Quantidade total no sistema'],
-    ['% DE ESTOQUE COM DIVERGÊNCIA',_fmtPct(c.pctDivQtd),'—','Unidades divergentes / unidades WMS'],
-    ['% DE ACURACIDADE (QTDE)',_fmtPct(c.accQtd),'—','100% − % de estoque com divergência']
+    ['TOTAL DE UNIDADES DIVERGENTES',c.unidadesDivergentes.toLocaleString('pt-BR',{maximumFractionDigits:3}),'—','Diferença absoluta entre físico e SISTEMA'],
+    ['TOTAL DE UNIDADES SISTEMA',c.unidadesSistema.toLocaleString('pt-BR',{maximumFractionDigits:3}),'—','Quantidade total no Sistema'],
+    ['% DE ESTOQUE COM DIVERGÊNCIA',_fmtPct(c.pctDivQtd),'—','Unidades divergentes / unidades SISTEMA'],
+    ['% DE ACURACIDADE (QTDE)',_fmtPct(c.accQtd),'—','100% − % de quantidade com divergência']
   ];
   if(compEl)compEl.innerHTML=rows.map((r,i)=>`<tr class="${i===2||i===6||i===13?'total-row':''}"><td>${r[0]}</td><td style="text-align:right;${i===1?'color:#f87171':i===0?'color:#4ade80':i===6||i===13?'color:#4ade80':''}">${r[1]}</td><td style="text-align:right">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
-  if(finEl){const box=(label,val,sub,bar)=>`<div class="metric-box"><div class="metric-label">${label}</div><div class="metric-value">${val}</div><div class="metric-sub">${sub}</div>${bar!==null?`<div class="conc-bar"><span style="width:${Math.min(Math.max(bar,0),100)}%;background:${bar>=90?'#22c55e':bar>=75?'#fbbf24':'#ef4444'}"></span></div>`:''}</div>`;finEl.innerHTML=box('Estoque contábil',_fmtMoney(c.estoqueContabil),'Valor total WMS',100)+box('Sobra',_fmtMoney(c.valorSobra),_fmtPct(c.pctSobra)+' do estoque',c.pctSobra)+box('Falta',_fmtMoney(-c.valorFalta),_fmtPct(c.pctFalta)+' do estoque',c.pctFalta)+box('Divergências',_fmtMoney(c.valorDivergencias),_fmtPct(c.pctDivValor)+' do estoque',c.pctDivValor)+box('Acuracidade R$',_fmtPct(c.accValor),'Indicador financeiro',c.accValor)+box('Acuracidade QTD',_fmtPct(c.accQtd),'Indicador quantitativo',c.accQtd)}
+  if(finEl){const box=(label,val,sub,bar)=>`<div class="metric-box"><div class="metric-label">${label}</div><div class="metric-value">${val}</div><div class="metric-sub">${sub}</div>${bar!==null?`<div class="conc-bar"><span style="width:${Math.min(Math.max(bar,0),100)}%;background:${bar>=90?'#22c55e':bar>=75?'#fbbf24':'#ef4444'}"></span></div>`:''}</div>`;finEl.innerHTML=box('Estoque contábil',_fmtMoney(c.estoqueContabil),'Valor total SISTEMA',100)+box('Sobra',_fmtMoney(c.valorSobra),_fmtPct(c.pctSobra)+' do estoque',c.pctSobra)+box('Falta',_fmtMoney(-c.valorFalta),_fmtPct(c.pctFalta)+' do estoque',c.pctFalta)+box('Divergências',_fmtMoney(c.valorDivergencias),_fmtPct(c.pctDivValor)+' do estoque',c.pctDivValor)+box('Acuracidade R$',_fmtPct(c.accValor),c.accValor===null?'Base financeira insuficiente':'Indicador financeiro',c.accValor===null?null:c.accValor)+box('Acuracidade QTD',_fmtPct(c.accQtd),'Indicador quantitativo',c.accQtd)}
+}
+
+
+function abrirVisualizacaoDivergencias(){
+  const modal=document.getElementById('modal'), body=document.getElementById('modalBody');
+  if(!modal||!body)return;
+  const concInvs=(DB.inventarios||[]).filter(i=>i.tipo==='CONCILIACAO_EXCEL'||i.modoContagem==='CONCILIACAO_EXCEL');
+  const rows=[];
+  concInvs.forEach(inv=>(inv.tarefas||[]).forEach(t=>(t.itens||[]).forEach(it=>{
+    const lc=_latestCount(it);
+    const q=lc?Number(lc.q):(it.qtdFisicaImportada!=null?Number(it.qtdFisicaImportada):null);
+    const qSys=Number(it.qtdSistema)||0;
+    if(q===null||Math.abs(q-qSys)<=0.000001)return;
+    const diff=q-qSys;
+    rows.push({inv,t,it,q,qSys,diff});
+  })));
+  const fmt=n=>Number(n||0).toLocaleString('pt-BR',{maximumFractionDigits:3});
+  body.innerHTML=`
+    <div class="mt">Divergências da Conciliação</div>
+    <div class="ms">Visualização detalhada das posições divergentes encontradas na conciliação. A validação física e a aprovação permanecem sob responsabilidade do MASTER.</div>
+    <div class="kpis" style="margin-top:14px">
+      <div class="kpi"><div class="v">${rows.length}</div><div class="l">Registros divergentes</div></div>
+      <div class="kpi"><div class="v">${fmt(rows.reduce((a,x)=>a+Math.abs(x.diff),0))}</div><div class="l">Unidades divergentes</div></div>
+    </div>
+    <div class="tw" style="margin-top:14px;max-height:58vh;overflow:auto">
+      <table class="dt"><thead><tr><th>INVENTÁRIO</th><th>ENDEREÇO</th><th>SKU</th><th>LOTE</th><th>UM</th><th>SISTEMA</th><th>FÍSICO</th><th>DIF.</th><th>STATUS</th></tr></thead>
+      <tbody>${rows.length?rows.map(x=>`<tr><td>${esc(x.inv.id)}</td><td>${esc(x.it.endereco)}</td><td>${esc(x.it.sku)}</td><td>${esc(x.it.lote||'—')}</td><td>${esc(x.it.um||'—')}</td><td>${fmt(x.qSys)}</td><td>${fmt(x.q)}</td><td style="color:${x.diff>0?'#60a5fa':'#f87171'}">${x.diff>0?'+':''}${fmt(x.diff)}</td><td><span class="badge div">DIVERGENTE</span></td></tr>`).join(''):'<tr><td colspan="9" style="text-align:center;padding:30px">Nenhuma divergência encontrada.</td></tr>'}</tbody>
+      </table>
+    </div>
+    <div class="mfoot"><button type="button" class="btn" onclick="closeModal()">Fechar</button></div>`;
+  openModal();
 }
 
 function renderConc(){
