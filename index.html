@@ -190,7 +190,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.8.2';
+const CONTALOG_VERSION='1.8.3';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -363,6 +363,110 @@ function editarEndereco(i){if(usuarioAtual?.perfil!=='MASTER')return toast('Some
 function salvarEdicaoEndereco(i){if(usuarioAtual?.perfil!=='MASTER')return;const b=_getActiveBase('enderecos');if(b&&_baseEmUso('enderecos',b.id))return toast('Esta carga está vinculada a um inventário e não pode ser alterada.',false);let x=DB.enderecos[i],novo=document.getElementById('ee_ENDEREÇO').value.trim();if(!novo)return toast('ENDEREÇO obrigatório.',false);let dup=DB.enderecos.some((e,j)=>j!==i&&String(e['ENDEREÇO']).trim()===novo);if(dup)return toast('ENDEREÇO já cadastrado.',false);END_COLS.forEach(c=>x[c]=document.getElementById('ee_'+c).value);if(b)b.registros=_clone(DB.enderecos);save();closeModal();renderEnd();toast('Endereço atualizado')}
 function excluirEndereco(i){if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);const b=_getActiveBase('enderecos');if(b&&_baseEmUso('enderecos',b.id))return toast('Esta carga está vinculada a um inventário e não pode ser alterada.',false);let x=DB.enderecos[i];if(!x)return;if(DB.estoque.some(e=>String(e.ENDERECO).trim()===String(x['ENDEREÇO']).trim()))return toast('Endereço possui estoque vinculado.',false);if(!confirm('Excluir este endereço?'))return;DB.enderecos.splice(i,1);if(b)b.registros=_clone(DB.enderecos);save();renderEnd();toast('Endereço excluído')}
 function renderEnd(){_renderBaseSelector('enderecos');let e=DB.enderecos,uso=new Set(DB.estoque.map(x=>x.ENDERECO));document.getElementById('endKpis').innerHTML='<div class="kpi"><div class="v">'+e.length+'</div><div class="l">Endereços</div></div><div class="kpi"><div class="v">'+uso.size+'</div><div class="l">Com estoque</div></div><div class="kpi"><div class="v">'+Math.max(0,e.length-uso.size)+'</div><div class="l">Livres</div></div>';document.getElementById('endBody').innerHTML=e.length?e.map((x,i)=>'<tr>'+END_COLS.map(c=>'<td>'+esc(x[c]||'—')+'</td>').join('')+'<td><span class="badge '+(uso.has(x['ENDEREÇO'])?'and':'ok')+'">'+(uso.has(x['ENDEREÇO'])?'OCUPADO':'LIVRE')+'</span></td><td><div class="actions-cell">'+(usuarioAtual?.perfil==='MASTER'?'<button class="btn btn-b" onclick="editarEndereco('+i+')">Editar</button><button class="btn btn-r" onclick="excluirEndereco('+i+')">Excluir</button>':'—')+'</div></td></tr>').join(''):'<tr><td colspan="8" style="text-align:center;padding:30px">Nenhum endereço carregado.</td></tr>'}
+
+
+// ════════════════════════════════════════════════════════
+// CONFIGURAÇÕES GERAIS · FILIAIS / OPERAÇÕES
+// ════════════════════════════════════════════════════════
+function _opcoesConfig(){
+  return (DB.clientesOperacoes||[]).filter(x=>x && x.ativo!==false);
+}
+function _configById(id){
+  return (DB.clientesOperacoes||[]).find(x=>String(x.id)===String(id))||null;
+}
+function _configLabel(x){
+  if(!x)return '—';
+  const nome=String(x.nome||'').trim();
+  const filial=String(x.filial||'').trim();
+  const cidade=String(x.cidade||'').trim();
+  return [nome,filial,cidade].filter(Boolean).join(' · ');
+}
+function _formatCNPJ(v){
+  const d=String(v||'').replace(/\D/g,'').slice(0,14);
+  if(d.length!==14)return d;
+  return d.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,'$1.$2.$3/$4-$5');
+}
+function _configTemVinculos(id){
+  const basesE=(DB.basesEstoque||[]).some(b=>String(b.configOperacaoId||'')===String(id));
+  const basesEnd=(DB.basesEnderecos||[]).some(b=>String(b.configOperacaoId||'')===String(id));
+  const invs=(DB.inventarios||[]).some(i=>String(i.configOperacaoId||'')===String(id));
+  return basesE||basesEnd||invs;
+}
+function abrirCadastroOperacao(idEdit){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const x=idEdit?_configById(idEdit):null;
+  document.getElementById('modalBody').innerHTML=`
+    <div class="mt">${x?'Editar':'Nova'} <em style="color:var(--orange)">Filial / Operação</em></div>
+    <div class="ms">Cadastre a identificação que será obrigatória nas cargas de estoque, estruturas, inventários e conciliações.</div>
+    <div class="grid">
+      <div class="fg"><label>NOME / OPERAÇÃO (CLIENTE) *</label><input id="cfgNome" value="${esc(x?.nome||'')}" placeholder="Ex.: Ubyfol"></div>
+      <div class="fg"><label>FILIAL *</label><input id="cfgFilial" value="${esc(x?.filial||'')}" placeholder="Ex.: Balsas-MA"></div>
+      <div class="fg"><label>CNPJ *</label><input id="cfgCnpj" inputmode="numeric" maxlength="18" value="${esc(x?.cnpj||'')}" placeholder="00.000.000/0000-00" oninput="this.value=_formatCNPJ(this.value)"></div>
+      <div class="fg"><label>CIDADE *</label><input id="cfgCidade" value="${esc(x?.cidade||'')}" placeholder="Ex.: Balsas"></div>
+    </div>
+    <div class="info" style="margin-top:12px">A <b>FILIAL / OPERAÇÃO</b> cadastrada será usada como vínculo da carga. O ContaLog não deverá misturar estruturas ou estoques de operações diferentes.</div>
+    <div class="mfoot">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-p" onclick="salvarCadastroOperacao('${esc(idEdit||'')}')">${x?'Salvar Alterações':'Cadastrar Filial / Operação'}</button>
+    </div>`;
+  openModal();
+  setTimeout(()=>document.getElementById('cfgNome')?.focus(),50);
+}
+function salvarCadastroOperacao(idEdit){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const nome=(document.getElementById('cfgNome')?.value||'').trim();
+  const filial=(document.getElementById('cfgFilial')?.value||'').trim();
+  const cnpj=_formatCNPJ(document.getElementById('cfgCnpj')?.value||'');
+  const cidade=(document.getElementById('cfgCidade')?.value||'').trim();
+  if(!nome||!filial||!cnpj||!cidade)return toast('Preencha Nome/Operação, Filial, CNPJ e Cidade.',false);
+  if(cnpj.replace(/\D/g,'').length!==14)return toast('CNPJ inválido. Informe os 14 dígitos.',false);
+  const lista=DB.clientesOperacoes||(DB.clientesOperacoes=[]);
+  const duplicada=lista.find(x=>String(x.id)!==String(idEdit||'')&&String(x.nome||'').trim().toUpperCase()===nome.toUpperCase()&&String(x.filial||'').trim().toUpperCase()===filial.toUpperCase());
+  if(duplicada)return toast('Esta filial/operação já está cadastrada.',false);
+  if(idEdit){
+    const x=_configById(idEdit);if(!x)return toast('Cadastro não encontrado.',false);
+    Object.assign(x,{nome,filial,cnpj,cidade,ativo:x.ativo!==false,atualizadoEm:now(),atualizadoPor:usuarioAtual?.nome||''});
+    toast('Filial/operação atualizada.');
+  }else{
+    lista.push({id:id('CFG'),nome,filial,cnpj,cidade,ativo:true,criadoEm:now(),criadoPor:usuarioAtual?.nome||''});
+    toast('Filial/operação cadastrada com sucesso.');
+  }
+  save();closeModal();renderConfiguracoes();
+}
+function alterarStatusOperacao(id){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const x=_configById(id);if(!x)return;
+  const novo=x.ativo===false;
+  x.ativo=novo;x.atualizadoEm=now();x.atualizadoPor=usuarioAtual?.nome||'';
+  save();renderConfiguracoes();toast(novo?'Filial/operação ativada.':'Filial/operação desativada.');
+}
+function excluirCadastroOperacao(id){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const x=_configById(id);if(!x)return;
+  if(_configTemVinculos(id))return toast('Esta filial/operação já possui cargas ou inventários vinculados. Desative o cadastro em vez de excluir.',false);
+  if(!confirm('Excluir a filial/operação "'+_configLabel(x)+'"?'))return;
+  DB.clientesOperacoes=DB.clientesOperacoes.filter(y=>String(y.id)!==String(id));
+  save();renderConfiguracoes();toast('Filial/operação excluída.');
+}
+function renderConfiguracoes(){
+  const body=document.getElementById('configOperacoesBody');if(!body)return;
+  if(usuarioAtual?.perfil!=='MASTER'){
+    body.innerHTML='<tr><td colspan="6" style="text-align:center;padding:30px">Acesso restrito ao MASTER.</td></tr>';return;
+  }
+  const lista=(DB.clientesOperacoes||[]).slice().sort((a,b)=>String(a.nome||'').localeCompare(String(b.nome||''),'pt-BR'));
+  body.innerHTML=lista.length?lista.map(x=>`<tr>
+    <td><b style="color:var(--w)">${esc(x.nome||'—')}</b></td>
+    <td>${esc(x.filial||'—')}</td>
+    <td class="mn">${esc(x.cnpj||'—')}</td>
+    <td>${esc(x.cidade||'—')}</td>
+    <td><span class="badge ${x.ativo===false?'div':'ok'}">${x.ativo===false?'INATIVA':'ATIVA'}</span></td>
+    <td><div class="actions-cell">
+      <button class="btn btn-b" onclick="abrirCadastroOperacao('${esc(x.id)}')">Editar</button>
+      <button class="btn ${x.ativo===false?'btn-g':'btn-a'}" onclick="alterarStatusOperacao('${esc(x.id)}')">${x.ativo===false?'Ativar':'Desativar'}</button>
+      <button class="btn btn-r" onclick="excluirCadastroOperacao('${esc(x.id)}')">Excluir</button>
+    </div></td>
+  </tr>`).join(''):'<tr><td colspan="6" style="text-align:center;padding:38px;color:var(--w40)">Nenhuma filial/operação cadastrada. Clique em <b>＋ Nova Filial / Operação</b> para iniciar.</td></tr>';
+}
 
 function abrirNovoInv(tipo){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
