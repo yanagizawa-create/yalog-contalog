@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.8.0 · Conciliação e Contagem</title>
+<title>ContaLog · v1.8.9 · Conciliação e Contagem</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.8.7<br>YALOG-CONTA-001 • v1.8.7 Build 044 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.8.9<br>YALOG-CONTA-001 • v1.8.9 Build 046 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -737,11 +737,64 @@ function verTarefas(invId){go('tarefas');setTimeout(()=>{document.getElementById
 function _invDivEnderecos(invId){
   const inv=DB.inventarios.find(x=>x.id===invId); if(!inv)return new Set();
   const set=new Set();
+  // Fonte primária: divergências já apuradas na conciliação.
+  (inv.divergencias||[]).forEach(d=>{
+    (Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).forEach(e=>{
+      const end=typeof e==='string'?e:e?.endereco;
+      if(String(end||'').trim()) set.add(String(end).trim());
+    });
+    if(String(d.endereco||'').trim()) set.add(String(d.endereco).trim());
+  });
+  // Compatibilidade: conciliações anteriores podem não ter persistido enderecosRoteados,
+  // mas suas tarefas já foram criadas a partir das divergências. Nesse caso, as tarefas
+  // da própria conciliação são a referência dos endereços divergentes.
+  if(!set.size && (inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO')){
+    (inv.tarefas||[]).forEach(t=>{
+      if(String(t.status||'')==='CANCELADO')return;
+      const end=String(t.endereco||'').trim();
+      if(end)set.add(end);
+    });
+  }
+  // Compatibilidade com inventários antigos que só possuem as contagens.
   (inv.tarefas||[]).forEach(t=>(t.itens||[]).forEach(it=>{
     const q=it.qtd3??it.qtd2??it.qtd1;
-    if(q!==null&&q!==undefined&&q!==it.qtdSistema) set.add(String(t.endereco||it.endereco||'').trim());
+    if(q!==null&&q!==undefined&&q!==it.qtdSistema){const end=String(t.endereco||it.endereco||'').trim();if(end)set.add(end);}
   }));
   return set;
+}
+function _liberacaoCandidatos(inv,modo,fonteId){
+  const tarefas=(inv?.tarefas||[]).filter(t=>t.status==='AGUARDANDO');
+  if(modo!=='CICLICO')return tarefas;
+  const divEnd=_invDivEnderecos(fonteId);
+  return tarefas.filter(t=>divEnd.has(String(t.endereco||'').trim()));
+}
+function _renderLiberacaoFiltros(invId){
+  const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
+  const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';
+  const fonteId=document.getElementById('libFonteInv')?.value||invId;
+  const candidatos=_liberacaoCandidatos(inv,modo,fonteId);
+  const uni=(fn)=>[...new Set(candidatos.map(fn).map(v=>String(v??'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}));
+  const ruas=uni(t=>t.rua),lados=uni(t=>t.lado),niveis=uni(t=>t.nivel);
+  const boxes=[['libRuaBox','libRua','Ruas',ruas],['libLadoBox','libLado','Lado',lados],['libNivelBox','libNivel','Níveis',niveis]];
+  boxes.forEach(([id,cls,label,vals])=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML='<div class="sec-t">'+label+'</div><label style="display:block;margin-bottom:8px"><input type="checkbox" data-lib-all="'+cls+'" onchange="toggleChecks(\''+cls+'\',this.checked)"> Todos</label>'+vals.map(v=>'<label style="display:block;margin:7px 0;font-size:11px"><input class="'+cls+'" type="checkbox" value="'+esc(v)+'" onchange="atualizarPreviewLiberacao()"> '+esc(v)+'</label>').join('') || '<div class="mini">Nenhum item disponível.</div>';
+  });
+  atualizarPreviewLiberacao();
+}
+function atualizarPreviewLiberacao(){
+  const pv=document.getElementById('libPreview');if(!pv)return;
+  const invId=document.getElementById('modalBody')?.dataset?.invId,inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
+  const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL',fonteId=document.getElementById('libFonteInv')?.value||invId;
+  const r=[...document.querySelectorAll('.libRua:checked')].map(x=>x.value),l=[...document.querySelectorAll('.libLado:checked')].map(x=>x.value),n=[...document.querySelectorAll('.libNivel:checked')].map(x=>x.value);
+  const candidatos=_liberacaoCandidatos(inv,modo,fonteId).filter(t=>(!r.length||r.includes(String(t.rua)))&&(!l.length||l.includes(String(t.lado)))&&(!n.length||n.includes(String(t.nivel))));
+  pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' tarefa(s) disponíveis com os filtros atuais · <b>recomendadas agora:</b> '+(_releaseStats(inv)?.liberar||0);
+}
+
+function toggleChecks(cls,checked){
+  document.querySelectorAll('.'+cls).forEach(x=>{x.checked=!!checked;});
+  const master=document.querySelector('[data-lib-all="'+cls+'"]');if(master)master.checked=!!checked;
+  atualizarPreviewLiberacao();
 }
 function _releaseStats(inv){
   const ts=inv?.tarefas||[];
@@ -784,16 +837,14 @@ function _renderReleaseMonitor(inv){
 function abrirLiberacaoTarefas(invId){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
-  const tarefas=inv.tarefas||[],endMap=new Map(DB.enderecos.map(x=>[String(x['ENDEREÇO']||'').trim(),x]));
+  const tarefas=inv.tarefas||[];
   const estrutura=DB.enderecos.filter(x=>x&&String(x['ENDEREÇO']||'').trim());
-  const ruas=[...new Set(estrutura.map(x=>String(x.RUA||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}));
-  const lados=[...new Set(estrutura.map(x=>String(x.LADO||x['ÍMPAR/PAR']||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}));
-  const niveis=[...new Set(estrutura.map(x=>String(x['NÍVEL']||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}));
   const enderecosEstrutura=new Set(estrutura.map(x=>String(x['ENDEREÇO']).trim()));
   const tarefasEstrutura=tarefas.filter(t=>enderecosEstrutura.has(String(t.endereco||'').trim()));
   const enderecosSemProduto=tarefasEstrutura.filter(t=>!(t.itens||[]).length).length;
-  const fontes=DB.inventarios.filter(x=>x.id!==invId&&_invDivEnderecos(x).size);
+  const fontesRaw=DB.inventarios.filter(x=>_invDivEnderecos(x.id).size && (x.id===invId || x.tipo==='CONCILIACAO_EXCEL' || x.modoContagem==='CONCILIACAO'));const fontes=fontesRaw.some(x=>x.id===invId)?fontesRaw:(_invDivEnderecos(invId).size?[inv,...fontesRaw]:fontesRaw);
   const st=_releaseStats(inv);
+  document.getElementById('modalBody').dataset.invId=invId;
   document.getElementById('modalBody').innerHTML=`
   <div class="mt">Liberar Inventário · ${esc(inv.id)}</div>
   <div class="ms">Libere em ondas controladas por <b>RUA, LADO e NÍVEL</b>. Os filtros vêm diretamente da <b>Carga de Endereços</b> e mostram toda a capacidade cadastrada, inclusive níveis/endereços sem produto na Carga Estoque.</div>
@@ -801,22 +852,31 @@ function abrirLiberacaoTarefas(invId){
     <label class="card" style="cursor:pointer;border:1px solid var(--orange);"><input type="radio" name="libModo" value="GERAL" checked onchange="atualizarModoLiberacao()"><strong style="color:var(--orange2)"> INVENTÁRIO GERAL</strong><div class="mini" style="margin-top:8px">Contagem cega. A 1ª contagem é obrigatória para 100% dos endereços da base.</div></label>
     <label class="card" style="cursor:pointer;"><input type="radio" name="libModo" value="CICLICO" onchange="atualizarModoLiberacao()"><strong style="color:#60a5fa"> INVENTÁRIO CÍCLICO / CONCILIAÇÃO</strong><div class="mini" style="margin-top:8px">Somente endereços divergentes da referência selecionada.</div></label>
   </div>
-  <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}">${esc(x.id)} · ${esc(x.tipo||'BASE')} · ${_invDivEnderecos(x.id).size} endereço(s) divergente(s)</option>`).join('')}</select></div></div>
-  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços da estrutura</div></div><div><div class="dash-highlight" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" style="font-size:20px">${tarefas.filter(t=>t.status==='AGUARDANDO').length}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Regra:</b> referência de 1 tarefa aguardando por contador ativo. Conforme uma tarefa for concluída e a fila cair, o sistema recalcula automaticamente quantas tarefas devem ser liberadas.</div></div>
+  <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv" onchange="atualizarModoLiberacao()"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}" ${x.id===invId?'selected':''}>${esc(x.id)}${x.id===invId?' · ESTA CONCILIAÇÃO':' · '+esc(x.tipo||'BASE')} · ${_invDivEnderecos(x.id).size} endereço(s) divergente(s)</option>`).join('')}</select></div><div class="mini" style="margin-top:8px">Em <b>Cíclico / Conciliação</b>, somente os endereços da referência divergente podem ser liberados.</div></div>
+  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${tarefas.filter(t=>t.status==='AGUARDANDO').length}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Regra:</b> referência de 1 tarefa aguardando por contador ativo. Conforme uma tarefa for concluída e a fila cair, o sistema recalcula automaticamente quantas tarefas devem ser liberadas.</div></div>
   <div class="g3" style="margin-top:14px">
-    <div class="card"><div class="sec-t">Ruas</div><label style="display:block;margin-bottom:8px"><input type="checkbox" onchange="toggleChecks('libRua',this.checked)"> Todas</label>${ruas.map(r=>`<label style="display:block;margin:7px 0;font-size:11px"><input class="libRua" type="checkbox" value="${esc(r)}"> ${esc(r)}</label>`).join('')}</div>
-    <div class="card"><div class="sec-t">Lado</div><label style="display:block;margin-bottom:8px"><input type="checkbox" onchange="toggleChecks('libLado',this.checked)"> Todos</label>${lados.map(l=>`<label style="display:block;margin:7px 0;font-size:11px"><input class="libLado" type="checkbox" value="${esc(l)}"> ${esc(l)}</label>`).join('')}</div>
-    <div class="card"><div class="sec-t">Níveis</div><label style="display:block;margin-bottom:8px"><input type="checkbox" onchange="toggleChecks('libNivel',this.checked)"> Todos</label>${niveis.map(n=>`<label style="display:block;margin:7px 0;font-size:11px"><input class="libNivel" type="checkbox" value="${esc(n)}"> ${esc(n)}</label>`).join('')}</div>
+    <div class="card" id="libRuaBox"></div>
+    <div class="card" id="libLadoBox"></div>
+    <div class="card" id="libNivelBox"></div>
   </div>
   <div id="libPreview" class="info" style="margin-top:14px"><b>Seleção:</b> marque Rua, Lado e/ou Nível. Se marcar mais de um critério, eles serão combinados por <b>AND</b>.</div>
   <div class="info"><b>Operação:</b> depois de liberadas, as tarefas aparecem imediatamente em <b>Tarefas de Contagem</b>. Endereços sem produto também são tarefas válidas: o contador deverá confirmar o endereço como <b>VAZIO / 0</b>. O MASTER deve abastecer a fila de forma cadenciada.</div>
   <div class="mfoot"><button class="btn" onclick="closeModal();clearReleaseTimer()">Cancelar</button><button class="btn btn-p" onclick="executarLiberacao('${esc(invId)}')">Liberar Tarefas Selecionadas</button></div>`;
-  openModal();startReleaseTimer(invId);
+  openModal();atualizarModoLiberacao();_renderLiberacaoFiltros(invId);startReleaseTimer(invId);
 }
 let releaseTimer=null;
 function clearReleaseTimer(){if(releaseTimer){clearInterval(releaseTimer);releaseTimer=null}}
-function startReleaseTimer(invId){clearReleaseTimer();releaseTimer=setInterval(()=>{const inv=DB.inventarios.find(x=>x.id===invId);if(!inv||!document.getElementById('modal')?.classList.contains('open'))return;const st=_releaseStats(inv);const k=document.querySelector('#modalBody .card[style*="rgba(251,146,60"]');if(k){const vals=k.querySelectorAll('.dash-highlight');if(vals[0])vals[0].textContent=st.ativos;if(vals[1])vals[1].textContent=st.fila.length;if(vals[2])vals[2].textContent=st.liberar}const pv=document.getElementById('libPreview');if(pv){const r=[...document.querySelectorAll('.libRua:checked')].map(x=>x.value),l=[...document.querySelectorAll('.libLado:checked')].map(x=>x.value),n=[...document.querySelectorAll('.libNivel:checked')].map(x=>x.value);const count=inv.tarefas.filter(t=>t.status==='AGUARDANDO'&&(!r.length||r.includes(t.rua))&&(!l.length||l.includes(t.lado))&&(!n.length||n.includes(t.nivel))).length;pv.innerHTML='<b>Seleção:</b> '+count+' tarefa(s) disponíveis com os filtros atuais · <b>recomendadas agora:</b> '+st.liberar;}} ,3000)}
-function atualizarModoLiberacao(){const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';const box=document.getElementById('libFonteBox');if(box)box.style.display=modo==='CICLICO'?'block':'none'}
+function startReleaseTimer(invId){
+  clearReleaseTimer();
+  releaseTimer=setInterval(()=>{
+    const inv=DB.inventarios.find(x=>x.id===invId);if(!inv||!document.getElementById('modal')?.classList.contains('open'))return;
+    const st=_releaseStats(inv);
+    const k=document.querySelector('#modalBody .card[style*="rgba(251,146,60"]');
+    if(k){const vals=k.querySelectorAll('.dash-highlight');if(vals[0])vals[0].textContent=st.ativos;if(vals[1])vals[1].textContent=st.fila.length;if(vals[2])vals[2].textContent=st.liberar;}
+    atualizarPreviewLiberacao();
+  },3000);
+}
+function atualizarModoLiberacao(){const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';const box=document.getElementById('libFonteBox');if(box)box.style.display=modo==='CICLICO'?'block':'none';const invId=document.getElementById('modalBody')?.dataset?.invId;if(invId){const sel=document.getElementById('libFonteInv');if(modo==='CICLICO'&&sel&&!sel.value&&[...sel.options].some(o=>o.value===invId))sel.value=invId;_renderLiberacaoFiltros(invId);const inv=DB.inventarios.find(x=>x.id===invId),fonteId=sel?.value||invId,cand=_liberacaoCandidatos(inv,modo,fonteId),ec=document.getElementById('libEstruturaCount'),sc=document.getElementById('libSemProdutoCount'),ac=document.getElementById('libAguardandoCount');if(ec)ec.textContent=cand.length;if(sc)sc.textContent=cand.filter(t=>!(t.itens||[]).length).length;if(ac)ac.textContent=cand.length}}
 function executarLiberacao(invId){
   if(usuarioAtual?.perfil!=='MASTER')return;
   const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL',fonteId=document.getElementById('libFonteInv')?.value||'';
@@ -824,14 +884,18 @@ function executarLiberacao(invId){
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
   if(modo==='CICLICO'&&!fonteId)return toast('Selecione a carga/inventário de conciliação.',false);
   if(!ruas.length&&!lados.length&&!niveis.length)return toast('Selecione ao menos uma RUA, LADO ou NÍVEL.',false);
-  const divEnd=modo==='CICLICO'?_invDivEnderecos(fonteId):new Set();let st=_releaseStats(inv);let limite=st.liberar||1;let candidatos=inv.tarefas.filter(t=>t.status==='AGUARDANDO');
-  if(modo==='CICLICO')inv.tarefas.forEach(t=>{if(!divEnd.has(String(t.endereco||'').trim()))t.status='FORA_CICLO'});
-  candidatos=candidatos.filter(t=>(!ruas.length||ruas.includes(String(t.rua)))&&(!lados.length||lados.includes(String(t.lado)))&&(!niveis.length||niveis.includes(String(t.nivel)))&&(modo==='GERAL'||divEnd.has(String(t.endereco||'').trim())));
+  const divEnd=modo==='CICLICO'?_invDivEnderecos(fonteId):new Set();const st=_releaseStats(inv);let candidatos=_liberacaoCandidatos(inv,modo,fonteId);
+  if(modo==='CICLICO'&&!divEnd.size)return toast('A conciliação selecionada não possui endereços divergentes roteados para contagem.',false);
+  candidatos=candidatos.filter(t=>(!ruas.length||ruas.includes(String(t.rua)))&&(!lados.length||lados.includes(String(t.lado)))&&(!niveis.length||niveis.includes(String(t.nivel))));
+  if(modo==='CICLICO'){
+    inv.tarefas.forEach(t=>{if(divEnd.has(String(t.endereco||'').trim())){if(t.status==='FORA_CICLO')t.status='AGUARDANDO';}else if(t.status==='AGUARDANDO'){t.status='FORA_CICLO';}});
+    candidatos=inv.tarefas.filter(t=>t.status==='AGUARDANDO'&&divEnd.has(String(t.endereco||'').trim())&&(!ruas.length||ruas.includes(String(t.rua)))&&(!lados.length||lados.includes(String(t.lado)))&&(!niveis.length||niveis.includes(String(t.nivel))));
+  }
   candidatos.sort((a,b)=>String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.endereco).localeCompare(String(b.endereco),'pt-BR',{numeric:true}));
-  const excedente=Math.max(0,candidatos.length-limite);if(excedente>0)candidatos=candidatos.slice(0,limite);
+  const excedente=0;
   inv.tipo=modo;inv.modoContagem=modo==='GERAL'?'CEGA_100':'CONCILIACAO';inv.cargaConciliacaoId=modo==='CICLICO'?fonteId:null;
   candidatos.forEach(t=>{t.status='LIBERADA';t.rodada=1;t.contador=null;t.liberadoEm=now();t.liberadoPor=usuarioAtual.nome;t.modeloContagem=modo==='GERAL'?'CEGA':'CONCILIACAO'});
-  if(modo==='GERAL'){inv.totalEnderecosObrigatorios=inv.tarefas.length;inv.enderecosLiberados=(inv.tarefas||[]).filter(t=>['LIBERADA','ANDAMENTO','CONCLUIDO'].includes(t.status)).length}
+  if(modo==='GERAL'){inv.totalEnderecosObrigatorios=inv.tarefas.length;inv.enderecosLiberados=(inv.tarefas||[]).filter(t=>['LIBERADA','ANDAMENTO','CONCLUIDO'].includes(t.status)).length}else{inv.totalEnderecosObrigatorios=inv.tarefas.filter(t=>t.status!=='FORA_CICLO').length;inv.enderecosLiberados=(inv.tarefas||[]).filter(t=>['LIBERADA','ANDAMENTO','CONCLUIDO','CONGELADA'].includes(t.status)).length}
   save();clearReleaseTimer();closeModal();renderInv();renderTarefas();renderDash();toast(candidatos.length+' tarefa(s) liberada(s) · fila alvo: '+st.alvoFila+(excedente?' · liberação limitada pela cadência':'')+'');
 }
 function _statusCounts(ts){return{total:ts.length,aguardar:ts.filter(t=>t.status==='AGUARDANDO').length,liberadas:ts.filter(t=>t.status==='LIBERADA').length,andamento:ts.filter(t=>t.status==='ANDAMENTO').length,congeladas:ts.filter(t=>t.status==='CONGELADA').length,concluidas:ts.filter(t=>t.status==='CONCLUIDO').length,canceladas:ts.filter(t=>t.status==='CANCELADO').length};}
