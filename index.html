@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.9.5 · Conciliação e Contagem</title>
+<title>ContaLog · v1.9.6 · Planejamento de Ondas</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,11 +124,11 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.9.5<br>YALOG-CONTA-001 • v1.9.5 Build 052 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.6<br>YALOG-CONTA-001 • v1.9.6 Build 055 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
-<section class="screen" id="s-configuracoes"><div class="ph"><div><div class="ph-eye">ContaLog · Administração</div><div class="ph-title">Configurações <em>Gerais</em></div><div class="ph-sub">Cadastre as filiais/operações que serão utilizadas nas cargas, inventários e conciliações.</div></div><div class="acts"><button class="btn btn-p" onclick="abrirCadastroOperacao()">＋ Nova Filial / Operação</button></div></div><div class="info"><b>Regra:</b> cada carga e cada inventário deve estar vinculado a uma filial/operação cadastrada aqui. Isso mantém estruturas, estoques, conciliações e indicadores organizados sem misturar operações.</div><div class="tw"><table class="dt"><thead><tr><th>OPERAÇÃO / CLIENTE</th><th>FILIAL</th><th>CNPJ</th><th>CIDADE</th><th>STATUS</th><th>AÇÕES</th></tr></thead><tbody id="configOperacoesBody"></tbody></table></div></section><section class="screen" id="s-inventario"><div class="ph"><div><div class="ph-eye">ContaLog · Inventário</div><div class="ph-title">Gestão de <em>Inventários</em></div><div class="ph-sub">Gere a base de inventário e, quando necessário, concilie diretamente a carga de estoque por Excel.</div></div><div class="acts"><button class="btn btn-b" onclick="abrirConcilExcel()">⚖ Importar Conciliação</button><button class="btn btn-a" onclick="abrirVisualizacaoDivergencias('')">⌕ Visualizar Divergências</button><button class="btn btn-p" onclick="abrirNovoInv('BASE')">＋ Novo Inventário</button><button class="btn btn-r" onclick="limparInventarios()" data-master-action>🗑 Limpar</button></div></div><div class="info"><b>Conciliação por Excel:</b> importe a posição física para comparar automaticamente com a carga de estoque. O ContaLog criará somente as tarefas dos <b>SKUs + LOTE + ENDEREÇO divergentes</b>, já prontas para contagem/conciliação.</div><div class="kpis" id="invKpis"></div><div id="releaseMonitor" style="margin-bottom:16px"></div><div class="tw"><table class="dt"><thead><tr><th>INVENTÁRIO</th><th>TIPO</th><th>OPERAÇÃO</th><th>CLIENTE</th><th>SITE</th><th>CRIADO</th><th>TAREFAS</th><th>PROGRESSO</th><th>STATUS</th><th>AÇÕES</th></tr></thead><tbody id="invBody"></tbody></table></div></section>
+<section class="screen" id="s-configuracoes"><div class="ph"><div><div class="ph-eye">ContaLog · Administração</div><div class="ph-title">Configurações <em>Gerais</em></div><div class="ph-sub">Cadastre as filiais/operações que serão utilizadas nas cargas, inventários e conciliações.</div></div><div class="acts"><button class="btn btn-p" onclick="abrirCadastroOperacao()">＋ Nova Filial / Operação</button></div></div><div class="info"><b>Regra:</b> cada carga e cada inventário deve estar vinculado a uma filial/operação cadastrada aqui. Isso mantém estruturas, estoques, conciliações e indicadores organizados sem misturar operações.</div><div class="tw"><table class="dt"><thead><tr><th>OPERAÇÃO / CLIENTE</th><th>FILIAL</th><th>CNPJ</th><th>CIDADE</th><th>STATUS</th><th>AÇÕES</th></tr></thead><tbody id="configOperacoesBody"></tbody></table></div></section><section class="screen" id="s-inventario"><div class="ph"><div><div class="ph-eye">ContaLog · Inventário</div><div class="ph-title">Gestão de <em>Inventários</em></div><div class="ph-sub">Gere a base de inventário e, quando necessário, concilie diretamente a carga de estoque por Excel.</div></div><div class="acts"><button class="btn btn-b" onclick="abrirConcilExcel()">⇄ Importar Estoque Contábil Cliente</button><button class="btn btn-a" onclick="abrirVisualizacaoDivergencias('')">⌕ Visualizar Divergências</button><button class="btn btn-p" onclick="abrirNovoInv('BASE')">＋ Novo Inventário</button><button class="btn btn-r" onclick="limparInventarios()" data-master-action>🗑 Limpar</button></div></div><div class="info"><b>Estoque Contábil do Cliente:</b> importe o mapa de estoque contábil do cliente. Depois de carregar o arquivo, o MASTER executa a <b>CONCILIAÇÃO</b> contra o estoque físico e o mapa de endereços da filial.</div><div class="kpis" id="invKpis"></div><div id="releaseMonitor" style="margin-bottom:16px"></div><div class="tw"><table class="dt"><thead><tr><th>INVENTÁRIO</th><th>TIPO</th><th>OPERAÇÃO</th><th>CLIENTE</th><th>SITE</th><th>CRIADO</th><th>TAREFAS</th><th>PROGRESSO</th><th>STATUS</th><th>AÇÕES</th></tr></thead><tbody id="invBody"></tbody></table></div></section>
 <section class="screen" id="s-tarefas"><div class="ph"><div><div class="ph-eye">ContaLog · Controle Operacional</div><div class="ph-title">Liberação de <em>Contagens</em></div><div class="ph-sub">Visão resumida da estrutura, do que já foi liberado e do que ainda precisa ser abastecido.</div></div><div class="acts"><button class="btn btn-b" onclick="renderTarefas()">↺ Atualizar</button><button class="btn btn-p" onclick="go('contagem')">📱 Abrir Contagem</button></div></div><div class="info"><b>Objetivo:</b> liberar o inventário em ondas cadenciadas por <b>RUA + LADO + NÍVEL</b>, acompanhando em tempo real <b>À LIBERAR → LIBERADAS → EM CONTAGEM → CONCLUÍDAS</b>. A Carga de Endereços é a referência de 100% da estrutura.</div><div class="kpis" id="taskControlKpis"></div><div id="taskReleaseCards"></div><details class="release-detail"><summary>Ver detalhamento das tarefas</summary><div class="tw"><table class="dt"><thead><tr><th>TAREFA</th><th>INV.</th><th>RUA</th><th>NÍVEL</th><th>ITENS</th><th>RODADA</th><th>MODELO</th><th>CONTADOR</th><th>STATUS</th><th>DATA</th><th>AÇÕES</th></tr></thead><tbody id="tarefasBody"></tbody></table></div></details></section>
 <section class="screen" id="s-contagem"><div class="ph contagem-head"><div><div class="ph-eye">ContaLog · Mobile</div><div class="ph-title">Contagem <em>por Onda</em></div><div class="ph-sub">O contador trabalha em uma única onda por vez, seguindo a sequência liberada.</div></div></div><div class="g2 contagem-layout"><div class="card contagem-desktop-panel"><div class="sec-t">Identificação da Onda</div><div class="grid"><div class="fg"><label>Nome do usuário</label><input id="contadorNome" placeholder="Digite seu nome"></div><div class="fg"><label>Onda disponível</label><select id="contOnda" onchange="mostrarOndaSelecionada()"></select></div></div><div id="ondaOrientacao" class="onda-orientacao" style="margin-top:14px"><div class="onda-label">ORIENTAÇÃO DE CONTAGEM</div><div class="onda-title">Selecione uma onda</div><div class="onda-meta">A onda define exatamente o setor físico que este contador poderá lançar.</div></div><div class="hint" style="margin-top:10px">Acesso do contador: usuário = nome cadastrado · senha = 123. Um contador pode assumir somente uma onda por vez.</div><button class="btn btn-p" style="margin-top:14px" onclick="assumirOnda()">ASSUMIR ONDA</button></div><div class="mobile-preview" id="mobileCounterPanel"><div class="contador-mobile-menu"><div class="contador-mobile-menu-head"><div><div style="font:800 10px var(--mono);letter-spacing:.12em;color:#475569">MENU OPERACIONAL</div></div><button type="button" class="contador-menu-btn" aria-label="Abrir menu do contador" onclick="toggleContadorMenu()">☰</button></div><div id="contadorMobileMenuPanel" class="contador-mobile-menu-panel"><button type="button" onclick="contadorMenuVoltarOndas()">← VOLTAR PARA ONDAS</button><button type="button" onclick="contadorMenuAtualizar()">↻ ATUALIZAR TAREFAS</button><button type="button" class="menu-sair" onclick="sairContaLog()">⎋ SAIR / LOGOFF</button></div></div><div id="mobileIdentificacao"><h3>ContaLog · Contagem</h3><div class="mobile-step-title">IDENTIFICAÇÃO DA CONTAGEM</div><label class="mobile-label">CONTADOR LOGADO</label><div id="mobileContadorNomeDisplay" class="mobile-big-input mobile-counter-name" style="display:flex;align-items:center;min-height:48px;box-sizing:border-box;cursor:default"></div><input id="mobileContadorNome" type="hidden"><label class="mobile-label">ONDA DISPONÍVEL · SELECIONE 1</label><div id="mobileOndaLista" class="mobile-onda-list"></div><select id="mobileContOnda" class="mobile-big-input" style="display:none" aria-hidden="true"></select><button class="mobile-primary" type="button" onclick="assumirOndaMobile()">✓ INICIAR CONTAGEM DA ONDA</button></div><div id="mobileFluxo" style="display:none"><div id="mobileOndaAtual" class="mobile-onda">NENHUMA ONDA ASSUMIDA</div><div id="enderecoAlvoMobile" class="onda-alvo-mobile"><span class="alvo-label">ENDEREÇO DA VEZ</span><strong>AGUARDANDO ONDA</strong></div><div id="mobileStepEndereco" class="mobile-step"><div class="mobile-field-title">1 · ENDEREÇO</div><input id="mobEndereco" class="scan-input mobile-big-input" placeholder="INFORME O ENDEREÇO" readonly oninput="validarEnderecoMobile()" onkeydown="if(event.key==='Enter')avancarEtapaMobile('endereco')"><div class="mobile-input-methods"><button type="button" class="mobile-method-btn" onclick="selecionarEntradaMobile('endereco','scan')">▣ BIPAR</button><button type="button" class="mobile-method-btn" onclick="selecionarEntradaMobile('endereco','manual')">⌨ DIGITAR</button></div><div id="endValid" class="mini"></div><button type="button" class="mobile-primary" onclick="avancarEtapaMobile('endereco')">CONTINUAR</button></div><div id="mobileStepSku" class="mobile-step" style="display:none"><div class="mobile-field-title">2 · SKU</div><input id="mobSku" class="scan-input mobile-big-input" placeholder="INFORME O SKU" readonly onkeydown="if(event.key==='Enter')avancarEtapaMobile('sku')"><div class="mobile-input-methods"><button type="button" class="mobile-method-btn" onclick="selecionarEntradaMobile('sku','scan')">▣ BIPAR</button><button type="button" class="mobile-method-btn" onclick="selecionarEntradaMobile('sku','manual')">⌨ DIGITAR</button></div><div class="mobile-nav-actions"><button type="button" class="mobile-secondary" onclick="voltarEtapaMobile('sku')">← ANTERIOR</button><button type="button" class="mobile-primary" onclick="avancarEtapaMobile('sku')">CONTINUAR</button></div></div><div id="mobileStepLote" class="mobile-step" style="display:none"><div class="mobile-field-title">3 · LOTE</div><input id="mobLote" class="scan-input mobile-big-input" placeholder="INFORME O LOTE" readonly onkeydown="if(event.key==='Enter')avancarEtapaMobile('lote')"><div class="mobile-input-methods"><button type="button" class="mobile-method-btn" onclick="selecionarEntradaMobile('lote','scan')">▣ BIPAR</button><button type="button" class="mobile-method-btn" onclick="selecionarEntradaMobile('lote','manual')">⌨ DIGITAR</button></div><div class="mobile-nav-actions"><button type="button" class="mobile-secondary" onclick="voltarEtapaMobile('lote')">← ANTERIOR</button><button type="button" class="mobile-primary" onclick="avancarEtapaMobile('lote')">CONTINUAR</button></div></div><div id="mobileStepDesc" class="mobile-step" style="display:none"><div class="mobile-field-title">4 · DESCRIÇÃO</div><select id="mobDesc" class="mobile-big-input"><option value="">SELECIONE A DESCRIÇÃO</option></select><input id="mobDescManual" class="mobile-big-input" placeholder="DIGITE A DESCRIÇÃO MANUALMENTE" style="display:none"><button type="button" class="mobile-link" onclick="alternarCampoManualMobile('desc')">✎ DIGITAR MANUALMENTE</button><div class="mobile-nav-actions"><button type="button" class="mobile-secondary" onclick="voltarEtapaMobile('desc')">← ANTERIOR</button><button type="button" class="mobile-primary" onclick="avancarEtapaMobile('desc')">CONTINUAR</button></div></div><div id="mobileStepUm" class="mobile-step" style="display:none"><div class="mobile-field-title">5 · UNIDADE DE MEDIDA / DERIVAÇÃO</div><select id="mobUm" class="mobile-big-input"><option value="">SELECIONE A UNIDADE</option></select><input id="mobUmManual" class="mobile-big-input" placeholder="DIGITE A UNIDADE MANUALMENTE" style="display:none"><button type="button" class="mobile-link" onclick="alternarCampoManualMobile('um')">✎ DIGITAR MANUALMENTE</button><div class="mobile-nav-actions"><button type="button" class="mobile-secondary" onclick="voltarEtapaMobile('um')">← ANTERIOR</button><button type="button" class="mobile-primary" onclick="avancarEtapaMobile('um')">CONTINUAR</button></div></div><div id="mobileStepQtd" class="mobile-step" style="display:none"><div class="mobile-field-title">6 · QUANTIDADE</div><input id="mobQtd" class="mobile-big-input" type="number" min="0" step="0.001" placeholder="INFORME A QUANTIDADE"><div class="mobile-nav-actions"><button type="button" class="mobile-secondary" onclick="voltarEtapaMobile('qtd')">← ANTERIOR</button><button type="button" class="mobile-primary" onclick="registrarContagemMobile()">REGISTRAR CONTAGEM</button></div></div><div id="contagemProgressoEndereco" class="count-progress" style="display:none"></div><div id="contagemProximoAcoes" class="next-address-actions" style="display:none"><button type="button" class="btn btn-g" onclick="continuarMesmoEndereco()">↻ CONTINUAR NESTE ENDEREÇO</button><button type="button" class="btn btn-b" onclick="proximoEndereco()">→ PRÓXIMO ENDEREÇO</button></div><button class="btn btn-b mobile-empty-btn" style="margin-top:8px;width:100%" onclick="registrarEnderecoVazio()">REGISTRAR ENDEREÇO VAZIO · 0</button><div id="masterTerceiraBox" class="master-third-box"><div class="third-note"><b>3ª CONTAGEM · MASTER</b><br>Compare com a 1ª e a 2ª contagem. Se coincidir com uma delas, a contagem pode ser encerrada. Se divergir das duas, registre a justificativa e a sugestão de ajuste.</div><label style="display:block;font:9px var(--mono);color:var(--w40);margin:6px 0">OBSERVAÇÃO / JUSTIFICATIVA</label><textarea id="masterObs" placeholder="Justifique a decisão ou a divergência..."></textarea><label style="display:block;font:9px var(--mono);color:var(--w40);margin:8px 0 6px">SUGESTÃO DE AJUSTE</label><textarea id="masterSugestao" placeholder="Sugestão de ajuste para compor o relatório final..."></textarea></div></div></div></div></section>
 
@@ -539,7 +539,8 @@ function limparInventarios(){
   save();clearReleaseTimer();renderInv();renderTarefas();renderDash();toast('Todos os inventários foram excluídos.');
 }
 
-function baixarTemplateConcilExcel(){template(['ENDERECO','SKU_CLIENTE','LOTE','QUANTIDADE','DESCRICAO','UNIDADE_MEDIDA'],'ContaLog_Template_Conciliação_Estoque')}
+function baixarTemplateConcilExcel(){template(['ENDERECO','SKU_CLIENTE','LOTE','QUANTIDADE','DESCRICAO','UNIDADE_MEDIDA'],'ContaLog_Template_Estoque_Contabil_Cliente')}
+function baixarTemplateEstoqueContabilCliente(){baixarTemplateConcilExcel()}
 function _normHead(v){return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim().replace(/[\s\-\/]+/g,'_')}
 function _num(v){if(typeof v==='number')return isFinite(v)?v:0;let z=String(v??'').trim().replace(/\./g,'').replace(',','.');let n=parseFloat(z);return isFinite(n)?n:0}
 function _keyConc(end,sku,lote){return String(end??'').trim()+'||'+String(sku??'').trim()+'||'+String(lote??'').trim()}
@@ -588,7 +589,7 @@ function atualizarBasesConcilPorConfig(){
 function abrirConcilExcel(){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
   if(!DB.basesEstoque.length)return toast('Importe pelo menos uma Carga de Estoque antes da conciliação.',false);
-  document.getElementById('modalBody').innerHTML=`<div class="mt">Nova <em style="color:var(--orange)">Conciliação</em></div><div class="ms">A conciliação usa cargas selecionadas e cria uma operação independente. O resultado fica vinculado ao inventário criado.</div><div class="grid"><div class="fg"><label>FILIAL / OPERAÇÃO *</label><select id="concConfigOperacao" onchange="atualizarBasesConcilPorConfig()"><option value="">Selecione</option>${_opcoesConfig().map(x=>`<option value="${esc(x.id)}">${esc(_configLabel(x))}</option>`).join('')}</select></div><div class="fg"><label>Carga de Estoque *</label><select id="concEstBase">${DB.basesEstoque.map(b=>`<option value="${esc(b.id)}" ${b.id===DB.activeEstoqueBaseId?'selected':''}>${esc(_baseLabel(b))}</option>`).join('')}</select></div><div class="fg"><label>Carga de Endereços Operacional <span id="concEndReq" class="mini">(sempre utilizada para direcionar a contagem)</span></label><select id="concEndBase">${DB.basesEnderecos.map(b=>`<option value="${esc(b.id)}" ${b.id===DB.activeEnderecosBaseId?'selected':''}>${esc(_baseLabel(b))}</option>`).join('')}</select></div><div class="fg"><label>Cliente / Conta</label><select id="concCliente"><option value="">Todos</option></select></div><div class="fg"><label>Site</label><select id="concSite"><option value="">Todos</option></select></div></div><div id="concSourcePreview" class="info" style="margin-top:12px"></div><div class="fsec" style="margin-top:12px"><div class="sec-t">TIPO DE CRUZAMENTO</div><div class="mini" style="margin-bottom:10px">Marque somente os campos que devem participar da conciliação. Não há filtro por valor: aqui você define <b>como o Sistema deve cruzar os registros</b>.</div><div class="g3" style="gap:10px"><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaEndereco" checked> <b>ENDEREÇO</b><div class="mini">Cruzar pela posição física</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaSku" checked> <b>SKU</b><div class="mini">Cruzar pelo produto</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaLote" checked> <b>LOTE</b><div class="mini">Cruzar pelo lote</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaQtd" checked> <b>QUANTIDADE</b><div class="mini">Comparar saldo Sistema × Físico</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaUm" checked> <b>UNIDADE DE MEDIDA</b><div class="mini">Cruzar pela unidade</div></label></div><div class="mini" style="margin-top:10px">Exemplo: <b>ENDEREÇO + SKU + LOTE + QUANTIDADE</b> compara a posição, produto, lote e saldo. Se desmarcar <b>QUANTIDADE</b>, o saldo não será considerado como critério de divergência.</div></div><div id="concExpectedInfo" class="info"><b>Arquivo esperado:</b> definido pelos tipos de cruzamento selecionados. Quando ENDEREÇO estiver desmarcado, a coluna ENDERECO não é exigida nem considerada.</div><div class="acts" style="margin-bottom:12px"><button class="btn btn-b" onclick="baixarTemplateConcilExcel()">↓ Template Excel</button></div><div class="drop" id="dropConc" onclick="document.getElementById('fileConcExcel').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'conciliacao')"><b>Arraste o Excel aqui</b><div class="mini">ou clique para selecionar · .xlsx, .xls ou .csv</div></div><input id="fileConcExcel" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarConcilExcel(event)"><div id="concPreview" class="mini" style="margin-top:12px"></div><div id="concGenerateArea" class="info" style="display:none;margin-top:14px;border-color:rgba(74,222,128,.28);background:rgba(34,197,94,.06)"><b>Arquivo carregado com sucesso.</b><div class="mini" style="margin-top:4px">Revise a filial/operação e as cargas selecionadas e clique em <b>GERAR CONCILIAÇÃO</b> para executar a comparação.</div><div class="acts" style="margin-top:10px"><button id="btnGerarConcil" type="button" class="btn btn-p" onclick="gerarConcilExcel()">✓ GERAR CONCILIAÇÃO</button></div></div><div class="mfoot"><button class="btn" onclick="closeModal()">Cancelar</button></div>`;
+  document.getElementById('modalBody').innerHTML=`<div class="mt">Importar <em style="color:var(--orange)">Estoque Contábil do Cliente</em></div><div class="ms">Primeiro carregue o mapa contábil do cliente. Depois de importar, o botão <b>CONCILIAR ESTOQUE CONTÁBIL CLIENTE</b> executará a comparação e criará o planejamento de ondas para os endereços divergentes.</div><div class="grid"><div class="fg"><label>FILIAL / OPERAÇÃO *</label><select id="concConfigOperacao" onchange="atualizarBasesConcilPorConfig()"><option value="">Selecione</option>${_opcoesConfig().map(x=>`<option value="${esc(x.id)}">${esc(_configLabel(x))}</option>`).join('')}</select></div><div class="fg"><label>Carga de Estoque *</label><select id="concEstBase">${DB.basesEstoque.map(b=>`<option value="${esc(b.id)}" ${b.id===DB.activeEstoqueBaseId?'selected':''}>${esc(_baseLabel(b))}</option>`).join('')}</select></div><div class="fg"><label>Carga de Endereços Operacional <span id="concEndReq" class="mini">(sempre utilizada para direcionar a contagem)</span></label><select id="concEndBase">${DB.basesEnderecos.map(b=>`<option value="${esc(b.id)}" ${b.id===DB.activeEnderecosBaseId?'selected':''}>${esc(_baseLabel(b))}</option>`).join('')}</select></div><div class="fg"><label>Cliente / Conta</label><select id="concCliente"><option value="">Todos</option></select></div><div class="fg"><label>Site</label><select id="concSite"><option value="">Todos</option></select></div></div><div id="concSourcePreview" class="info" style="margin-top:12px"></div><div class="fsec" style="margin-top:12px"><div class="sec-t">TIPO DE CRUZAMENTO</div><div class="mini" style="margin-bottom:10px">Marque somente os campos que devem participar da conciliação. Não há filtro por valor: aqui você define <b>como o Sistema deve cruzar os registros</b>.</div><div class="g3" style="gap:10px"><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaEndereco" checked> <b>ENDEREÇO</b><div class="mini">Cruzar pela posição física</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaSku" checked> <b>SKU</b><div class="mini">Cruzar pelo produto</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaLote" checked> <b>LOTE</b><div class="mini">Cruzar pelo lote</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaQtd" checked> <b>QUANTIDADE</b><div class="mini">Comparar saldo Sistema × Físico</div></label><label class="card" style="cursor:pointer"><input type="checkbox" id="concCruzaUm" checked> <b>UNIDADE DE MEDIDA</b><div class="mini">Cruzar pela unidade</div></label></div><div class="mini" style="margin-top:10px">Exemplo: <b>ENDEREÇO + SKU + LOTE + QUANTIDADE</b> compara a posição, produto, lote e saldo. Se desmarcar <b>QUANTIDADE</b>, o saldo não será considerado como critério de divergência.</div></div><div id="concExpectedInfo" class="info"><b>Arquivo esperado:</b> definido pelos tipos de cruzamento selecionados. Quando ENDEREÇO estiver desmarcado, a coluna ENDERECO não é exigida nem considerada.</div><div class="acts" style="margin-bottom:12px"><button class="btn btn-b" onclick="baixarTemplateEstoqueContabilCliente()">↓ Template Estoque Contábil Cliente</button></div><div class="drop" id="dropConc" onclick="document.getElementById('fileConcExcel').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'conciliacao')"><b>Arraste o mapa de estoque contábil do cliente aqui</b><div class="mini">ou clique para selecionar · .xlsx, .xls ou .csv</div></div><input id="fileConcExcel" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarConcilExcel(event)"><div id="concPreview" class="mini" style="margin-top:12px"></div><div id="concGenerateArea" class="info" style="display:none;margin-top:14px;border-color:rgba(74,222,128,.28);background:rgba(34,197,94,.06)"><b>Mapa contábil carregado com sucesso.</b><div class="mini" style="margin-top:4px">Revise a filial/operação e as cargas selecionadas e clique em <b>CONCILIAR ESTOQUE CONTÁBIL CLIENTE</b>.</div><div class="acts" style="margin-top:10px"><button id="btnGerarConcil" type="button" class="btn btn-p" onclick="gerarConcilExcel()">✓ CONCILIAR ESTOQUE CONTÁBIL CLIENTE</button></div></div><div class="mfoot"><button class="btn" onclick="closeModal()">Cancelar</button></div>`;
   const refresh=()=>{_concAtualizarFiltros();_concAtualizarPreview();};
   document.getElementById('concEstBase').addEventListener('change',refresh);
   document.getElementById('concEndBase').addEventListener('change',refresh);
@@ -603,7 +604,7 @@ function importarConcilExcel(evOrFile){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
   const file=evOrFile?.target?.files?.[0]||evOrFile;if(!file)return;
   readExcel(file,rows=>{
-    if(!Array.isArray(rows)||!rows.length)return toast('Arquivo de conciliação vazio.',false);
+    if(!Array.isArray(rows)||!rows.length)return toast('Mapa de estoque contábil do cliente vazio.',false);
     _concilExcelPendente={rows,nomeArquivo:file.name};
     const prev=document.getElementById('concPreview');
     if(prev)prev.innerHTML='<span style="color:#4ade80">✓ Arquivo carregado:</span> <b>'+esc(file.name)+'</b> · '+rows.length+' registro(s). Aguardando geração da conciliação.';
@@ -611,12 +612,12 @@ function importarConcilExcel(evOrFile){
     if(area)area.style.display='block';
     const btn=document.getElementById('btnGerarConcil');
     if(btn){btn.disabled=false;btn.style.opacity='1';}
-    toast('Arquivo carregado. Revise os parâmetros e clique em GERAR CONCILIAÇÃO.','ok');
+    toast('Mapa de estoque contábil carregado. Revise os parâmetros e clique em CONCILIAR ESTOQUE CONTÁBIL CLIENTE.','ok');
   });
 }
 function gerarConcilExcel(){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
-  if(!_concilExcelPendente?.rows?.length)return toast('Importe primeiro o arquivo de conciliação.',false);
+  if(!_concilExcelPendente?.rows?.length)return toast('Importe primeiro o mapa de ESTOQUE CONTÁBIL DO CLIENTE.',false);
   const cfg=_configById(document.getElementById('concConfigOperacao')?.value||'');
   if(!cfg)return toast('Selecione a FILIAL / OPERAÇÃO da conciliação.',false);
   const estBase=_getBase('estoque',document.getElementById('concEstBase')?.value||'');
@@ -627,7 +628,7 @@ function gerarConcilExcel(){
   processarConcilExcel(_concilExcelPendente.rows,_concilExcelPendente.nomeArquivo);
 }
 function processarConcilExcel(rows,nomeArquivo){
-  if(!Array.isArray(rows)||!rows.length)return toast('Arquivo de conciliação vazio.',false);
+  if(!Array.isArray(rows)||!rows.length)return toast('Mapa de estoque contábil do cliente vazio.',false);
   const aliases={ENDERECO:['ENDERECO','ENDERECO_FISICO','LOCALIZACAO','LOCACAO'],SKU_CLIENTE:['SKU_CLIENTE','SKU','CODIGO','CODIGO_SKU'],LOTE:['LOTE','BATCH'],QUANTIDADE:['QUANTIDADE','QTD','QTDE','ESTOQUE_FISICO','QTD_FISICA'],DESCRICAO:['DESCRICAO','PRODUTO'],UNIDADE_MEDIDA:['UNIDADE_MEDIDA','UM','UNIDADE']};
   const keys=Object.keys(rows[0]).map(_normHead);let map={};Object.entries(aliases).forEach(([dest,als])=>{const idx=keys.findIndex(k=>als.map(_normHead).includes(k));if(idx>=0)map[dest]=Object.keys(rows[0])[idx]});
   const cruzamento=_concTipoCruzamento();
@@ -691,16 +692,7 @@ function processarConcilExcel(rows,nomeArquivo){
   const seq=DB.inventarios.length+1,byEnd={};
   divs.forEach(d=>{
     let candidatos=[];
-    if(cruzamento.endereco){
-      if(d.endereco)candidatos=estoqueEscopo.filter(x=>_normalizarConc(x.ENDERECO)===d.endereco);
-    }else{
-      candidatos=estoqueEscopo.filter(x=>{
-        if(_normalizarConc(x.SKU_CLIENTE)!==_normalizarConc(d.sku))return false;
-        if(cruzamento.lote&&_normalizarConc(x.LOTE||'')!==_normalizarConc(d.lote||''))return false;
-        if(cruzamento.um&&_normalizarConc(x.UNIDADE_MEDIDA||'UN')!==_normalizarConc(d.um||'UN'))return false;
-        return String(x.ENDERECO||'').trim()!=='';
-      });
-    }
+    candidatos=estoqueEscopo.filter(x=>_concilRotaMatch(x,d,cruzamento));
     if(!candidatos.length){
       divs.filter(z=>z===d); // mantém a divergência no resumo mesmo sem roteamento
       return;
@@ -771,14 +763,14 @@ function _invDivEnderecos(invId){
 }
 
 function _liberacaoCandidatos(inv,modo,fonteId){
-  if(modo==='CICLICO'&&fonteId)_ensureCiclicoTarefas(inv,fonteId);
-  const tarefas=(inv?.tarefas||[]).filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));
-  if(modo!=='CICLICO')return tarefas;
-  const divEnd=_divergenciaEscopoEnderecos(DB.inventarios.find(x=>x.id===fonteId));
-  return tarefas.filter(t=>divEnd.has(String(t.endereco||'').trim()));
+  if(!inv)return [];
+  if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId||inv.id);
+  return (inv.tarefas||[]).filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))&&String(t.status||'')!=='FORA_CICLO');
 }
 function _renderLiberacaoFiltros(invId){
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
+  _materializarTarefasConcil(inv);
+  _planejarOndasConcil(inv);
   const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';
   const fonteId=document.getElementById('libFonteInv')?.value||invId;
   if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId);
@@ -792,6 +784,12 @@ function _renderLiberacaoFiltros(invId){
   });
   atualizarPreviewLiberacao();
 }
+function _renderPlanejamentoLiberacao(inv,modo,fonteId){
+  const el=document.getElementById('libWavePlan');if(!el||!inv)return;
+  const grupos=_planejarOndasConcil(inv);const pend=grupos.filter(g=>g.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))));
+  const users=_contadoresDisponiveisWave();const top=pend.slice(0,Math.max(users.length,5));
+  el.innerHTML='<div class="sec-t">PLANEJAMENTO DE ONDAS · MAIOR → MENOR</div><div class="mini" style="margin:5px 0 10px">Critério primário: <b>quantidade de endereços divergentes</b>. Desempate: unidades divergentes, itens e ordem física. A cada CONTADOR ativo é proposta uma onda por vez.</div>'+(top.length?top.map((g,i)=>'<div style="display:grid;grid-template-columns:42px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)"><b style="color:var(--orange2)">#'+String(g.seq).padStart(3,'0')+'</b><div><b>RUA '+esc(g.rua)+' · LADO '+esc(g.lado)+' · NÍVEL '+esc(g.nivel||'—')+'</b><div class="mini">'+g.enderecos.size+' endereço(s) · '+g.unidades.toLocaleString('pt-BR')+' unidade(s) divergente(s) · '+g.itens+' item(ns)</div></div><span class="badge pen">'+(i<users.length?'PRÓXIMA':'FILA')+'</span></div>').join(''):'<div class="mini">Nenhuma onda pendente para este inventário.</div>')+(inv.enderecosSemRoteamento?'<div class="info" style="margin-top:10px;border-color:rgba(248,113,113,.35)"><b>Atenção:</b> '+inv.enderecosSemRoteamento+' divergência(s) não puderam ser roteadas para um endereço físico. Elas permanecem no resumo, mas não entram na liberação até existir uma rota física.</div>':'');
+}
 function atualizarPreviewLiberacao(){
   const pv=document.getElementById('libPreview');if(!pv)return;
   const invId=document.getElementById('modalBody')?.dataset?.invId,inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
@@ -800,7 +798,7 @@ function atualizarPreviewLiberacao(){
   const auto=!!document.getElementById('libDistribuirAuto')?.checked;
   const base=_liberacaoCandidatos(inv,modo,fonteId);
   const candidatos=base.filter(t=>(!r.length||r.includes(String(t.rua)))&&(!l.length||l.includes(String(t.lado)))&&(!n.length||n.includes(String(t.nivel))));
-  pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' tarefa(s) disponíveis'+(auto&&!r.length&&!l.length&&!n.length?' · <b>modo automático:</b> toda a carga será distribuída entre os CONTADORES':' com os filtros atuais')+' · <b>recomendadas agora:</b> '+(_releaseStats(inv)?.liberar||0);
+  const st=_releaseStats(inv);pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' endereço(s) disponíveis'+(auto&&!r.length&&!l.length&&!n.length?' · <b>modo automático:</b> 1 onda por CONTADOR ativo':' · <b>modo manual:</b> RUA + LADO + NÍVEL')+' · <b>recomendadas agora:</b> '+st.liberar;_renderPlanejamentoLiberacao(inv,modo,fonteId);
 }
 
 function toggleChecks(cls,checked){
@@ -809,17 +807,11 @@ function toggleChecks(cls,checked){
   atualizarPreviewLiberacao();
 }
 function _releaseStats(inv){
-  const ts=inv?.tarefas||[];
-  const pend=ts.filter(t=>t.status==='AGUARDANDO');
-  const fila=ts.filter(t=>t.status==='LIBERADA');
-  const andamento=ts.filter(t=>t.status==='ANDAMENTO');
-  const concl=ts.filter(t=>t.status==='CONCLUIDO');
-  const aguard2=ts.filter(t=>['AGUARDANDO_2C','AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status));
-  const contadores=new Set(andamento.map(t=>t.contador).filter(Boolean));
-  const ativos=contadores.size;
-  const alvoFila=Math.max(1,ativos||1);
-  const liberar=Math.max(0,alvoFila-fila.length);
-  return {ts,pend,fila,andamento,concl,aguard2,ativos,alvoFila,liberar};
+  const ts=inv?.tarefas||[],pend=ts.filter(t=>t.status==='AGUARDANDO'),fila=ts.filter(t=>t.status==='LIBERADA'),andamento=ts.filter(t=>t.status==='ANDAMENTO'),concl=ts.filter(t=>t.status==='CONCLUIDO'),aguard2=ts.filter(t=>['AGUARDANDO_2C','AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status));
+  const users=_contadoresDisponiveisWave();
+  const designados=new Set([...fila,...andamento].map(t=>String(t.contadorDesignadoId||t.contadorDesignadoLogin||t.contadorDesignado||t.contadorId||t.contadorLogin||t.contador||'').trim()).filter(Boolean));
+  const ativos=users.length,slots=Math.max(0,ativos-designados.size),liberar=Math.min(pend.length,slots);
+  return {ts,pend,fila,andamento,concl,aguard2,ativos,alvoFila:ativos,liberar,slots,users};
 }
 function _renderReleaseMonitor(inv){
   const el=document.getElementById('releaseMonitor');if(!el)return;
@@ -850,103 +842,82 @@ function _normOperFlex(v){
   const s=_normalizarConc(v);
   return s.replace(/^0+(?=\d)/,'');
 }
+function _concilRotaMatch(x,d,cruz){
+  if(cruz.sku && _normOperFlex(x.SKU_CLIENTE)!==_normOperFlex(d.sku))return false;
+  if(cruz.lote && _normOperFlex(x.LOTE||'')!==_normOperFlex(d.lote||''))return false;
+  if(cruz.um && _normOperFlex(x.UNIDADE_MEDIDA||'UN')!==_normOperFlex(d.um||'UN'))return false;
+  if(cruz.endereco && String(d.endereco||'').trim() && _normalizarConc(x.ENDERECO)!==_normalizarConc(d.endereco))return false;
+  return String(x.ENDERECO||'').trim()!=='';
+}
+function _concilEnderecoMeta(enderecos,end){
+  const key=_normalizarConc(end);
+  return (enderecos||[]).find(z=>_normalizarConc(z['ENDEREÇO']||z.ENDERECO||'')===key)||{};
+}
+function _concilTaskItem(x,d,end){
+  const sku=String(x?.SKU_CLIENTE??d?.sku??'').trim(),lote=String(x?.LOTE??d?.lote??'').trim(),um=String(x?.UNIDADE_MEDIDA??d?.um??'UN').trim()||'UN';
+  return {endereco:end,sku,lote,descricao:String(x?.DESCRICAO??d?.descricao??'').trim(),qtdSistema:_num(x?.QUANTIDADE??d?.qtdSistema??0),um,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:Number(d?.qtdFisica||0),divergenciaConsolidada:Number(d?.qtdFisica||0)-Number(d?.qtdSistema||0)};
+}
+function _materializarTarefasConcil(inv){
+  if(!inv||!Array.isArray(inv.divergencias)||!inv.divergencias.length)return {criados:0,enderecos:new Set(),semRoteamento:0};
+  const cruz=inv.conciliacaoResumo?.tipoCruzamento||{endereco:true,sku:true,lote:true,quantidade:true,um:true};
+  const estoque=Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:[];
+  const enderecos=Array.isArray(inv.cargaEnderecosSnapshot)?inv.cargaEnderecosSnapshot:[];
+  inv.tarefas=Array.isArray(inv.tarefas)?inv.tarefas:[];
+  const byEnd=new Map(inv.tarefas.map(t=>[String(t.endereco||'').trim(),t]));
+  let criados=0,semRoteamento=0;
+  inv.divergencias.forEach(d=>{
+    let candidatos=estoque.filter(x=>_concilRotaMatch(x,d,cruz));
+    if(!candidatos.length && cruz.endereco && String(d.endereco||'').trim())candidatos=[{ENDERECO:String(d.endereco).trim(),SKU_CLIENTE:d.sku,LOTE:d.lote,UNIDADE_MEDIDA:d.um,DESCRICAO:d.descricao,QUANTIDADE:d.qtdSistema}];
+    if(!candidatos.length){semRoteamento++;return;}
+    const seenEnd=new Set();
+    candidatos.forEach(x=>{
+      const end=String(x.ENDERECO||'').trim();if(!end||seenEnd.has(_normalizarConc(end)))return;seenEnd.add(_normalizarConc(end));
+      const meta=_concilEnderecoMeta(enderecos,end),rua=String(meta.RUA||'').trim(),lado=String(meta.LADO||meta['ÍMPAR/PAR']||'').trim(),nivel=String(meta['NÍVEL']||'').trim();
+      let t=byEnd.get(end);
+      if(!t){t={id:'TAR-'+String(inv.id||'INV').slice(-8)+'-'+String(inv.tarefas.length+1).padStart(4,'0'),endereco:end,rua,lado,nivel,status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO',itens:[]};inv.tarefas.push(t);byEnd.set(end,t);criados++;}
+      else{t.rua=rua||t.rua||'';t.lado=lado||t.lado||'';t.nivel=nivel||t.nivel||'';if(t.status==='FORA_CICLO')t.status='AGUARDANDO';}
+      t.itens=Array.isArray(t.itens)?t.itens:[];
+      const item=_concilTaskItem(x,d,end),ik=[item.sku,item.lote,item.um].map(_normalizarConc).join('||');
+      if(!t.itens.some(it=>[it.sku,it.lote,it.um].map(_normalizarConc).join('||')===ik))t.itens.push(item);
+      d.enderecosRoteados=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
+      if(!d.enderecosRoteados.some(z=>_normalizarConc(z?.endereco||z)===_normalizarConc(end)))d.enderecosRoteados.push({endereco:end,rua,lado,nivel});
+    });
+  });
+  inv.totalEnderecosObrigatorios=inv.tarefas.filter(t=>t.status!=='FORA_CICLO').length;
+  inv.enderecosSemRoteamento=semRoteamento;
+  return {criados,enderecos:new Set(inv.tarefas.filter(t=>t.status!=='FORA_CICLO').map(t=>String(t.endereco||'').trim()).filter(Boolean)),semRoteamento};
+}
+function _planejarOndasConcil(inv){
+  if(!inv)return [];
+  _materializarTarefasConcil(inv);
+  const map=new Map();
+  (inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO'&&t.status!=='CONCLUIDO').forEach(t=>{
+    const k=[String(t.rua||'—'),String(t.lado||'—'),String(t.nivel||'—')].join('||');
+    if(!map.has(k))map.set(k,{rua:t.rua||'—',lado:t.lado||'—',nivel:t.nivel||'—',ts:[]});map.get(k).ts.push(t);
+  });
+  const arr=[...map.values()].map(g=>{g.enderecos=new Set(g.ts.map(t=>String(t.endereco||'').trim()).filter(Boolean));g.unidades=g.ts.reduce((a,t)=>a+(t.itens||[]).reduce((s,it)=>s+Math.abs(Number(it.divergenciaConsolidada||0)),0),0);g.itens=g.ts.reduce((a,t)=>a+(t.itens||[]).length,0);g.score=(g.enderecos.size*100000000)+(g.unidades*1000)+g.itens;return g;}).sort((a,b)=>b.score-a.score||String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true}));
+  arr.forEach((g,i)=>{g.seq=i+1;g.chave=[g.rua,g.lado,g.nivel].join('||');g.ts.forEach(t=>{t.ondaPlanejadaSeq=g.seq;t.ondaPlanejadaScore=g.score;t.ondaPlanejadaChave=g.chave})});
+  inv.planoOndas=arr.map(g=>({seq:g.seq,rua:g.rua,lado:g.lado,nivel:g.nivel,enderecos:g.enderecos.size,unidades:g.unidades,itens:g.itens,score:g.score}));
+  return arr;
+}
 function _ensureCiclicoTarefas(inv,fonteId){
   if(!inv)return {enderecos:new Set(),criados:0};
   const fonte=DB.inventarios.find(x=>x.id===fonteId)||inv;
-  const estoque=Array.isArray(fonte.cargaEstoqueSnapshot)?fonte.cargaEstoqueSnapshot:(Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:[]);
-  const enderecos=Array.isArray(fonte.cargaEnderecosSnapshot)?fonte.cargaEnderecosSnapshot:(Array.isArray(inv.cargaEnderecosSnapshot)?inv.cargaEnderecosSnapshot:[]);
-  const divs=Array.isArray(fonte.divergencias)?fonte.divergencias:[];
-  const roteados=new Set();
-
-  // FONTE PRIMÁRIA DA LIBERAÇÃO: quando a conciliação já criou tarefas,
-  // essas tarefas são a referência operacional. Não devemos tentar reconstruir
-  // o endereço novamente pelo SKU e correr o risco de perder a RUA/LADO/NÍVEL.
-  // Isso elimina a dependência circular que deixava o modal com 0 endereços.
-  if(Array.isArray(fonte.tarefas) && fonte.tarefas.length){
-    if(!Array.isArray(inv.tarefas))inv.tarefas=[];
-    fonte.tarefas.filter(t=>t&&String(t.status||'')!=='FORA_CICLO').forEach(src=>{
-      const end=String(src.endereco||'').trim();
-      if(!end)return;
-      roteados.add(end);
-      let t=inv.tarefas.find(x=>_normalizarConc(x.endereco)===_normalizarConc(end));
-      if(!t){
-        t=_clone(src);
-        if(!t.status||t.status==='FORA_CICLO')t.status='AGUARDANDO';
-        inv.tarefas.push(t);
-      }else{
-        t.rua=src.rua||t.rua||'';
-        t.lado=src.lado||t.lado||'';
-        t.nivel=src.nivel||t.nivel||'';
-        if((!Array.isArray(t.itens)||!t.itens.length) && Array.isArray(src.itens))t.itens=_clone(src.itens);
-        if(t.status==='FORA_CICLO')t.status='AGUARDANDO';
-      }
-    });
-    return {enderecos:roteados,criados:roteados.size};
+  const r=_materializarTarefasConcil(fonte);
+  if(fonte!==inv){
+    inv.tarefas=Array.isArray(inv.tarefas)?inv.tarefas:[];
+    const existing=new Map(inv.tarefas.map(t=>[_normalizarConc(t.endereco),t]));
+    (fonte.tarefas||[]).filter(t=>t.status!=='FORA_CICLO').forEach(src=>{let t=existing.get(_normalizarConc(src.endereco));if(!t){t=_clone(src);inv.tarefas.push(t);existing.set(_normalizarConc(t.endereco),t)}else{t.rua=src.rua;t.lado=src.lado;t.nivel=src.nivel;if(!t.itens?.length)t.itens=_clone(src.itens||[])}});
   }
-
-  divs.forEach(d=>{
-    const sku=_normalizarConc(d.sku), skuFlex=_normOperFlex(d.sku);
-    const candidatos=estoque.filter(x=>{
-      if(_normalizarConc(x.SKU_CLIENTE)!==sku && _normOperFlex(x.SKU_CLIENTE)!==skuFlex)return false;
-      if(fonte.conciliacaoResumo?.tipoCruzamento?.lote && _normalizarConc(x.LOTE||'')!==_normalizarConc(d.lote||'' ) && _normOperFlex(x.LOTE||'')!==_normOperFlex(d.lote||''))return false;
-      if(fonte.conciliacaoResumo?.tipoCruzamento?.um && _normalizarConc(x.UNIDADE_MEDIDA||'UN')!==_normalizarConc(d.um||'UN'))return false;
-      return String(x.ENDERECO||'').trim()!=='';
-    });
-    candidatos.forEach(x=>{
-      const end=String(x.ENDERECO||'').trim();
-      const en=enderecos.find(z=>_normalizarConc(z['ENDEREÇO'])===_normalizarConc(end))||{};
-      const rota={endereco:end,rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||''};
-      d.enderecosRoteados=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
-      if(!d.enderecosRoteados.some(z=>_normalizarConc(z.endereco)===_normalizarConc(end)))d.enderecosRoteados.push(rota);
-      roteados.add(end);
-      if(!Array.isArray(inv.tarefas))inv.tarefas=[];
-      let t=inv.tarefas.find(t=>_normalizarConc(t.endereco)===_normalizarConc(end));
-      if(!t){
-        const seq=inv.tarefas.length+1;
-        t={id:'TAR-'+String(inv.id||'INV').slice(-8)+'-'+String(seq).padStart(3,'0'),endereco:end,rua:rota.rua,lado:rota.lado,nivel:rota.nivel,status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO',itens:[]};
-        inv.tarefas.push(t);
-      }else{
-        t.rua=rota.rua;t.lado=rota.lado;t.nivel=rota.nivel;if(t.status==='FORA_CICLO')t.status='AGUARDANDO';
-      }
-      const itemSku=String(x.SKU_CLIENTE||d.sku||''), itemLote=String(x.LOTE||d.lote||''), itemUm=String(x.UNIDADE_MEDIDA||d.um||'UN');
-      const itemKey=_normalizarConc(itemSku)+'||'+_normalizarConc(itemLote)+'||'+_normalizarConc(itemUm);
-      if(!Array.isArray(t.itens))t.itens=[];
-      if(!t.itens.some(it=>_normalizarConc(it.sku||'')+'||'+_normalizarConc(it.lote||'')+'||'+_normalizarConc(it.um||'')===itemKey)){
-        t.itens.push({endereco:end,sku:itemSku,lote:itemLote,descricao:String(x.DESCRICAO||d.descricao||''),qtdSistema:_num(x.QUANTIDADE),um:itemUm,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:Number(d.qtdFisica||0),divergenciaConsolidada:Number(d.qtdFisica||0)-Number(d.qtdSistema||0)});
-      }
-    });
-  });
-  return {enderecos:roteados,criados:roteados.size};
+  _planejarOndasConcil(inv);
+  return {enderecos:new Set((inv.tarefas||[]).map(t=>String(t.endereco||'').trim()).filter(Boolean)),criados:r.criados};
 }
 function _divergenciaEscopoEnderecos(inv){
-  const set=new Set();
-  if(!inv||!Array.isArray(inv.divergencias))return set;
-  const estoque=Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:[];
-  const cruz=inv.conciliacaoResumo?.tipoCruzamento||{};
-  const ends=Array.isArray(inv.cargaEnderecosSnapshot)?inv.cargaEnderecosSnapshot:[];
-  const add=(e)=>{const v=String(e||'').trim();if(v)set.add(v)};
-
-  // Se a própria conciliação já possui tarefas, elas são a fonte operacional
-  // mais confiável para o escopo. Cada tarefa já carrega RUA/LADO/NÍVEL.
-  // Mantemos inclusive CANCELADO para permitir uma nova liberação.
-  if(Array.isArray(inv.tarefas)&&inv.tarefas.length){
-    inv.tarefas.forEach(t=>{
-      if(String(t.status||'')!=='FORA_CICLO')add(t.endereco);
-    });
-  }
-
-  inv.divergencias.forEach(d=>{
-    (Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).forEach(r=>add(typeof r==='string'?r:r?.endereco));
-    const cand=estoque.filter(x=>{
-      if(_normOperFlex(x.SKU_CLIENTE)!==_normOperFlex(d.sku))return false;
-      if(cruz.lote&&_normOperFlex(x.LOTE||'')!==_normOperFlex(d.lote||''))return false;
-      if(cruz.um&&_normOperFlex(x.UNIDADE_MEDIDA||'UN')!==_normOperFlex(d.um||'UN'))return false;
-      return String(x.ENDERECO||'').trim()!=='';
-    });
-    cand.forEach(x=>add(x.ENDERECO));
-  });
-  return set;
+  if(!inv)return new Set();
+  _ensureCiclicoTarefas(inv,inv.id);
+  return new Set((inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO').map(t=>String(t.endereco||'').trim()).filter(Boolean));
 }
+
 function _encontrarFonteCiclica(invId){
   const atual=DB.inventarios.find(x=>x.id===invId);
   const ehConc=!!(atual&&(atual.tipo==='CONCILIACAO_EXCEL'||atual.modoContagem==='CONCILIACAO_EXCEL'||atual.modoContagem==='CONCILIACAO'));
@@ -972,8 +943,9 @@ function _encontrarFonteCiclica(invId){
   return mesmo||concs[0]||null;
 }
 
-function abrirLiberacaoTarefas(invId){
+async function abrirLiberacaoTarefas(invId){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  if(typeof _listarUsuariosPlatform==='function')await _listarUsuariosPlatform();
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
   let fonteInicial=null;
   if(inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO')fonteInicial=inv;
@@ -1000,11 +972,11 @@ function abrirLiberacaoTarefas(invId){
   <div class="mt">Liberar Inventário · ${esc(inv.id)}</div>
   <div class="ms">Libere em <b>ondas independentes por RUA + LADO + NÍVEL</b>. Cada combinação selecionada poderá formar cards/tarefas separados em Tarefas de Contagem, permitindo distribuir a produtividade entre CONTADORES.</div>
   <div class="g2">
-    <label class="card" style="cursor:pointer;border:1px solid var(--orange);"><input type="radio" name="libModo" value="GERAL" checked onchange="atualizarModoLiberacao()"><strong style="color:var(--orange2)"> INVENTÁRIO GERAL</strong><div class="mini" style="margin-top:8px">Contagem cega. A 1ª contagem é obrigatória para 100% dos endereços da base.</div></label>
-    <label class="card" style="cursor:pointer;"><input type="radio" name="libModo" value="CICLICO" ${fonteInicial?'':'disabled'} onchange="atualizarModoLiberacao()"><strong style="color:#60a5fa"> INVENTÁRIO CÍCLICO / CONCILIAÇÃO</strong><div class="mini" style="margin-top:8px">Somente endereços divergentes da referência selecionada.</div></label>
+    <label class="card" style="cursor:pointer;border:1px solid var(--orange);"><input type="radio" name="libModo" value="GERAL" ${fonteInicial?'':'checked'} onchange="atualizarModoLiberacao()"><strong style="color:var(--orange2)"> INVENTÁRIO GERAL</strong><div class="mini" style="margin-top:8px">Contagem cega. A 1ª contagem é obrigatória para 100% dos endereços da base.</div></label>
+    <label class="card" style="cursor:pointer;"><input type="radio" name="libModo" value="CICLICO" ${fonteInicial?'checked':'disabled'} onchange="atualizarModoLiberacao()"><strong style="color:#60a5fa"> INVENTÁRIO CÍCLICO / CONCILIAÇÃO</strong><div class="mini" style="margin-top:8px">Somente endereços divergentes da referência selecionada.</div></label>
   </div>
   <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv" onchange="atualizarModoLiberacao()"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}" ${fonteInicial&&x.id===fonteInicial.id?'selected':''}>${esc(x.id)} · ${esc(x.operacao||x.cliente||'CONCILIAÇÃO')} · ${_divergenciaEscopoEnderecos(x).size} endereço(s) no escopo</option>`).join('')}</select></div><div class="mini" style="margin-top:8px">A referência é a conciliação. O endereço do cliente só participa do cruzamento quando o flag ENDEREÇO foi marcado; o endereço da base física continua sendo usado para rotear a contagem.</div></div>
-  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${tarefas.filter(t=>t.status==='AGUARDANDO').length}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Alternativa à divisão manual: distribui os endereços selecionados de forma equilibrada entre os CONTADORES ativos e cria uma onda independente para cada pessoa. Se desmarcado, o MASTER controla a liberação por RUA + LADO + NÍVEL.</div></span></label></div></div>
+  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${tarefas.filter(t=>t.status==='AGUARDANDO').length}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" checked onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Divide o planejamento em ondas por RUA + LADO + NÍVEL e distribui uma próxima onda por CONTADOR ativo, priorizando o maior volume de endereços divergentes. Ao concluir uma onda, a próxima é proposta automaticamente.</div></span></label></div></div><div id="libWavePlan" class="card" style="margin-top:12px;border-color:rgba(251,146,60,.35)"></div>
   <div class="g3" style="margin-top:14px"><div class="card" id="libRuaBox"></div><div class="card" id="libLadoBox"></div><div class="card" id="libNivelBox"></div></div>
   <div id="libPreview" class="info" style="margin-top:14px"><b>Seleção:</b> marque a RUA, o LADO e/ou o NÍVEL disponíveis. <b>Cada combinação RUA + LADO + NÍVEL gera uma onda/card independente</b>. Se marcar somente uma RUA, todos os lados e níveis daquela RUA ficam disponíveis para fracionamento.</div>
   <div class="info"><b>Operação:</b> após liberar, os cards aparecem em <b>Tarefas de Contagem</b>. A seleção de mais de uma RUA/LADO/NÍVEL não vira uma única contagem: os endereços continuam agrupados por RUA + LADO, com níveis fracionáveis.</div>
@@ -1058,21 +1030,20 @@ function executarLiberacao(invId){
   const stamp=now();let maxOnda=0;DB.inventarios.forEach(ii=>(ii.tarefas||[]).forEach(tt=>{maxOnda=Math.max(maxOnda,Number(tt.ondaNumero||0)||0)}));let numero=maxOnda+1;
   inv.tipo=modo;inv.modoContagem=modo==='GERAL'?'CEGA_100':'CONCILIACAO';inv.cargaConciliacaoId=modo==='CICLICO'?fonteId:null;
   const grupos=[];
+  const waveMap=new Map();candidatos.forEach(t=>{const k=[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||');if(!waveMap.has(k))waveMap.set(k,[]);waveMap.get(k).push(t);});
+  const orderedGroups=[...waveMap.entries()].map(([key,ts])=>{const [rua,lado,nivel]=key.split('||');return {ts,rua,lado,nivel,user:null,score:(ts.length*100000000)+ts.reduce((a,t)=>a+(t.itens||[]).reduce((s,it)=>s+Math.abs(Number(it.divergenciaConsolidada||0)),0),0)*1000+(ts.reduce((a,t)=>a+(t.itens||[]).length,0))};}).sort((a,b)=>b.score-a.score||String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true}));
   if(auto){
-    const users=_contadoresDisponiveisWave().filter(u=>u.ativo!==false&&String(u.perfil||'').toUpperCase()==='CONTADOR');
-    if(!users.length)return toast('Não há CONTADORES ativos cadastrados para distribuição automática.',false);
-    const ordered=candidatos.slice().sort((a,b)=>String(a.rua||'').localeCompare(String(b.rua||''),'pt-BR',{numeric:true})||String(a.lado||'').localeCompare(String(b.lado||''))||String(a.nivel||'').localeCompare(String(b.nivel||''),'pt-BR',{numeric:true})||String(a.endereco||'').localeCompare(String(b.endereco||''),'pt-BR',{numeric:true}));
-    const n=Math.min(users.length,ordered.length);
-    const buckets=Array.from({length:n},()=>[]);ordered.forEach((t,i)=>buckets[i%n].push(t));
-    buckets.forEach((ts,i)=>{if(ts.length)grupos.push({ts,rua:'MÚLTIPLAS',lado:'MÚLTIPLOS',nivel:'DISTRIBUÍDO',user:users[i]});});
+    const users=_contadoresDisponiveisWave().filter(u=>u.ativo!==false&&String(u.perfil||'').toUpperCase()==='CONTADOR'&&!_contadorTemTarefaPendente(u)).sort((a,b)=>_contadorFeitosPercent(a)-_contadorFeitosPercent(b)||String(a.nome).localeCompare(String(b.nome),'pt-BR'));
+    if(!users.length)return toast('Não há CONTADORES ativos cadastrados para distribuição automática. Cadastre pelo menos um usuário com perfil CONTADOR.',false);
+    const slots=Math.min(users.length,orderedGroups.length);
+    for(let i=0;i<slots;i++){const g=orderedGroups[i];g.user=users[i];grupos.push(g);}
   }else{
-    const map=new Map();candidatos.forEach(t=>{const k=[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||');if(!map.has(k))map.set(k,[]);map.get(k).push(t);});
-    map.forEach((ts,key)=>{const [rua,lado,nivel]=key.split('||');grupos.push({ts,rua,lado,nivel,user:null});});
+    orderedGroups.forEach(g=>grupos.push(g));
   }
-  grupos.forEach(g=>{const ondaId=_waveScopeId(inv,g.rua,g.lado,g.nivel,1);g.ts.forEach(t=>{if(t.status==='CANCELADO'){t.contagens=[];t.contadorHistorico=t.contadorHistorico||[];t.rodada=1;t.contador=null;t.contadorId=null;t.contadorLogin=null;t.iniciadoEm=null;t.iniciadoEmMs=null;t.concluidoEm=null;t.concluidoEmMs=null;t.contagemVazia=null}t.status='LIBERADA';t.rodada=1;t.ondaId=ondaId;t.ondaNumero=numero;t.ondaEscopo=auto?'DISTRIBUIDO':'NIVEL';t.ondaNivel=auto?'DISTRIBUIDO':g.nivel;t.contadorDesignado=g.user?(g.user.nome||g.user.login||''):null;t.contadorDesignadoId=g.user?.id||null;t.contadorDesignadoLogin=g.user?.login||null;t.liberadoEm=stamp;t.liberadoPor=usuarioAtual.nome;t.modeloContagem=modo==='GERAL'?'CEGA':'CONCILIACAO';});numero++;});
+  grupos.forEach(g=>{const ondaId=_waveScopeId(inv,g.rua,g.lado,g.nivel,1);const planned=g.ts.reduce((m,t)=>Math.min(m,Number(t.ondaPlanejadaSeq||Infinity)),Infinity);const seqWave=Number.isFinite(planned)?planned:numero;g.ts.forEach(t=>{if(t.status==='CANCELADO'){t.contagens=[];t.contadorHistorico=t.contadorHistorico||[];t.rodada=1;t.contador=null;t.contadorId=null;t.contadorLogin=null;t.iniciadoEm=null;t.iniciadoEmMs=null;t.concluidoEm=null;t.concluidoEmMs=null;t.contagemVazia=null}t.status='LIBERADA';t.rodada=1;t.ondaId=ondaId;t.ondaNumero=seqWave;t.ondaEscopo='NIVEL';t.ondaNivel=g.nivel;t.ondaPlanejadaSeq=seqWave;t.contadorDesignado=g.user?(g.user.nome||g.user.login||''):null;t.contadorDesignadoId=g.user?.id||null;t.contadorDesignadoLogin=g.user?.login||null;t.liberadoEm=stamp;t.liberadoEmMs=Date.now();t.liberadoPor=usuarioAtual.nome;t.modeloContagem=modo==='GERAL'?'CEGA':'CONCILIACAO';});numero=Math.max(numero,seqWave+1);});
   inv.totalEnderecosObrigatorios=inv.tarefas.length;inv.enderecosLiberados=(inv.tarefas||[]).filter(t=>['LIBERADA','ANDAMENTO','CONCLUIDO','CONGELADA'].includes(t.status)).length;
   save();clearReleaseTimer();closeModal();renderInv();renderTarefas();renderDash();if(usuarioAtual?.perfil==='MASTER')renderVisaoTarefas();
-  toast(candidatos.length+' tarefa(s) liberada(s) em '+grupos.length+' card(s)/onda(s)'+(auto?' · distribuição automática entre '+grupos.length+' CONTADOR(es)':''));
+  toast(candidatos.length+' endereço(s) liberado(s) em '+grupos.length+' onda(s)'+(auto?' · '+grupos.length+' CONTADOR(es) designado(s)':' · planejamento manual por RUA + LADO + NÍVEL'));
 }
 
 function _statusCounts(ts){return{total:ts.length,aguardar:ts.filter(t=>t.status==='AGUARDANDO').length,liberadas:ts.filter(t=>t.status==='LIBERADA').length,andamento:ts.filter(t=>t.status==='ANDAMENTO').length,congeladas:ts.filter(t=>t.status==='CONGELADA').length,concluidas:ts.filter(t=>t.status==='CONCLUIDO').length,canceladas:ts.filter(t=>t.status==='CANCELADO').length};}
@@ -1240,7 +1211,7 @@ function _masterAssumirTerceiraTask(t){
 }
 function masterAssumirTerceiraOnda(invId,rua,lado,nivel){if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER pode executar a 3ª contagem.',false);const inv=DB.inventarios.find(i=>i.id===invId);if(!inv)return;const grupo=_waveTasks(inv,rua,lado,nivel).filter(t=>['AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status)&&Number(t.rodada)===3);if(!grupo.length)return toast('Não há tarefa disponível para 3ª contagem MASTER.',false);const t=grupo[0];_masterAssumirTerceiraTask(t);ondaAtual={key:t.ondaId||_waveKey(inv,rua,lado,nivel),inv,rua,lado,nivel:t.ondaEscopo==='TODOS_NIVEIS'?'*':(t.ondaNivel||t.nivel),escopo:t.ondaEscopo||'NIVEL'};tarefaAtual={inv,t,onda:ondaAtual};save();renderTarefas();renderDash();go('contagem');renderContagem();toast('3ª contagem MASTER iniciada.')}
 
-function renderTarefas(invFilter){let rows=[],master=usuarioAtual?.perfil==='MASTER';DB.inventarios.forEach(inv=>{if(invFilter&&inv.id!==invFilter)return;(inv.tarefas||[]).forEach(t=>{if(t.status==='FORA_CICLO')return;if(!master){if(!['LIBERADA','ANDAMENTO'].includes(t.status))return;if(t.status==='ANDAMENTO'&&t.contador!==usuarioAtual?.nome)return}rows.push({inv,t})})});const aberto=[...DB.inventarios].reverse().find(i=>i.status==='ABERTO'||i.status==='CONTANDO');_renderTaskReleaseBoard(aberto||null);document.getElementById('tarefasBody').innerHTML=rows.length?rows.map(({inv,t})=>{let actions='';if(!master&&t.status==='LIBERADA')actions+=`<button class="btn btn-b" onclick="assumirTarefaId('${inv.id}','${t.id}')">Assumir</button> `;if(!master&&t.status==='ANDAMENTO'&&t.contador===usuarioAtual?.nome)actions+=`<button class="btn btn-b" onclick="go('contagem')">Contar</button> `;if(master&&['AGUARDANDO','LIBERADA','ANDAMENTO','AGUARDANDO_2C','AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status))actions+=`<button class="btn btn-r" onclick="cancelarTarefa('${inv.id}','${t.id}')">Cancelar</button> <button class="btn btn-r" onclick="excluirTarefa('${inv.id}','${t.id}')">Excluir</button>`;return `<tr><td class="mn">${esc(t.id)}</td><td class="mn">${esc(inv.id)}</td><td>${esc(t.rua||'—')}</td><td>${esc(t.nivel||'—')}</td><td>${t.itens.length||0}</td><td>${t.rodada||1}ª</td><td>${esc(t.modeloContagem||inv.modoContagem||'—')}</td><td>${esc(t.contador||'—')}</td><td><span class="badge ${t.status==='CONCLUIDO'?'ok':t.status==='ANDAMENTO'?'and':t.status==='CANCELADO'?'div':t.status==='CONGELADA'?'pen':t.status==='AGUARDANDO_APROV'?'div':'pen'}">${esc(t.status)}</span></td><td>${esc(t.criadoEm)}</td><td>${actions||'—'}</td></tr>`}).join(''):'<tr><td colspan="11" style="text-align:center;padding:30px">Nenhuma tarefa disponível.</td></tr>'}
+async function renderTarefas(invFilter){if(usuarioAtual?.perfil==='MASTER'&&typeof _listarUsuariosPlatform==='function')await _listarUsuariosPlatform();let rows=[],master=usuarioAtual?.perfil==='MASTER';DB.inventarios.forEach(inv=>{if(invFilter&&inv.id!==invFilter)return;(inv.tarefas||[]).forEach(t=>{if(t.status==='FORA_CICLO')return;if(!master){if(!['LIBERADA','ANDAMENTO'].includes(t.status))return;if(t.status==='ANDAMENTO'&&t.contador!==usuarioAtual?.nome)return}rows.push({inv,t})})});const aberto=[...DB.inventarios].reverse().find(i=>i.status==='ABERTO'||i.status==='CONTANDO');_renderTaskReleaseBoard(aberto||null);document.getElementById('tarefasBody').innerHTML=rows.length?rows.map(({inv,t})=>{let actions='';if(!master&&t.status==='LIBERADA')actions+=`<button class="btn btn-b" onclick="assumirTarefaId('${inv.id}','${t.id}')">Assumir</button> `;if(!master&&t.status==='ANDAMENTO'&&t.contador===usuarioAtual?.nome)actions+=`<button class="btn btn-b" onclick="go('contagem')">Contar</button> `;if(master&&['AGUARDANDO','LIBERADA','ANDAMENTO','AGUARDANDO_2C','AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status))actions+=`<button class="btn btn-r" onclick="cancelarTarefa('${inv.id}','${t.id}')">Cancelar</button> <button class="btn btn-r" onclick="excluirTarefa('${inv.id}','${t.id}')">Excluir</button>`;return `<tr><td class="mn">${esc(t.id)}</td><td class="mn">${esc(inv.id)}</td><td>${esc(t.rua||'—')}</td><td>${esc(t.nivel||'—')}</td><td>${t.itens.length||0}</td><td>${t.rodada||1}ª</td><td>${esc(t.modeloContagem||inv.modoContagem||'—')}</td><td>${esc(t.contador||'—')}</td><td><span class="badge ${t.status==='CONCLUIDO'?'ok':t.status==='ANDAMENTO'?'and':t.status==='CANCELADO'?'div':t.status==='CONGELADA'?'pen':t.status==='AGUARDANDO_APROV'?'div':'pen'}">${esc(t.status)}</span></td><td>${esc(t.criadoEm)}</td><td>${actions||'—'}</td></tr>`}).join(''):'<tr><td colspan="11" style="text-align:center;padding:30px">Nenhuma tarefa disponível.</td></tr>'}
 
 function liberarTarefa(invId,tid){return abrirLiberacaoTarefas(invId)}
 function excluirTarefa(invId,tid){if(usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER.',false);return}let inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;if(!confirm('Excluir definitivamente esta tarefa e todas as contagens vinculadas?'))return;inv.tarefas=(inv.tarefas||[]).filter(t=>t.id!==tid);if(!inv.tarefas.length){inv.status='ABERTO';}save();renderTarefas();renderInv();renderDash();toast('Tarefa excluída definitivamente');}
@@ -1361,7 +1332,17 @@ function _renderContagemEnderecoAcoes(t,r){const p=document.getElementById('cont
 function _clearContagemCampos({manterEndereco=false}={}){['mobSku','mobLote','mobQtd','mobDescManual','mobUmManual'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});const ds=document.getElementById('mobDesc');if(ds)ds.value='';const us=document.getElementById('mobUm');if(us)us.value='';['mobDescManual','mobUmManual'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'});['mobDesc','mobUm'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='block'});const p=document.getElementById('contagemProgressoEndereco'),a=document.getElementById('contagemProximoAcoes');if(p)p.style.display='none';if(a)a.style.display='none';if(!manterEndereco){const e=document.getElementById('mobEndereco');if(e)e.value='';const ev=document.getElementById('endValid');if(ev)ev.textContent='Digite ou leia o endereço';}mostrarEtapaMobile('endereco');_atualizarEnderecoAlvoMobile(_getOndaAtiva());}
 function continuarMesmoEndereco(){const g=_getOndaAtiva(),end=String(document.getElementById('mobEndereco')?.value||'').trim(),t=_getTaskByEndereco(end),r=Number(t?.rodada||g?.ts?.[0]?.rodada||1);if(!g||!t)return toast('Selecione um endereço da onda.',false);if(_taskEnderecoCompleto(t,r)){_clearContagemCampos({manterEndereco:true});document.getElementById('mobSku')?.scrollIntoView({behavior:'smooth',block:'center'});return toast('Mesmo endereço mantido. Pronto para o próximo palete/SKU.')}toast('Este endereço ainda possui itens/paletes pendentes. Continue a contagem aqui.',false)}
 function proximoEndereco(){const g=_getOndaAtiva(),end=String(document.getElementById('mobEndereco')?.value||'').trim(),t=_getTaskByEndereco(end),r=Number(t?.rodada||g?.ts?.[0]?.rodada||1);if(!g||!t)return toast('Selecione um endereço da onda.',false);if(!_taskEnderecoCompleto(t,r))return toast('FINALIZE TODOS OS ITENS/PALETES DESTE ENDEREÇO ANTES DE IR PARA O PRÓXIMO.',false);_clearContagemCampos();setTimeout(()=>abrirScanner('endereco'),120)}
-function _mostrarFimOnda(g){const p=_ondaProgresso(g);if(p.total&&p.feitos===p.total){document.getElementById('modalBody').innerHTML='<div class="wave-finished"><div class="big">✓ ESSA TAREFA/ONDA FOI FINALIZADA.</div><div class="small">Todos os '+p.total+' endereços da RUA '+esc(g.rua)+' · LADO '+esc(g.lado)+' · '+esc(_waveScopeLabel(g))+' foram visitados e finalizados na '+p.r+'ª contagem.</div><div class="mfoot" style="justify-content:center"><button class="btn btn-p" onclick="fecharFimOndaEEscolherProxima()">ESCOLHER PRÓXIMA TAREFA</button></div></div>';openModal();return true}return false}
+function _proximaOndaSugerida(inv,g){
+  if(!inv)return null;
+  const ondas=_planejarOndasConcil(inv).filter(x=>x.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))));
+  return ondas[0]||null;
+}
+function _mostrarFimOnda(g){
+  const p=_ondaProgresso(g);if(!(p.total&&p.feitos===p.total))return false;
+  const prox=_proximaOndaSugerida(g.inv,g);
+  const proxHtml=prox?'<div class="info" style="margin-top:12px;border-color:rgba(251,146,60,.35)"><b>PRÓXIMA ONDA SUGERIDA</b><br>ONDA #'+String(prox.seq).padStart(3,'0')+' · RUA '+esc(prox.rua)+' · LADO '+esc(prox.lado)+' · NÍVEL '+esc(prox.nivel||'—')+'<br><span class="mini">'+prox.enderecos.size+' endereço(s) · '+prox.unidades.toLocaleString('pt-BR')+' unidade(s) divergente(s)</span></div>':'<div class="info" style="margin-top:12px;border-color:rgba(74,222,128,.35)"><b>PLANEJAMENTO CONCLUÍDO</b><br>Não há outra onda pendente neste inventário.</div>';
+  document.getElementById('modalBody').innerHTML='<div class="wave-finished"><div class="big">✓ ESSA TAREFA/ONDA FOI FINALIZADA.</div><div class="small">Todos os '+p.total+' endereços da RUA '+esc(g.rua)+' · LADO '+esc(g.lado)+' · '+esc(_waveScopeLabel(g))+' foram visitados e finalizados na '+p.r+'ª contagem.</div>'+proxHtml+'<div class="mfoot" style="justify-content:center"><button class="btn btn-p" onclick="fecharFimOndaEEscolherProxima()">ESCOLHER PRÓXIMA TAREFA</button></div></div>';openModal();return true;
+}
 function fecharFimOndaEEscolherProxima(){closeModal();ondaAtual=null;tarefaAtual=null;_clearContagemCampos();renderContagem();renderTarefas();renderDash();}
 function registrarEnderecoVazio(){let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();if(!nome||!g)return toast('Assuma uma onda primeiro.',false);let endereco=document.getElementById('mobEndereco').value.trim(),t=_getTaskByEndereco(endereco);if(!t){_alertOnda('ENDEREÇO NÃO É DA SUA TAREFA/ONDA!!','REPITA LANÇAMENTO');return}if(t.status!=='ANDAMENTO'||t.contador!==nome){return toast('Este endereço não está disponível para este contador.',false)}if((t.itens||[]).length)return toast('Este endereço possui produto cadastrado. Realize a contagem do SKU + LOTE.',false);let r=t.rodada||1;if(t.contagens?.some(c=>c.endereco===t.endereco&&c.rodada===r)){alert('CONTAGEM REALIZADA ANTERIORMENTE!!');return}let ms=Date.now();t.contagens=t.contagens||[];t.contagens.push({endereco:t.endereco,sku:'',lote:'',quantidade:0,rodada:r,nome,data:now(),ms,vazio:true});t.contagemVazia=t.contagemVazia||{};t.contagemVazia['q'+r]=0;t.contagemVazia['resp'+r]=nome;t.contagemVazia['data'+r]=now();t.contagemVazia['ms'+r]=ms;t.status='CONCLUIDO';t.concluidoEm=now();t.concluidoEmMs=Date.now();t.contador=null;const waveKeyAntes=ondaAtual?.key;save();_clearContagemCampos();renderTarefas();renderContagem();renderInv();renderDash();const g2=_getWaveGroupByKey(waveKeyAntes);if(g2)_mostrarFimOnda(g2);toast('Endereço '+t.endereco+' confirmado como VAZIO · 0')}
 function registrarContagemMobile(){
