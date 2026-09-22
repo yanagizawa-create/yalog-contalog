@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.9.3 · Conciliação e Contagem</title>
+<title>ContaLog · v1.9.4 · Conciliação e Contagem</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.9.3<br>YALOG-CONTA-001 • v1.9.3 Build 050 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.4<br>YALOG-CONTA-001 • v1.9.4 Build 051 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -771,9 +771,10 @@ function _invDivEnderecos(invId){
 }
 
 function _liberacaoCandidatos(inv,modo,fonteId){
-  const tarefas=(inv?.tarefas||[]).filter(t=>t.status==='AGUARDANDO');
+  if(modo==='CICLICO'&&fonteId)_ensureCiclicoTarefas(inv,fonteId);
+  const tarefas=(inv?.tarefas||[]).filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));
   if(modo!=='CICLICO')return tarefas;
-  const divEnd=_invDivEnderecos(fonteId);
+  const divEnd=_divergenciaEscopoEnderecos(DB.inventarios.find(x=>x.id===fonteId));
   return tarefas.filter(t=>divEnd.has(String(t.endereco||'').trim()));
 }
 function _renderLiberacaoFiltros(invId){
@@ -890,24 +891,46 @@ function _ensureCiclicoTarefas(inv,fonteId){
   });
   return {enderecos:roteados,criados:roteados.size};
 }
+function _divergenciaEscopoEnderecos(inv){
+  const set=new Set();
+  if(!inv||!Array.isArray(inv.divergencias))return set;
+  const estoque=Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:[];
+  const cruz=inv.conciliacaoResumo?.tipoCruzamento||{};
+  const ends=Array.isArray(inv.cargaEnderecosSnapshot)?inv.cargaEnderecosSnapshot:[];
+  const add=(e)=>{const v=String(e||'').trim();if(v)set.add(v)};
+  inv.divergencias.forEach(d=>{
+    (Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).forEach(r=>add(typeof r==='string'?r:r?.endereco));
+    const cand=estoque.filter(x=>{
+      if(_normOperFlex(x.SKU_CLIENTE)!==_normOperFlex(d.sku))return false;
+      if(cruz.lote&&_normOperFlex(x.LOTE||'')!==_normOperFlex(d.lote||''))return false;
+      if(cruz.um&&_normOperFlex(x.UNIDADE_MEDIDA||'UN')!==_normOperFlex(d.um||'UN'))return false;
+      return String(x.ENDERECO||'').trim()!=='';
+    });
+    cand.forEach(x=>add(x.ENDERECO));
+  });
+  return set;
+}
 function _encontrarFonteCiclica(invId){
   const atual=DB.inventarios.find(x=>x.id===invId);
+  const ehConc=!!(atual&&(atual.tipo==='CONCILIACAO_EXCEL'||atual.modoContagem==='CONCILIACAO_EXCEL'||atual.modoContagem==='CONCILIACAO'));
+  // Se a própria tela foi aberta sobre uma conciliação com divergências,
+  // ela é a fonte. Não procurar outra conciliação e não depender de contagem prévia.
+  if(ehConc&&Array.isArray(atual.divergencias)&&atual.divergencias.length)return atual;
   const concs=DB.inventarios.filter(x=>
-    x.id!==invId &&
     (x.tipo==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO') &&
     Array.isArray(x.divergencias) && x.divergencias.length>0
   ).sort((a,b)=>{
-    const ae=_invDivEnderecos(a.id).size,be=_invDivEnderecos(b.id).size;
+    const ae=_divergenciaEscopoEnderecos(a).size,be=_divergenciaEscopoEnderecos(b).size;
     if(be!==ae)return be-ae;
     return String(b.criadoEm||'').localeCompare(String(a.criadoEm||''));
   });
   if(atual?.cargaConciliacaoId){
     const direto=DB.inventarios.find(x=>x.id===atual.cargaConciliacaoId);
-    if(direto && Array.isArray(direto.divergencias) && direto.divergencias.length)return direto;
+    if(direto&&Array.isArray(direto.divergencias)&&direto.divergencias.length)return direto;
   }
   const mesmo=concs.find(x=>{
     if(!atual)return true;
-    return String(x.configOperacaoId||'')===String(atual.configOperacaoId||'') && String(x.filial||'')===String(atual.filial||'');
+    return String(x.configOperacaoId||'')===String(atual.configOperacaoId||'')&&String(x.filial||'')===String(atual.filial||'');
   });
   return mesmo||concs[0]||null;
 }
@@ -918,7 +941,7 @@ function abrirLiberacaoTarefas(invId){
   let fonteInicial=null;
   if(inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO')fonteInicial=inv;
   else fonteInicial=_encontrarFonteCiclica(invId);
-  if(fonteInicial && _invDivEnderecos(fonteInicial.id).size){
+  if(fonteInicial && Array.isArray(fonteInicial.divergencias) && fonteInicial.divergencias.length){
     inv.cargaConciliacaoId=fonteInicial.id;
     _ensureCiclicoTarefas(inv,fonteInicial.id);
     save();
@@ -928,8 +951,8 @@ function abrirLiberacaoTarefas(invId){
   const enderecosEstrutura=new Set(estrutura.map(x=>String(x['ENDEREÇO']).trim()));
   const tarefasEstrutura=tarefas.filter(t=>enderecosEstrutura.has(String(t.endereco||'').trim()) && t.status!=='FORA_CICLO');
   const enderecosSemProduto=tarefasEstrutura.filter(t=>!(t.itens||[]).length).length;
-  const fontesRaw=DB.inventarios.filter(x=>x.id!==invId && (x.tipo==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO') && Array.isArray(x.divergencias) && x.divergencias.length>0).sort((a,b)=>{
-    const ae=_invDivEnderecos(a.id).size,be=_invDivEnderecos(b.id).size;
+  const fontesRaw=DB.inventarios.filter(x=>(x.tipo==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO') && Array.isArray(x.divergencias) && x.divergencias.length>0).sort((a,b)=>{
+    const ae=_divergenciaEscopoEnderecos(a).size,be=_divergenciaEscopoEnderecos(b).size;
     if(be!==ae)return be-ae;
     return String(b.criadoEm||'').localeCompare(String(a.criadoEm||''));
   });
@@ -943,7 +966,7 @@ function abrirLiberacaoTarefas(invId){
     <label class="card" style="cursor:pointer;border:1px solid var(--orange);"><input type="radio" name="libModo" value="GERAL" checked onchange="atualizarModoLiberacao()"><strong style="color:var(--orange2)"> INVENTÁRIO GERAL</strong><div class="mini" style="margin-top:8px">Contagem cega. A 1ª contagem é obrigatória para 100% dos endereços da base.</div></label>
     <label class="card" style="cursor:pointer;"><input type="radio" name="libModo" value="CICLICO" ${fonteInicial?'':'disabled'} onchange="atualizarModoLiberacao()"><strong style="color:#60a5fa"> INVENTÁRIO CÍCLICO / CONCILIAÇÃO</strong><div class="mini" style="margin-top:8px">Somente endereços divergentes da referência selecionada.</div></label>
   </div>
-  <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv" onchange="atualizarModoLiberacao()"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}" ${fonteInicial&&x.id===fonteInicial.id?'selected':''}>${esc(x.id)} · ${esc(x.operacao||x.cliente||'CONCILIAÇÃO')} · ${_invDivEnderecos(x.id).size} endereço(s) divergente(s)</option>`).join('')}</select></div><div class="mini" style="margin-top:8px">A referência é a conciliação. O endereço do cliente só participa do cruzamento quando o flag ENDEREÇO foi marcado; o endereço da base física continua sendo usado para rotear a contagem.</div></div>
+  <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv" onchange="atualizarModoLiberacao()"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}" ${fonteInicial&&x.id===fonteInicial.id?'selected':''}>${esc(x.id)} · ${esc(x.operacao||x.cliente||'CONCILIAÇÃO')} · ${_divergenciaEscopoEnderecos(x).size} endereço(s) no escopo</option>`).join('')}</select></div><div class="mini" style="margin-top:8px">A referência é a conciliação. O endereço do cliente só participa do cruzamento quando o flag ENDEREÇO foi marcado; o endereço da base física continua sendo usado para rotear a contagem.</div></div>
   <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${tarefas.filter(t=>t.status==='AGUARDANDO').length}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Divide os endereços selecionados de forma equilibrada entre os CONTADORES ativos e cria cards independentes. Se desmarcado, a divisão continua sendo feita manualmente por RUA + LADO + NÍVEL.</div></span></label></div></div>
   <div class="g3" style="margin-top:14px"><div class="card" id="libRuaBox"></div><div class="card" id="libLadoBox"></div><div class="card" id="libNivelBox"></div></div>
   <div id="libPreview" class="info" style="margin-top:14px"><b>Seleção:</b> marque Rua, Lado e/ou Nível. Cada conjunto de RUA + LADO + NÍVEL poderá ser tratado como uma onda independente.</div>
@@ -972,7 +995,7 @@ function atualizarModoLiberacao(){
   let fonteId=sel?.value||'';
   if(modo==='CICLICO'){
     if(!fonteId){const f=_encontrarFonteCiclica(invId);if(f){fonteId=f.id;if(sel)sel.value=f.id;inv.cargaConciliacaoId=f.id;}}
-    if(fonteId){_invDivEnderecos(fonteId);_ensureCiclicoTarefas(inv,fonteId);save();}
+    if(fonteId){_ensureCiclicoTarefas(inv,fonteId);save();}
   }
   _renderLiberacaoFiltros(invId);
   const cand=_liberacaoCandidatos(inv,modo,fonteId);
@@ -988,7 +1011,7 @@ function executarLiberacao(invId){
   let fonteId=document.getElementById('libFonteInv')?.value||'';
   if(modo==='CICLICO'&&!fonteId){const f=_encontrarFonteCiclica(invId);if(f){fonteId=f.id;const sel=document.getElementById('libFonteInv');if(sel)sel.value=f.id;}}
   if(modo==='CICLICO'&&!fonteId)return toast('Selecione uma conciliação com divergências para liberar.',false);
-  if(modo==='CICLICO'){_invDivEnderecos(fonteId);_ensureCiclicoTarefas(inv,fonteId);}
+  if(modo==='CICLICO'){_ensureCiclicoTarefas(inv,fonteId);}
   const ruas=[...document.querySelectorAll('.libRua:checked')].map(x=>x.value),lados=[...document.querySelectorAll('.libLado:checked')].map(x=>x.value),niveis=[...document.querySelectorAll('.libNivel:checked')].map(x=>x.value);
   const auto=!!document.getElementById('libDistribuirAuto')?.checked;
   if(!ruas.length&&!lados.length&&!niveis.length&&!auto)return toast('Selecione ao menos uma RUA, LADO ou NÍVEL, ou marque DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES.',false);
