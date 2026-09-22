@@ -633,6 +633,8 @@ function processarConcilExcel(rows,nomeArquivo){
   const cfg=_configById(document.getElementById('concConfigOperacao')?.value||'');if(!cfg)return toast('Selecione a FILIAL / OPERAÇÃO da conciliação.',false);
   if(estBase.configOperacaoId!==cfg.id||endBase.configOperacaoId!==cfg.id)return toast('As cargas selecionadas não pertencem à FILIAL / OPERAÇÃO escolhida.',false);
   const cli=document.getElementById('concCliente')?.value||'',site=document.getElementById('concSite')?.value||'';
+  const estoqueOrigem=Array.isArray(estBase.registros)?estBase.registros:[];
+  const estoqueEscopo=estoqueOrigem.filter(x=>(!cli||_concEq(x.CLIENTE,cli))&&(!site||_concEq(x.SITE,site)));
   const cruzamento=_concTipoCruzamento();
   if(!Object.values(cruzamento).some(Boolean))return toast('Selecione ao menos um tipo de cruzamento.',false);
   if(cruzamento.quantidade && !map.QUANTIDADE)return toast('O cruzamento por QUANTIDADE exige a coluna QUANTIDADE no Excel.',false);
@@ -645,7 +647,7 @@ function processarConcilExcel(rows,nomeArquivo){
     const k=chaveCruzamento(x),old=fis.get(k);fis.set(k,{endereco:_normalizarConc(x.endereco),sku:_normalizarConc(x.sku),lote:_normalizarConc(x.lote),um:_normalizarConc(x.um||'UN'),qtdFis:(old?.qtdFis||0)+x.qtd,descricao:String(map.DESCRICAO?r[map.DESCRICAO]||'':'').trim()||(old?.descricao||'')});
   });
   const sis=new Map();
-  (estBase.registros||[]).filter(x=>(!cli||_concEq(x.CLIENTE,cli))&&(!site||_concEq(x.SITE,site))).forEach(x=>{
+  estoqueEscopo.forEach(x=>{
     const a={endereco:x.ENDERECO,sku:x.SKU_CLIENTE,lote:x.LOTE||'',um:x.UNIDADE_MEDIDA||'UN',qtd:_num(x.QUANTIDADE)};
     if(!String(a.endereco??'').trim()||!String(a.sku??'').trim())return;
     const k=chaveCruzamento(a),old=sis.get(k);sis.set(k,{endereco:_normalizarConc(a.endereco),sku:_normalizarConc(a.sku),lote:_normalizarConc(a.lote),um:_normalizarConc(a.um||'UN'),qtdSis:(old?.qtdSis||0)+a.qtd,descricao:String(x.DESCRICAO||'').trim()||(old?.descricao||''),valorUnit:Number(x.VALOR_UNIT)||0});
@@ -663,11 +665,13 @@ function processarConcilExcel(rows,nomeArquivo){
     }
   });
   if(semEndereco.length){const un=[...new Set(semEndereco.filter(Boolean))];return toast('Há '+un.length+' endereço(s) no Excel/estoque que não existem na Carga de Endereços selecionada: '+un.slice(0,3).join(', ')+(un.length>3?'...':''),false)}
-  if(!confrontados)return toast('Nenhum registro entrou no escopo da conciliação. Revise os filtros, Cliente/Site e as cargas selecionadas.',false);
+  if(!estoqueEscopo.length)return toast('A Carga de Estoque selecionada possui '+estoqueOrigem.length+' registro(s), porém 0 entraram no filtro Cliente/Site. Cliente selecionado: '+(cli||'Todos')+' · Site selecionado: '+(site||'Todos')+'.',false);
+  if(!fis.size)return toast('O Excel de conciliação possui '+rows.length+' linha(s), mas nenhuma possui ENDEREÇO e SKU_CLIENTE válidos para cruzamento.',false);
+  if(!confrontados)return toast('Nenhum registro entrou no escopo da conciliação. Estoque filtrado: '+estoqueEscopo.length+' · Excel válido: '+fis.size+'. Revise somente os critérios de cruzamento.',false);
   const seq=DB.inventarios.length+1,byEnd={};divs.forEach(d=>(byEnd[d.endereco]??=[]).push(d));
   const tarefas=Object.entries(byEnd).map(([end,items],i)=>{const en=(endBase.registros||[]).find(x=>_normalizarConc(x['ENDEREÇO'])===end)||{};return{id:'TAR-'+String(seq).padStart(3,'0')+'-'+String(i+1).padStart(3,'0'),endereco:end,rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||'',status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO_EXCEL',itens:items.map(x=>({endereco:x.endereco,sku:x.sku,lote:String(x.lote||''),descricao:x.descricao,qtdSistema:x.qtdSistema,um:x.um,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:x.qtdFisica}))}});
   const valorDivergencias=valorSobra+valorFalta,unidadesSistema=[...sis.values()].reduce((a,x)=>a+Number(x.qtdSis||0),0),pctDivQtd=unidadesSistema?unidadesDivergentes/unidadesSistema*100:0,accQtd=unidadesSistema?Math.max(0,100-pctDivQtd):null,pctDivValor=estoqueContabil?valorDivergencias/estoqueContabil*100:0,accValor=estoqueContabil?Math.max(0,100-pctDivValor):null;
-  const inv={configOperacaoId:cfg.id,filial:cfg.filial,id:'INV-CONC-'+new Date().getFullYear()+'-'+String(seq).padStart(4,'0'),tipo:'CONCILIACAO_EXCEL',modoContagem:'CONCILIACAO_EXCEL',cargaConciliacaoId:nomeArquivo,cargaEstoqueId:estBase.id,cargaEnderecosId:endBase.id,status:'ABERTO',operacao:cfg.nome,cliente:cli||'MÚLTIPLOS',site:site||'MÚLTIPLOS',criadoEm:now(),arquivoConcil:nomeArquivo,totalDivergencias:divs.length,tarefas,conciliacaoResumo:{confrontados,divergentes,unidadesDivergentes,unidadesSistema,valorSobra,valorFalta,valorDivergencias,estoqueContabil,itensSobra,itensFalta,pctDivQtd,accQtd,pctDivValor,accValor,semDivergencia:divs.length===0,tipoCruzamento:cruzamento},cargaEstoqueSnapshot:_clone((estBase.registros||[]).filter(x=>(!cli||x.CLIENTE===cli)&&(!site||x.SITE===site))),cargaEnderecosSnapshot:_clone(endBase.registros||[]),fonteCargaEstoque:_baseLabel(estBase),fonteCargaEnderecos:_baseLabel(endBase)};
+  const inv={configOperacaoId:cfg.id,filial:cfg.filial,id:'INV-CONC-'+new Date().getFullYear()+'-'+String(seq).padStart(4,'0'),tipo:'CONCILIACAO_EXCEL',modoContagem:'CONCILIACAO_EXCEL',cargaConciliacaoId:nomeArquivo,cargaEstoqueId:estBase.id,cargaEnderecosId:endBase.id,status:'ABERTO',operacao:cfg.nome,cliente:cli||'MÚLTIPLOS',site:site||'MÚLTIPLOS',criadoEm:now(),arquivoConcil:nomeArquivo,totalDivergencias:divs.length,tarefas,conciliacaoResumo:{confrontados,divergentes,unidadesDivergentes,unidadesSistema,valorSobra,valorFalta,valorDivergencias,estoqueContabil,itensSobra,itensFalta,pctDivQtd,accQtd,pctDivValor,accValor,semDivergencia:divs.length===0,tipoCruzamento:cruzamento},cargaEstoqueSnapshot:_clone(estoqueEscopo),cargaEnderecosSnapshot:_clone(endBase.registros||[]),fonteCargaEstoque:_baseLabel(estBase),fonteCargaEnderecos:_baseLabel(endBase)};
   DB.inventarios.push(inv);save();_concilExcelPendente=null;closeModal();renderInv();renderDash();renderConc();
   if(divs.length){go('tarefas');setTimeout(()=>renderTarefas(inv.id),50)}else{go('dashboard')}
   toast('Conciliação concluída · '+confrontados+' cruzamento(s) realizado(s) · '+divs.length+' divergência(s) · '+cfg.nome);
