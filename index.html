@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.8.9 · Conciliação e Contagem</title>
+<title>ContaLog · v1.9.0 · Conciliação e Contagem</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.8.9<br>YALOG-CONTA-001 • v1.8.9 Build 046 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.0<br>YALOG-CONTA-001 • v1.9.0 Build 047 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -772,6 +772,7 @@ function _renderLiberacaoFiltros(invId){
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
   const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';
   const fonteId=document.getElementById('libFonteInv')?.value||invId;
+  if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId);
   const candidatos=_liberacaoCandidatos(inv,modo,fonteId);
   const uni=(fn)=>[...new Set(candidatos.map(fn).map(v=>String(v??'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}));
   const ruas=uni(t=>t.rua),lados=uni(t=>t.lado),niveis=uni(t=>t.nivel);
@@ -834,15 +835,61 @@ function _renderReleaseMonitor(inv){
     </div>
   </div>`;
 }
+function _normOperFlex(v){
+  const s=_normalizarConc(v);
+  return s.replace(/^0+(?=\d)/,'');
+}
+function _ensureCiclicoTarefas(inv,fonteId){
+  if(!inv)return {enderecos:new Set(),criados:0};
+  const fonte=DB.inventarios.find(x=>x.id===fonteId)||inv;
+  const estoque=Array.isArray(fonte.cargaEstoqueSnapshot)?fonte.cargaEstoqueSnapshot:(Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:[]);
+  const enderecos=Array.isArray(fonte.cargaEnderecosSnapshot)?fonte.cargaEnderecosSnapshot:(Array.isArray(inv.cargaEnderecosSnapshot)?inv.cargaEnderecosSnapshot:[]);
+  const divs=Array.isArray(fonte.divergencias)?fonte.divergencias:[];
+  const roteados=new Set();
+  divs.forEach(d=>{
+    const sku=_normalizarConc(d.sku), skuFlex=_normOperFlex(d.sku);
+    const candidatos=estoque.filter(x=>{
+      if(_normalizarConc(x.SKU_CLIENTE)!==sku && _normOperFlex(x.SKU_CLIENTE)!==skuFlex)return false;
+      if(fonte.conciliacaoResumo?.tipoCruzamento?.lote && _normalizarConc(x.LOTE||'')!==_normalizarConc(d.lote||'' ) && _normOperFlex(x.LOTE||'')!==_normOperFlex(d.lote||''))return false;
+      if(fonte.conciliacaoResumo?.tipoCruzamento?.um && _normalizarConc(x.UNIDADE_MEDIDA||'UN')!==_normalizarConc(d.um||'UN'))return false;
+      return String(x.ENDERECO||'').trim()!=='';
+    });
+    candidatos.forEach(x=>{
+      const end=String(x.ENDERECO||'').trim();
+      const en=enderecos.find(z=>_normalizarConc(z['ENDEREÇO'])===_normalizarConc(end))||{};
+      const rota={endereco:end,rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||''};
+      d.enderecosRoteados=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
+      if(!d.enderecosRoteados.some(z=>_normalizarConc(z.endereco)===_normalizarConc(end)))d.enderecosRoteados.push(rota);
+      roteados.add(end);
+      if(!Array.isArray(inv.tarefas))inv.tarefas=[];
+      let t=inv.tarefas.find(t=>_normalizarConc(t.endereco)===_normalizarConc(end));
+      if(!t){
+        const seq=inv.tarefas.length+1;
+        t={id:'TAR-'+String(inv.id||'INV').slice(-8)+'-'+String(seq).padStart(3,'0'),endereco:end,rua:rota.rua,lado:rota.lado,nivel:rota.nivel,status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO',itens:[]};
+        inv.tarefas.push(t);
+      }else{
+        t.rua=rota.rua;t.lado=rota.lado;t.nivel=rota.nivel;if(t.status==='FORA_CICLO')t.status='AGUARDANDO';
+      }
+      const itemSku=String(x.SKU_CLIENTE||d.sku||''), itemLote=String(x.LOTE||d.lote||''), itemUm=String(x.UNIDADE_MEDIDA||d.um||'UN');
+      const itemKey=_normalizarConc(itemSku)+'||'+_normalizarConc(itemLote)+'||'+_normalizarConc(itemUm);
+      if(!Array.isArray(t.itens))t.itens=[];
+      if(!t.itens.some(it=>_normalizarConc(it.sku||'')+'||'+_normalizarConc(it.lote||'')+'||'+_normalizarConc(it.um||'')===itemKey)){
+        t.itens.push({endereco:end,sku:itemSku,lote:itemLote,descricao:String(x.DESCRICAO||d.descricao||''),qtdSistema:_num(x.QUANTIDADE),um:itemUm,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:Number(d.qtdFisica||0),divergenciaConsolidada:Number(d.qtdFisica||0)-Number(d.qtdSistema||0)});
+      }
+    });
+  });
+  return {enderecos:roteados,criados:roteados.size};
+}
 function abrirLiberacaoTarefas(invId){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
+  if(inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO') _ensureCiclicoTarefas(inv,invId);
   const tarefas=inv.tarefas||[];
   const estrutura=DB.enderecos.filter(x=>x&&String(x['ENDEREÇO']||'').trim());
   const enderecosEstrutura=new Set(estrutura.map(x=>String(x['ENDEREÇO']).trim()));
   const tarefasEstrutura=tarefas.filter(t=>enderecosEstrutura.has(String(t.endereco||'').trim()));
   const enderecosSemProduto=tarefasEstrutura.filter(t=>!(t.itens||[]).length).length;
-  const fontesRaw=DB.inventarios.filter(x=>_invDivEnderecos(x.id).size && (x.id===invId || x.tipo==='CONCILIACAO_EXCEL' || x.modoContagem==='CONCILIACAO'));const fontes=fontesRaw.some(x=>x.id===invId)?fontesRaw:(_invDivEnderecos(invId).size?[inv,...fontesRaw]:fontesRaw);
+  const fontesRaw=DB.inventarios.filter(x=>x.id===invId || ((x.tipo==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO') && _invDivEnderecos(x.id).size));const fontes=fontesRaw.some(x=>x.id===invId)?fontesRaw:(_invDivEnderecos(invId).size?[inv,...fontesRaw]:fontesRaw);
   const st=_releaseStats(inv);
   document.getElementById('modalBody').dataset.invId=invId;
   document.getElementById('modalBody').innerHTML=`
@@ -876,7 +923,7 @@ function startReleaseTimer(invId){
     atualizarPreviewLiberacao();
   },3000);
 }
-function atualizarModoLiberacao(){const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';const box=document.getElementById('libFonteBox');if(box)box.style.display=modo==='CICLICO'?'block':'none';const invId=document.getElementById('modalBody')?.dataset?.invId;if(invId){const sel=document.getElementById('libFonteInv');if(modo==='CICLICO'&&sel&&!sel.value&&[...sel.options].some(o=>o.value===invId))sel.value=invId;_renderLiberacaoFiltros(invId);const inv=DB.inventarios.find(x=>x.id===invId),fonteId=sel?.value||invId,cand=_liberacaoCandidatos(inv,modo,fonteId),ec=document.getElementById('libEstruturaCount'),sc=document.getElementById('libSemProdutoCount'),ac=document.getElementById('libAguardandoCount');if(ec)ec.textContent=cand.length;if(sc)sc.textContent=cand.filter(t=>!(t.itens||[]).length).length;if(ac)ac.textContent=cand.length}}
+function atualizarModoLiberacao(){const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';const box=document.getElementById('libFonteBox');if(box)box.style.display=modo==='CICLICO'?'block':'none';const invId=document.getElementById('modalBody')?.dataset?.invId;if(invId){const sel=document.getElementById('libFonteInv');if(modo==='CICLICO'&&sel&&!sel.value&&[...sel.options].some(o=>o.value===invId))sel.value=invId;_renderLiberacaoFiltros(invId);const inv=DB.inventarios.find(x=>x.id===invId),fonteId=sel?.value||invId;if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId);const cand=_liberacaoCandidatos(inv,modo,fonteId),ec=document.getElementById('libEstruturaCount'),sc=document.getElementById('libSemProdutoCount'),ac=document.getElementById('libAguardandoCount');if(ec)ec.textContent=cand.length;if(sc)sc.textContent=cand.filter(t=>!(t.itens||[]).length).length;if(ac)ac.textContent=cand.length}}
 function executarLiberacao(invId){
   if(usuarioAtual?.perfil!=='MASTER')return;
   const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL',fonteId=document.getElementById('libFonteInv')?.value||'';
@@ -884,7 +931,7 @@ function executarLiberacao(invId){
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
   if(modo==='CICLICO'&&!fonteId)return toast('Selecione a carga/inventário de conciliação.',false);
   if(!ruas.length&&!lados.length&&!niveis.length)return toast('Selecione ao menos uma RUA, LADO ou NÍVEL.',false);
-  const divEnd=modo==='CICLICO'?_invDivEnderecos(fonteId):new Set();const st=_releaseStats(inv);let candidatos=_liberacaoCandidatos(inv,modo,fonteId);
+  if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId);const divEnd=modo==='CICLICO'?_invDivEnderecos(fonteId):new Set();const st=_releaseStats(inv);let candidatos=_liberacaoCandidatos(inv,modo,fonteId);
   if(modo==='CICLICO'&&!divEnd.size)return toast('A conciliação selecionada não possui endereços divergentes roteados para contagem.',false);
   candidatos=candidatos.filter(t=>(!ruas.length||ruas.includes(String(t.rua)))&&(!lados.length||lados.includes(String(t.lado)))&&(!niveis.length||niveis.includes(String(t.nivel))));
   if(modo==='CICLICO'){
