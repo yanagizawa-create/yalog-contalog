@@ -2160,61 +2160,92 @@ async function exportarDivergenciasExcel(invId){
   const wb=XLSX.utils.book_new();
   const resumo=[
     ['CONTALOG — ANÁLISE DE DIVERGÊNCIAS'],
-    ['Inventário',scope?.id||'Todas as conciliações'],
-    ['Operação',scope?.operacao||'Todas'],
-    ['Cliente',scope?.cliente||'Todos'],
-    ['Site',scope?.site||'Todos'],
-    ['Exportado em',now()],
-    [],
-    ['INDICADOR','VALOR'],
-    ['Registros divergentes',rows.length],
-    ['Produtos divergentes',new Set(rows.map(x=>String(x.it.sku||'').trim())).size],
+    ['Inventário',scope?.id||'Todas as conciliações'],['Operação',scope?.operacao||'Todas'],['Cliente',scope?.cliente||'Todos'],['Site',scope?.site||'Todos'],['Exportado em',now()],[],
+    ['INDICADOR','VALOR'],['Registros divergentes',rows.length],['Produtos divergentes',new Set(rows.map(x=>String(x.it.sku||'').trim())).size],
     ['Endereços físicos para contagem',new Set(rows.flatMap(x=>(x.enderecos||[]).map(e=>String(e||'').trim())).filter(Boolean)).size],
-    ['Divergências SEM ROTEAMENTO FÍSICO',rows.filter(x=>x.semRota).length],
-    ['Unidades divergentes',rows.reduce((a,x)=>a+Math.abs(x.diff),0)],
-    ['Sobra (unidades)',rows.filter(x=>x.diff>0).reduce((a,x)=>a+x.diff,0)],
-    ['Falta (unidades)',rows.filter(x=>x.diff<0).reduce((a,x)=>a+Math.abs(x.diff),0)]
+    ['Divergências SEM ENDEREÇO FÍSICO',rows.filter(x=>x.semRota).length],['Unidades divergentes',rows.reduce((a,x)=>a+Math.abs(x.diff),0)],
+    ['Sobra (unidades)',rows.filter(x=>x.diff>0).reduce((a,x)=>a+x.diff,0)],['Falta (unidades)',rows.filter(x=>x.diff<0).reduce((a,x)=>a+Math.abs(x.diff),0)]
   ];
-  const wsR=XLSX.utils.aoa_to_sheet(resumo);wsR['!cols']=[{wch:34},{wch:28}];XLSX.utils.book_append_sheet(wb,wsR,'Resumo');
+  const wsR=XLSX.utils.aoa_to_sheet(resumo);wsR['!cols']=[{wch:36},{wch:30}];XLSX.utils.book_append_sheet(wb,wsR,'Resumo');
+
+  // Aba consolidada: mantém uma linha por divergência, como na visão anterior.
   const dados=rows.map(x=>({
     'OPERAÇÃO':x.inv.operacao||'—','INVENTÁRIO':x.inv.id,'CLIENTE':x.inv.cliente||'—','SITE':x.inv.site||'—',
-    'ENDEREÇOS PARA CONTAGEM':(x.enderecos&&x.enderecos.length)?x.enderecos.join(' · '):'SEM ROTEAMENTO FÍSICO','SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UNIDADE DE MEDIDA':x.it.um||'—',
+    'ENDEREÇOS PARA CONTAGEM':(x.enderecos&&x.enderecos.length)?x.enderecos.join(' · '):'SEM ENDEREÇO FÍSICO',
+    'SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UNIDADE DE MEDIDA':x.it.um||'—',
     'QUANTIDADE SISTEMA':fmt(x.qSys),'QUANTIDADE FÍSICA':fmt(x.q),'DIFERENÇA':fmt(x.diff),
-    'TIPO':x.diff>0?'SOBRA':'FALTA','CONTADOR':x.contador||'—','DATA/HORA':x.data||'—','STATUS':'DIVERGENTE'
+    'TIPO':x.semRota?'EXCEDENTE TOTAL CONTÁBIL':(x.diff>0?'SOBRA':'FALTA'),'CONTADOR':x.contador||'—','DATA/HORA':x.data||'—','STATUS':'DIVERGENTE'
   }));
-  const ws=XLSX.utils.json_to_sheet(dados);ws['!cols']=[{wch:18},{wch:18},{wch:22},{wch:14},{wch:18},{wch:18},{wch:34},{wch:18},{wch:20},{wch:20},{wch:20},{wch:16},{wch:14},{wch:24},{wch:22},{wch:16}];XLSX.utils.book_append_sheet(wb,ws,'Divergências');
+  const ws=XLSX.utils.json_to_sheet(dados);ws['!cols']=[{wch:18},{wch:18},{wch:22},{wch:14},{wch:34},{wch:18},{wch:28},{wch:22},{wch:20},{wch:20},{wch:20},{wch:16},{wch:25},{wch:24},{wch:22},{wch:16}];XLSX.utils.book_append_sheet(wb,ws,'Divergências');
+
+  // Nova aba: uma linha por endereço físico. O endereço SEM ENDEREÇO FÍSICO fica sempre abaixo dos endereços do mesmo produto.
+  const detalhe=[];
+  rows.forEach(x=>{
+    const ends=Array.isArray(x.enderecos)?x.enderecos.filter(Boolean):[];
+    const roteiro=Array.isArray(x.it?.enderecosRoteados)?x.it.enderecosRoteados:[];
+    const metaMap=new Map();roteiro.forEach(e=>{const o=typeof e==='string'?{endereco:e}:e||{};const k=_normRoteamento(o.endereco||'');if(k)metaMap.set(k,o)});
+    if(ends.length){
+      ends.forEach((end,idx)=>{
+        const o=metaMap.get(_normRoteamento(end))||{};
+        detalhe.push({
+          'OPERAÇÃO':x.inv.operacao||'—','INVENTÁRIO':x.inv.id,'CLIENTE':x.inv.cliente||'—','SITE':x.inv.site||'—',
+          'SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UM':x.it.um||'—',
+          'ORDEM':idx+1,'ENDEREÇO':end,'RUA':o.rua||'—','LADO':o.lado||'—','NÍVEL':o.nivel||'—',
+          'QTD. FÍSICA NO ENDEREÇO':fmt(o.qtdFisica), 'QTD. SISTEMA DO PRODUTO':fmt(x.qSys),
+          'DIFERENÇA TOTAL DO PRODUTO':fmt(x.diff),'CLASSIFICAÇÃO':x.diff>0?'EXCEDENTE':'FALTA',
+          'STATUS DO ENDEREÇO':'LOCALIZADO'
+        });
+      });
+    }
+    // Registro contábil sem localização física: preserva a divergência integral.
+    if(!ends.length){
+      detalhe.push({
+        'OPERAÇÃO':x.inv.operacao||'—','INVENTÁRIO':x.inv.id,'CLIENTE':x.inv.cliente||'—','SITE':x.inv.site||'—',
+        'SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UM':x.it.um||'—',
+        'ORDEM':1,'ENDEREÇO':'SEM ENDEREÇO FÍSICO','RUA':'—','LADO':'—','NÍVEL':'—','QTD. FÍSICA NO ENDEREÇO':0,
+        'QTD. SISTEMA DO PRODUTO':fmt(x.qSys),'DIFERENÇA TOTAL DO PRODUTO':fmt(x.diff),
+        'CLASSIFICAÇÃO':'EXCEDENTE TOTAL CONTÁBIL','STATUS DO ENDEREÇO':'NÃO LOCALIZADO'
+      });
+    } else if(x.semRota){
+      detalhe.push({'OPERAÇÃO':x.inv.operacao||'—','INVENTÁRIO':x.inv.id,'CLIENTE':x.inv.cliente||'—','SITE':x.inv.site||'—','SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UM':x.it.um||'—','ORDEM':ends.length+1,'ENDEREÇO':'SEM ENDEREÇO FÍSICO','RUA':'—','LADO':'—','NÍVEL':'—','QTD. FÍSICA NO ENDEREÇO':0,'QTD. SISTEMA DO PRODUTO':fmt(x.qSys),'DIFERENÇA TOTAL DO PRODUTO':fmt(x.diff),'CLASSIFICAÇÃO':'EXCEDENTE TOTAL CONTÁBIL','STATUS DO ENDEREÇO':'NÃO LOCALIZADO'});
+    }
+  });
+  const wsD=XLSX.utils.json_to_sheet(detalhe);
+  wsD['!cols']=[{wch:18},{wch:18},{wch:22},{wch:14},{wch:18},{wch:28},{wch:22},{wch:10},{wch:8},{wch:24},{wch:14},{wch:12},{wch:12},{wch:24},{wch:24},{wch:25},{wch:22},{wch:22}];
+  XLSX.utils.book_append_sheet(wb,wsD,'Detalhe por Endereço');
+
   const nome='ContaLog_Divergencias_'+String(scope?.id||'Consolidado').replace(/[^a-zA-Z0-9_-]+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.xlsx';
-  XLSX.writeFile(wb,nome);
-  toast('Excel de divergências gerado com sucesso.');
+  XLSX.writeFile(wb,nome);toast('Excel de divergências gerado com sucesso, incluindo a aba Detalhe por Endereço.');
 }
 
 function abrirVisualizacaoDivergencias(invId){
   const modal=document.getElementById('modal'),body=document.getElementById('modalBody');if(!modal||!body)return;
   const {concInvs,rows,scope}=_obterLinhasDivergencias(invId);
   const fmt=n=>Number(n||0).toLocaleString('pt-BR',{maximumFractionDigits:3});
-  const enderecoLabel=x=>{
-    const roteiro=Array.isArray(x.it?.enderecosRoteados)?x.it.enderecosRoteados:[];
-    const arr=(x.enderecos||[]).filter(Boolean);
-    if(!arr.length)return '<span class="badge div">SEM ENDEREÇO FÍSICO</span>';
-    const byNorm=new Map();roteiro.forEach(e=>{const o=typeof e==='string'?{endereco:e}:e||{};const k=_normRoteamento(o.endereco||'');if(k)byNorm.set(k,o)});
-    return arr.map(e=>{const o=byNorm.get(_normRoteamento(e))||{endereco:e};const meta=[o.rua&&('RUA '+o.rua),o.lado&&('LADO '+o.lado),o.nivel&&('NÍVEL '+o.nivel)].filter(Boolean).join(' · ');const q=o.qtdFisica!=null?' · físico '+fmt(o.qtdFisica):'';return '<span style="display:inline-flex;flex-direction:column;gap:2px;margin:2px 4px 2px 0;padding:5px 7px;border:1px solid rgba(251,146,60,.28);border-radius:7px;background:rgba(251,146,60,.05);font-family:var(--mono);font-size:10px"><b>'+esc(o.endereco||e)+'</b><span style="opacity:.72">'+esc((meta||'posição não cadastrada')+q)+'</span></span>'}).join('');
+  let visao='consolidado';
+  const buildEnderecoRows=x=>{
+    const roteiro=Array.isArray(x.it?.enderecosRoteados)?x.it.enderecosRoteados:[];const arr=(x.enderecos||[]).filter(Boolean);const byNorm=new Map();roteiro.forEach(e=>{const o=typeof e==='string'?{endereco:e}:e||{};const k=_normRoteamento(o.endereco||'');if(k)byNorm.set(k,o)});
+    const out=[];
+    arr.forEach((e,i)=>{const o=byNorm.get(_normRoteamento(e))||{endereco:e};out.push({x,e,o,ord:i+1,sem:false});});
+    if(!arr.length||x.semRota)out.push({x,e:'SEM ENDEREÇO FÍSICO',o:{},ord:arr.length+1,sem:true});
+    return out;
   };
-  const tipoDivergencia=x=>x.diff>0?'EXCEDENTE':'FALTA';
-  const rowsHtml=rows.length?rows.map(x=>`<tr>
-    <td>${esc(x.inv.operacao||'—')}</td><td>${esc(x.inv.id)}</td>
-    <td style="min-width:250px">${enderecoLabel(x)}</td>
-    <td class="mn">${esc(x.it.sku)}</td><td>${esc(x.it.descricao||'—')}</td><td class="mn">${esc(x.it.lote||'—')}</td><td>${esc(x.it.um||'—')}</td>
-    <td>${fmt(x.qSys)}</td><td>${fmt(x.q)}</td><td style="color:${x.diff>0?'#60a5fa':'#f87171'};font-weight:800">${x.diff>0?'+':''}${fmt(x.diff)}</td>
-    <td><span class="badge ${x.semRota?'div':(x.diff>0?'ok':'div')}">${x.semRota?'SEM ROTEAMENTO':tipoDivergencia(x)}</span></td>
-  </tr>`).join(''):'<tr><td colspan="11" style="text-align:center;padding:30px">Nenhuma divergência encontrada.</td></tr>';
+  const enderecoHtml=o=>{if(o.sem)return '<span class="badge div">SEM ENDEREÇO FÍSICO</span>';const meta=[o.o.rua&&('RUA '+o.o.rua),o.o.lado&&('LADO '+o.o.lado),o.o.nivel&&('NÍVEL '+o.o.nivel)].filter(Boolean).join(' · ');return '<span style="font-family:var(--mono);font-weight:800">'+esc(o.e)+'</span><div class="mini">'+esc(meta||'posição não cadastrada')+(o.o.qtdFisica!=null?' · físico '+fmt(o.o.qtdFisica):'')+'</div>';};
+  const render=()=>{
+    let expanded=[];rows.forEach(x=>{if(visao==='consolidado')expanded.push({x,e:'',o:{},ord:1,sem:x.semRota});else if(visao==='sem') {if(x.semRota)expanded.push(...buildEnderecoRows(x).filter(z=>z.sem));} else expanded.push(...buildEnderecoRows(x));});
+    const html=expanded.length?expanded.map(z=>{const x=z.x;const tipo=z.sem?'EXCEDENTE TOTAL CONTÁBIL':(x.diff>0?'EXCEDENTE':'FALTA');const cor=x.diff>0?'#60a5fa':'#f87171';const sinal=x.diff>0?'+':'';const badge=z.sem?'div':(x.diff>0?'ok':'div');return `<tr><td>${esc(x.inv.operacao||'—')}</td><td>${esc(x.inv.id)}</td><td>${esc(x.it.sku)}</td><td>${esc(x.it.descricao||'—')}</td><td class="mn">${esc(x.it.lote||'—')}</td><td>${esc(x.it.um||'—')}</td><td>${visao==='consolidado'?((x.enderecos||[]).join(' · ')||'SEM ENDEREÇO FÍSICO'):enderecoHtml(z)}</td><td>${fmt(x.qSys)}</td><td>${fmt(z.sem?0:x.q)}</td><td style="color:${cor};font-weight:800">${sinal}${fmt(x.diff)}</td><td><span class="badge ${badge}">${tipo}</span></td></tr>`;}).join(''):'<tr><td colspan="11" style="text-align:center;padding:30px">Nenhuma divergência encontrada para este filtro.</td></tr>';
+    body.querySelector('#divergenciasBody').innerHTML=html;
+    const sel=body.querySelector('#divergenciasVisao');if(sel)sel.value=visao;
+    const hint=body.querySelector('#divergenciasHint');if(hint)hint.innerHTML=visao==='por-endereco'?'<b>VISÃO POR ENDEREÇO:</b> cada endereço físico ocupa uma linha. Quando não houver localização, o registro <b>SEM ENDEREÇO FÍSICO</b> aparece preservando a divergência total.':visao==='sem'?'<b>SEM ENDEREÇO:</b> mostra somente produtos/divergências sem localização física, preservando o saldo contábil integral.':'<b>VISÃO CONSOLIDADA:</b> uma linha por divergência, com os endereços agrupados.';
+  };
   body.innerHTML=`<div class="mt">Divergências ${scope?'· '+esc(scope.id):'das Conciliações'}</div>
     <div class="ms">Visão analítica das divergências identificadas. ${scope?`Operação: <b>${esc(scope.operacao||'—')}</b> · Cliente: <b>${esc(scope.cliente||'—')}</b> · Site: <b>${esc(scope.site||'—')}</b>.`:'A seleção considera todas as operações de conciliação existentes.'}</div>
-    <div class="info" style="margin-top:12px;border-color:rgba(251,146,60,.35)"><b>ENDEREÇO DA DIVERGÊNCIA:</b> o Sistema localiza a divergência no <b>estoque físico</b> pelo SKU + LOTE + UM conforme os critérios da conciliação e mostra <b>todos os endereços físicos encontrados</b>. O endereço do mapa contábil não substitui a localização física.</div>
+    <div class="info" style="margin-top:12px;border-color:rgba(251,146,60,.35)"><div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap"><div class="fg" style="min-width:260px"><label>VISÃO DA DIVERGÊNCIA</label><select id="divergenciasVisao"><option value="consolidado">Consolidado</option><option value="por-endereco">Por endereço — 1 linha por endereço</option><option value="sem">Somente sem endereço físico</option></select></div><div id="divergenciasHint" class="mini" style="flex:1;min-width:280px"></div></div></div>
     <div class="acts" style="margin-top:14px;justify-content:flex-end"><button type="button" class="btn btn-p" onclick="exportarDivergenciasExcel(${scope?`'${esc(scope.id)}'`:"''"})">↓ Baixar Excel para análise</button></div>
-    <div class="kpis" style="margin-top:14px"><div class="kpi"><div class="v">${rows.length}</div><div class="l">Registros divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.map(x=>String(x.it.sku||'').trim())).size}</div><div class="l">Produtos divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.flatMap(x=>(x.enderecos||[]).map(e=>String(e||'').trim())).filter(Boolean)).size}</div><div class="l">Endereços físicos das divergências${rows.some(x=>x.semRota)?' · '+rows.filter(x=>x.semRota).length+' sem roteamento':''}</div></div><div class="kpi"><div class="v">${fmt(rows.reduce((a,x)=>a+Math.abs(x.diff),0))}</div><div class="l">Unidades divergentes</div></div></div>
-    <div class="tw" style="margin-top:14px;max-height:58vh;overflow:auto"><table class="dt"><thead><tr><th>OPERAÇÃO</th><th>INVENTÁRIO</th><th>ENDEREÇO(S) FÍSICO(S) DA DIVERGÊNCIA</th><th>SKU</th><th>DESCRIÇÃO</th><th>LOTE</th><th>UM</th><th>SISTEMA</th><th>FÍSICO</th><th>DIF.</th><th>CLASSIFICAÇÃO</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+    <div class="kpis" style="margin-top:14px"><div class="kpi"><div class="v">${rows.length}</div><div class="l">Registros divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.map(x=>String(x.it.sku||'').trim())).size}</div><div class="l">Produtos divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.flatMap(x=>(x.enderecos||[]).map(e=>String(e||'').trim())).filter(Boolean)).size}</div><div class="l">Endereços físicos</div></div><div class="kpi"><div class="v">${fmt(rows.reduce((a,x)=>a+Math.abs(x.diff),0))}</div><div class="l">Unidades divergentes</div></div></div>
+    <div class="tw" style="margin-top:14px;max-height:58vh;overflow:auto"><table class="dt"><thead><tr><th>OPERAÇÃO</th><th>INVENTÁRIO</th><th>SKU</th><th>DESCRIÇÃO</th><th>LOTE</th><th>UM</th><th>ENDEREÇO FÍSICO</th><th>SISTEMA</th><th>FÍSICO</th><th>DIF.</th><th>CLASSIFICAÇÃO</th></tr></thead><tbody id="divergenciasBody"></tbody></table></div>
     <div class="mfoot"><button type="button" class="btn" onclick="closeModal()">Fechar</button></div>`;
-  openModal();
+  body.querySelector('#divergenciasVisao').onchange=e=>{visao=e.target.value;render();};render();openModal();
 }
 
 function renderConc(){
