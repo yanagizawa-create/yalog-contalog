@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.9.8 · Build 058 · Planejamento de Ondas</title>
+<title>ContaLog · v1.9.9 · Build 060 · Planejamento de Ondas</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.9.8<br>YALOG-CONTA-001 • v1.9.8 Build 058 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.9<br>YALOG-CONTA-001 • v1.9.9 Build 060 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -190,8 +190,8 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.9.8';
-const CONTALOG_BUILD='057';
+const CONTALOG_VERSION='1.9.9';
+const CONTALOG_BUILD='060';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -707,7 +707,7 @@ function processarConcilExcel(rows,nomeArquivo){
      endereço continua gerando tarefas físicas corretas.
   */
   /*
-     ROTEAMENTO OPERACIONAL (v1.9.8):
+     ROTEAMENTO OPERACIONAL (v1.9.9):
      O flag ENDEREÇO controla apenas o cruzamento. Depois de identificada, cada divergência é
      localizada na Carga Estoque física por SKU + LOTE + UM (conforme os critérios) e TODOS os
      endereços físicos do item entram no escopo. RUA / LADO / NÍVEL vêm da Carga de Endereços.
@@ -848,7 +848,7 @@ function _renderReleaseMonitor(inv){
   </div>`;
 }
 /* =====================================================================
-   v1.9.8 · Build 058 — ROTEAMENTO FÍSICO DA CONCILIAÇÃO
+   v1.9.9 · Build 060 — ROTEAMENTO FÍSICO DA CONCILIAÇÃO
    DIVERGÊNCIA → SKU+LOTE+UM → CARGA ESTOQUE FÍSICA → ENDEREÇO(S) FÍSICO(S)
    → CARGA DE ENDEREÇOS → RUA + LADO + NÍVEL → ONDAS → CONTADORES
    Regras:
@@ -858,8 +858,18 @@ function _renderReleaseMonitor(inv){
      Nunca se cria dado fictício e nunca se escolhe carga arbitrária.
    ===================================================================== */
 function _normOperFlex(v){
-  const s=_normalizarConc(v);
-  return s.replace(/^0+(?=\d)/,'');
+  let s=_normalizarConc(v).replace(/\u00A0/g,' ').trim();
+  s=s.replace(/\s+/g,'');
+  // Excel frequentemente transforma códigos numéricos em 010010064.0.
+  s=s.replace(/\.0+$/,'');
+  // Para códigos puramente numéricos, zeros à esquerda não alteram a identidade.
+  if(/^\d+$/.test(s))s=s.replace(/^0+(?=\d)/,'');
+  return s;
+}
+function _normRoteamento(v){
+  let s=_normOperFlex(v);
+  // Comparação operacional tolerante para SKU/códigos sem alterar o valor exibido.
+  return s.replace(/[^A-Z0-9]/g,'');
 }
 function _ehConciliacao(inv){
   if(!inv)return false;
@@ -937,29 +947,41 @@ function _cruzConc(inv){return inv?.conciliacaoResumo?.tipoCruzamento||{endereco
 function _concilRotaMatch(x,d,cruz,usarEndereco){
   const f=_fisCampos(x),v=_divCampos(d);
   if(!f.endereco)return false;
-  if(cruz.sku&&_normOperFlex(f.sku)!==_normOperFlex(v.sku))return false;
-  if(cruz.lote&&_normOperFlex(f.lote)!==_normOperFlex(v.lote))return false;
-  if(cruz.um&&_normOperFlex(f.um||'UN')!==_normOperFlex(v.um||'UN'))return false;
+  const skuF=_normRoteamento(f.sku),skuD=_normRoteamento(v.sku);
+  const loteF=_normRoteamento(f.lote),loteD=_normRoteamento(v.lote);
+  const umF=_normRoteamento(f.um||'UN'),umD=_normRoteamento(v.um||'UN');
+  if(cruz.sku&&skuF!==skuD)return false;
+  if(cruz.lote&&loteF!==loteD)return false;
+  if(cruz.um&&umF!==umD)return false;
   const porEndereco=usarEndereco!==false&&cruz.endereco&&!!v.endereco;
   if(porEndereco){const a=_endChaves(f.endereco),b=_endChaves(v.endereco);if(a.exato!==b.exato&&a.alnum!==b.alnum)return false;}
-  // Sem nenhum critério identificador o item não é roteado (evita espalhar para todo o estoque).
-  if(!cruz.sku&&!cruz.lote&&!cruz.um&&!porEndereco)return false;
+  if(!skuF&&!skuD&&!porEndereco)return false;
   return true;
 }
-// Retorna TODOS os registros físicos da divergência (um SKU/lote pode estar em vários endereços).
+// Regra de negócio: o MAPA ESTOQUE CONTÁBIL DO CLIENTE é referência de saldo.
+// O endereço dele NÃO é requisito para encontrar a posição física.
+// Quando ENDEREÇO não participa do cruzamento, o SKU é a âncora mínima para
+// localizar TODAS as posições físicas daquele produto na Carga Estoque.
 function _rotearDivergencia(d,fis,cruz){
   if(!Array.isArray(fis)||!fis.length)return [];
-  // O endereço do mapa contábil, quando existir, é apenas um critério de cruzamento.
-  // Para a recontagem física, a fonte é SEMPRE a Carga Estoque, portanto buscamos
-  // todas as posições físicas do SKU/Lote/UM divergente.
-  let c=fis.filter(x=>_concilRotaMatch(x,d,cruz,true));
-  if(!c.length&&cruz.endereco)c=fis.filter(x=>_concilRotaMatch(x,d,cruz,false));
-  // Segurança para mapas contábeis que tenham SKU, mas apresentem lote/UM inconsistentes:
-  // nunca perder a tarefa física por causa de um atributo opcional; o SKU continua sendo
-  // a âncora mínima de localização.
-  if(!c.length){
-    const v=_divCampos(d);
-    if(String(v.sku).trim())c=fis.filter(x=>_concilRotaMatch(x,d,{endereco:false,sku:true,lote:false,um:false},false));
+  const v=_divCampos(d),sku=_normRoteamento(v.sku);
+  let c=[];
+  // 1) Cruzamento solicitado, quando há critérios suficientes.
+  c=fis.filter(x=>_concilRotaMatch(x,d,cruz,true));
+  // 2) Se o mapa contábil não tem endereço, o endereço físico do cliente é
+  //    irrelevante: localiza pelo SKU e mantém todas as posições físicas.
+  if(!c.length && !cruz.endereco && sku){
+    c=fis.filter(x=>_normRoteamento(_fisCampos(x).sku)===sku);
+  }
+  // 3) Fallback operacional: se lote/UM vierem inconsistentes entre fontes,
+  //    SKU continua sendo a âncora mínima da recontagem.
+  if(!c.length && sku){
+    c=fis.filter(x=>_normRoteamento(_fisCampos(x).sku)===sku);
+  }
+  // 4) Quando o mapa possui endereço e o endereço foi marcado, ainda permitimos
+  //    a localização por SKU caso a posição contábil não exista no mapa físico.
+  if(!c.length && cruz.endereco && sku){
+    c=fis.filter(x=>_normRoteamento(_fisCampos(x).sku)===sku);
   }
   return c;
 }
@@ -1044,15 +1066,41 @@ function _concilTaskItem(x,d,end,qtdSomada){
 const _STATUS_EDITAVEL_PLANO=['AGUARDANDO','CANCELADO','FORA_CICLO'];
 function _materializarTarefasConcil(inv){
   if(!inv||!Array.isArray(inv.divergencias)||!inv.divergencias.length){if(inv&&Array.isArray(inv.divergencias)){inv.enderecosSemRoteamento=0;inv.divergenciasSemRoteamento=[]}return {criados:0,enderecos:new Set(),semRoteamento:0};}
-  const cruz=_cruzConc(inv),fontes=_obterFontesConcil(inv),estoque=fontes.estoque,enderecos=fontes.enderecos;
+  const cruz=_cruzConc(inv),fontes=_obterFontesConcil(inv);
+  let estoque=fontes.estoque,enderecos=fontes.enderecos;
   _persistirFonte(inv,'estoque',fontes.resolucaoEstoque);_persistirFonte(inv,'enderecos',fontes.resolucaoEnderecos);
+  // RECUPERAÇÃO DE SEGURANÇA: se a fonte primária não localizar nenhuma divergência,
+  // reprocessa as cargas explicitamente vinculadas à mesma operação. Isso evita que
+  // snapshot antigo/filtrado impeça a geração das tarefas físicas.
+  const cobInicial=_coberturaRoteamento(inv,estoque);
+  if(cobInicial.roteaveis===0 && inv.divergencias.length){
+    const candidatos=[];
+    [inv.cargaEstoqueId,inv.cargaEstoqueIdOriginal].filter(Boolean).forEach(id=>{
+      const b=_getBase('estoque',id);if(b&&_mesmaOperacao(inv,b))candidatos.push(b);
+    });
+    (DB.basesEstoque||[]).filter(b=>_mesmaOperacao(inv,b)).forEach(b=>{
+      if(!candidatos.some(x=>String(x.id)===String(b.id)))candidatos.push(b);
+    });
+    let melhor=null,melhorScore=-1;
+    candidatos.forEach(b=>{const raw=Array.isArray(b.registros)?b.registros:[];const score=_coberturaRoteamento(inv,raw);if(score.roteaveis>melhorScore)melhorScore=score.roteaveis,melhor={b,raw,score}});
+    if(melhor&&melhorScore>0){
+      estoque=melhor.raw;
+      inv.cargaEstoqueId=melhor.b.id;
+      inv.cargaEstoqueSnapshot=_clone(melhor.raw);
+      inv.fonteCargaEstoque=_baseLabel(melhor.b);
+      inv.fonteFisica=inv.fonteFisica||{};
+      inv.fonteFisica.estoque={metodo:'REPROCESSAMENTO_CARGA_VINCULADA',baseId:melhor.b.id,em:now()};
+      fontes.resolucaoEstoque={metodo:'REPROCESSAMENTO_CARGA_VINCULADA',registros:melhor.raw,baseId:melhor.b.id};
+    }
+  }
   inv.fonteFisicaStatus={estoque:fontes.resolucaoEstoque.metodo,enderecos:fontes.resolucaoEnderecos.metodo,ambiguo:!!fontes.resolucaoEstoque.ambiguo};
   inv.fonteFisicaDiagnostico={
-    estoqueLocalizado:fontes.resolucaoEstoque.metodo!=='NAO_LOCALIZADA',
-    enderecosLocalizados:fontes.resolucaoEnderecos.metodo!=='NAO_LOCALIZADA',
+    estoqueLocalizado:estoque.length>0,
+    enderecosLocalizados:enderecos.length>0,
     registrosEstoque:Number(estoque.length||0),
     registrosEnderecos:Number(enderecos.length||0),
     divergenciasTotal:Number(inv.divergencias.length||0),
+    divergenciasRoteaveis:Number(_coberturaRoteamento(inv,estoque).roteaveis||0),
     timestamp:now()
   };
   const idx=_endIndice(enderecos);
