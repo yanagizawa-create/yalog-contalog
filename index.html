@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.9.9 · Build 060 · Planejamento de Ondas</title>
+<title>ContaLog · v1.9.10 · Build 061 · Planejamento de Ondas</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.9.9<br>YALOG-CONTA-001 • v1.9.9 Build 060 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.10<br>YALOG-CONTA-001 • v1.9.10 Build 061 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -190,8 +190,8 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.9.9';
-const CONTALOG_BUILD='060';
+const CONTALOG_VERSION='1.9.10';
+const CONTALOG_BUILD='061';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -707,7 +707,7 @@ function processarConcilExcel(rows,nomeArquivo){
      endereço continua gerando tarefas físicas corretas.
   */
   /*
-     ROTEAMENTO OPERACIONAL (v1.9.9):
+     ROTEAMENTO OPERACIONAL (v1.9.10):
      O flag ENDEREÇO controla apenas o cruzamento. Depois de identificada, cada divergência é
      localizada na Carga Estoque física por SKU + LOTE + UM (conforme os critérios) e TODOS os
      endereços físicos do item entram no escopo. RUA / LADO / NÍVEL vêm da Carga de Endereços.
@@ -715,8 +715,8 @@ function processarConcilExcel(rows,nomeArquivo){
   */
   const novoId=_novoIdInventario('INV-CONC-');
   const valorDivergencias=valorSobra+valorFalta,unidadesSistema=[...sis.values()].reduce((a,x)=>a+Number(x.qtdSis||0),0),pctDivQtd=unidadesSistema?unidadesDivergentes/unidadesSistema*100:0,accQtd=unidadesSistema?Math.max(0,100-pctDivQtd):null,pctDivValor=estoqueContabil?valorDivergencias/estoqueContabil*100:0,accValor=estoqueContabil?Math.max(0,100-pctDivValor):null;
-  const inv={configOperacaoId:cfg.id,filial:cfg.filial,id:novoId.id,tipo:'CONCILIACAO_EXCEL',tipoOriginal:'CONCILIACAO_EXCEL',modoContagem:'CONCILIACAO_EXCEL',cargaConciliacaoId:nomeArquivo,cargaEstoqueId:estBase.id,cargaEnderecosId:endBase.id,status:'ABERTO',operacao:cfg.nome,cliente:cli||'MÚLTIPLOS',site:site||'MÚLTIPLOS',criadoEm:now(),arquivoConcil:nomeArquivo,totalDivergencias:divs.length,divergencias:divs.map(d=>({endereco:d.endereco||'',sku:d.sku||'',lote:d.lote||'',qtdSistema:d.qtdSistema||0,qtdFisica:d.qtdFisica||0,descricao:d.descricao||'',um:d.um||'UN',cliente:d.cliente||'TODOS',site:d.site||'TODOS',enderecosRoteados:[]})),tarefas:[],conciliacaoResumo:{confrontados,divergentes,unidadesDivergentes,unidadesSistema,valorSobra,valorFalta,valorDivergencias,estoqueContabil,itensSobra,itensFalta,pctDivQtd,accQtd,pctDivValor,accValor,semDivergencia:divs.length===0,tipoCruzamento:cruzamento,tipoCruzamentoSolicitado:cruzamentoSolicitado,roteamentoSemEndereco:!cruzamento.endereco,mapaContabilSemEndereco:!temColunaDados('ENDERECO'),fonteContabil:'MAPA_CLIENTE'},cargaEstoqueSnapshot:_clone(estoqueEscopo),cargaEnderecosSnapshot:_clone(endBase?.registros||[]),fonteCargaEstoque:_baseLabel(estBase),fonteCargaEnderecos:_baseLabel(endBase),fonteFisica:{estoque:{metodo:'SNAPSHOT',baseId:estBase.id,em:now()},enderecos:{metodo:'SNAPSHOT',baseId:endBase.id,em:now()}}};
-  const rot=_materializarTarefasConcil(inv);_planejarOndasConcil(inv);const tarefas=inv.tarefas;
+  const inv={configOperacaoId:cfg.id,filial:cfg.filial,id:novoId.id,tipo:'CONCILIACAO_EXCEL',tipoOriginal:'CONCILIACAO_EXCEL',modoContagem:'CONCILIACAO_EXCEL',cargaConciliacaoId:nomeArquivo,cargaEstoqueId:estBase.id,cargaEnderecosId:endBase.id,status:'ABERTO',operacao:cfg.nome,cliente:cli||'MÚLTIPLOS',site:site||'MÚLTIPLOS',criadoEm:now(),arquivoConcil:nomeArquivo,totalDivergencias:divs.length,divergencias:divs.map(d=>({endereco:d.endereco||'',sku:d.sku||'',lote:d.lote||'',qtdSistema:d.qtdSistema||0,qtdFisica:d.qtdFisica||0,descricao:d.descricao||'',um:d.um||'UN',cliente:d.cliente||'TODOS',site:d.site||'TODOS',enderecosRoteados:[]})),tarefas:[],conciliacaoResumo:{confrontados,divergentes,unidadesDivergentes,unidadesSistema,valorSobra,valorFalta,valorDivergencias,estoqueContabil,itensSobra,itensFalta,pctDivQtd,accQtd,pctDivValor,accValor,semDivergencia:divs.length===0,tipoCruzamento:cruzamento,tipoCruzamentoSolicitado:cruzamentoSolicitado,roteamentoSemEndereco:!cruzamento.endereco,mapaContabilSemEndereco:!temColunaDados('ENDERECO'),fonteContabil:'MAPA_CLIENTE'},cargaEstoqueSnapshot:_clone(estBase?.registros||[]),cargaEnderecosSnapshot:_clone(endBase?.registros||[]),fonteCargaEstoque:_baseLabel(estBase),fonteCargaEnderecos:_baseLabel(endBase),fonteFisica:{estoque:{metodo:'SNAPSHOT',baseId:estBase.id,em:now()},enderecos:{metodo:'SNAPSHOT',baseId:endBase.id,em:now()}}};
+  const rot=_materializarTarefasConcil(inv);_planejarOndasConcil(inv);const tarefas=inv.tarefas;const fiscalContabil=(inv.divergencias||[]).filter(d=>d.roteamentoStatus==='SOBRA_FISCAL_CONTABIL'||d.exigeContagemFisica===false);inv.conciliacaoResumo.sobrasFiscaisContabeis=fiscalContabil.length;inv.conciliacaoResumo.enderecosFisicosParaContagem=inv.tarefas.length;
   DB.inventarios.push(inv);save();_concilExcelPendente=null;closeModal();renderInv();renderDash();renderConc();
   if(divs.length){go('tarefas');setTimeout(()=>renderTarefas(inv.id),50)}else{go('dashboard')}
   toast('Conciliação concluída · '+confrontados+' cruzamento(s) realizado(s) · '+divs.length+' divergência(s) · '+cfg.nome+' · '+tarefas.length+' endereço(s) físico(s) encaminhado(s) para contagem'+(rot.semRoteamento?' · '+rot.semRoteamento+' SEM ROTEAMENTO FÍSICO':''));
@@ -762,6 +762,27 @@ function _liberacaoCandidatos(inv,modo,fonteId){
   if(!inv)return [];
   return _escopoLiberacao(inv,modo,fonteId).filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));
 }
+function _percentWave(g){
+  const ts=Array.isArray(g?.ts)?g.ts:[];if(!ts.length)return 0;
+  const done=ts.filter(t=>t.status==='CONCLUIDO').length;return done/ts.length*100;
+}
+function _renderMapaVisitasLiberacao(inv,modo,fonteId){
+  const el=document.getElementById('libVisitasMapa');if(!el||!inv)return;
+  const escopo=_escopoLiberacao(inv,modo,fonteId).filter(t=>t.status!=='FORA_CICLO');
+  const execMap=new Map();
+  escopo.forEach(t=>{const nome=t.contadorDesignado||t.contador;if(!nome)return;const k=String(nome);if(!execMap.has(k))execMap.set(k,{nome:k,total:0,done:0,active:0,lib:0,pending:0});const u=execMap.get(k);u.total++;if(t.status==='CONCLUIDO')u.done++;else if(t.status==='ANDAMENTO')u.active++;else if(t.status==='LIBERADA')u.lib++;else if(['AGUARDANDO','CANCELADO'].includes(t.status))u.pending++;});
+  const execCards=[...execMap.values()].sort((a,b)=>b.done-a.done||b.active-a.active||a.nome.localeCompare(b.nome,'pt-BR')).map(u=>{const pct=u.total?u.done/u.total*100:0;return `<div style="border:1px solid var(--border);border-radius:9px;padding:8px 10px;margin:6px 0"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(u.nome)}</b><b style="font-family:var(--mono);color:var(--orange2)">${pct.toFixed(1).replace('.',',')}%</b></div><div class="mini">${u.done} concluídas · ${u.active} em contagem · ${u.lib} liberadas · ${u.pending} aguardando</div><div class="progress" style="margin-top:5px"><span style="width:${Math.min(pct,100)}%"></span></div></div>`}).join('');
+  const groups=new Map();escopo.forEach(t=>{const k=[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||');if(!groups.has(k))groups.set(k,{rua:t.rua||'—',lado:t.lado||'—',nivel:t.nivel||'—',ts:[]});groups.get(k).ts.push(t)});
+  const arr=[...groups.values()].sort((a,b)=>b.ts.length-a.ts.length||_ondaChaveOrd(a,b));
+  const fiscal=(modo==='CICLICO'?(DB.inventarios.find(x=>x.id===(fonteId||inv.id))||inv):inv).divergencias?.filter(d=>d.roteamentoStatus==='SOBRA_FISCAL_CONTABIL'||d.exigeContagemFisica===false)||[];
+  if(!arr.length){el.innerHTML=`<div class="sec-t">MAPA DE VISITAS FÍSICAS</div><div class="mini">Nenhum endereço físico pendente para visita.${fiscal.length?` <b>${fiscal.length}</b> divergência(s) foram classificadas como <b>SOBRA FISCAL / CONTÁBIL</b> e não exigem contagem física.`:''}</div>`;return;}
+  const cards=arr.map((g,i)=>{
+    const ts=g.ts,done=ts.filter(t=>t.status==='CONCLUIDO').length,active=ts.filter(t=>t.status==='ANDAMENTO').length,lib=ts.filter(t=>t.status==='LIBERADA').length,pending=ts.filter(t=>['AGUARDANDO','CANCELADO'].includes(t.status)).length,pct=_percentWave(g),exec=[...new Set(ts.map(t=>t.contadorDesignado||t.contador).filter(Boolean))];
+    const addr=ts.slice().sort((a,b)=>String(a.endereco).localeCompare(String(b.endereco),'pt-BR',{numeric:true})).map(t=>`<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border:1px solid var(--border);border-radius:7px;margin:3px 4px 0 0;font-family:var(--mono);font-size:10px"><b>${esc(t.endereco||'—')}</b><span style="opacity:.75">${esc(t.status||'AGUARDANDO')}</span></span>`).join('');
+    return `<div style="border:1px solid ${active?'rgba(251,146,60,.55)':'var(--border)'};border-radius:10px;padding:10px 12px;margin:8px 0;background:rgba(255,255,255,.015)"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><b style="color:var(--orange2)">#${String(i+1).padStart(2,'0')} · RUA ${esc(g.rua)} · LADO ${esc(g.lado)} · NÍVEL ${esc(g.nivel)}</b><div class="mini" style="margin-top:4px">${ts.length} endereço(s) · ${done} concluído(s) · ${active} em contagem · ${lib} liberado(s) · ${pending} aguardando</div></div><b style="font-family:var(--mono);color:${pct>=100?'#4ade80':'var(--orange2)'}">${pct.toFixed(1).replace('.',',')}%</b></div><div class="progress" style="margin-top:7px"><span style="width:${Math.min(pct,100)}%"></span></div><div class="mini" style="margin-top:6px">${exec.length?'CONTADOR: '+exec.map(esc).join(' · '):'CONTADOR: ainda não designado'}</div><div style="margin-top:5px">${addr}</div></div>`;
+  }).join('');
+  el.innerHTML=`<div class="sec-t">MAPA DE VISITAS FÍSICAS · ${arr.length} ONDA(S)</div><div class="mini" style="margin:5px 0 8px">O endereço exibido aqui é o <b>local físico que será visitado</b>. O MASTER pode liberar a onda inteira ou fracionar por RUA, LADO e NÍVEL. O percentual é atualizado conforme cada endereço é concluído.</div>${execCards?`<div style="margin:8px 0 12px"><div class="sec-t">PROGRESSO POR CONTADOR</div>${execCards}</div>`:''}${cards}${fiscal.length?`<div class="info" style="margin-top:10px;border-color:rgba(251,146,60,.35)"><b>SOBRA FISCAL / CONTÁBIL · ${fiscal.length}</b> divergência(s) sem registro físico do SKU. Não entram em tarefa/onda de contagem.</div>`:''}`;
+}
 function _renderLiberacaoFiltros(invId){
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
   const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';
@@ -774,7 +795,7 @@ function _renderLiberacaoFiltros(invId){
     const el=document.getElementById(id);if(!el)return;
     el.innerHTML='<div class="sec-t">'+label+'</div>'+(vals.length?'<label style="display:block;margin-bottom:8px"><input type="checkbox" data-lib-all="'+cls+'" onchange="toggleChecks(\''+cls+'\',this.checked)"> Todos</label>'+vals.map(v=>'<label style="display:block;margin:7px 0;font-size:11px"><input class="'+cls+'" type="checkbox" value="'+esc(v)+'" onchange="atualizarPreviewLiberacao()"> '+esc(v)+'</label>').join(''):'<div class="mini">Nenhum item disponível.</div>');
   });
-  atualizarPreviewLiberacao();
+  atualizarPreviewLiberacao();_renderMapaVisitasLiberacao(inv,modo,fonteId);
 }
 function _renderPlanejamentoLiberacao(inv,modo,fonteId){
   const el=document.getElementById('libWavePlan');if(!el||!inv)return;
@@ -794,7 +815,7 @@ function atualizarPreviewLiberacao(){
   const base=_liberacaoCandidatos(inv,modo,fonteId);
   const candidatos=base.filter(t=>(!r.length||r.includes(String(t.rua)))&&(!l.length||l.includes(String(t.lado)))&&(!n.length||n.includes(String(t.nivel))));
   const ondas=new Set(candidatos.map(t=>[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||'))).size;
-  const st=_releaseStats(inv);pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' endereço(s) disponíveis em '+ondas+' onda(s) RUA + LADO + NÍVEL'+(auto?' · <b>modo automático:</b> 1 onda por CONTADOR livre ('+_contadoresLivres().length+')':' · <b>modo manual:</b> RUA + LADO + NÍVEL')+' · <b>recomendadas agora:</b> '+st.liberar;_renderPlanejamentoLiberacao(inv,modo,fonteId);
+  const st=_releaseStats(inv);pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' endereço(s) disponíveis em '+ondas+' onda(s) RUA + LADO + NÍVEL'+(auto?' · <b>modo automático:</b> 1 onda por CONTADOR livre ('+_contadoresLivres().length+')':' · <b>modo manual:</b> RUA + LADO + NÍVEL')+' · <b>recomendadas agora:</b> '+st.liberar;_renderPlanejamentoLiberacao(inv,modo,fonteId);_renderMapaVisitasLiberacao(inv,modo,fonteId);
 }
 
 function toggleChecks(cls,checked){
@@ -848,7 +869,7 @@ function _renderReleaseMonitor(inv){
   </div>`;
 }
 /* =====================================================================
-   v1.9.9 · Build 060 — ROTEAMENTO FÍSICO DA CONCILIAÇÃO
+   v1.9.10 · Build 061 — ROTEAMENTO FÍSICO DA CONCILIAÇÃO
    DIVERGÊNCIA → SKU+LOTE+UM → CARGA ESTOQUE FÍSICA → ENDEREÇO(S) FÍSICO(S)
    → CARGA DE ENDEREÇOS → RUA + LADO + NÍVEL → ONDAS → CONTADORES
    Regras:
@@ -987,7 +1008,10 @@ function _rotearDivergencia(d,fis,cruz){
 }
 function _coberturaRoteamento(inv,fis){
   const cruz=_cruzConc(inv),ends=new Set();let roteaveis=0;
-  (inv?.divergencias||[]).forEach(d=>{const c=_rotearDivergencia(d,fis,cruz);if(c.length){roteaveis++;c.forEach(x=>ends.add(_endChaves(_fisCampos(x).endereco).exato))}});
+  (inv?.divergencias||[]).forEach(d=>{
+    if(d?.roteamentoStatus==='SOBRA_FISCAL_CONTABIL'||d?.exigeContagemFisica===false)return;
+    const c=_rotearDivergencia(d,fis,cruz);if(c.length){roteaveis++;c.forEach(x=>{const e=_fisCampos(x).endereco;if(e)ends.add(_endChaves(e).exato)})}
+  });
   return {roteaveis,total:(inv?.divergencias||[]).length,enderecos:ends.size};
 }
 /* ---------- Recuperação automática da fonte física ---------- */
@@ -1001,7 +1025,7 @@ function _filtroEscopoConc(inv){
   const cli=String(inv?.cliente||'').trim(),site=String(inv?.site||'').trim(),livre=v=>!v||['MÚLTIPLOS','MULTIPLOS','TODOS'].includes(_normalizarConc(v));
   return r=>{const f=_fisCampos(r);return (livre(cli)||_concEq(f.cliente,cli))&&(livre(site)||_concEq(f.site,site))};
 }
-function _registrosCarga(inv,tipo,b){const arr=Array.isArray(b?.registros)?b.registros:[];return tipo==='estoque'?arr.filter(_filtroEscopoConc(inv)):arr}
+function _registrosCarga(inv,tipo,b){const arr=Array.isArray(b?.registros)?b.registros:[];return arr}
 function _fonteValida(tipo,arr){
   // Existência da fonte NÃO pode depender de ela já conseguir rotear uma divergência.
   // Uma fonte válida pode existir mesmo quando o roteamento ainda não foi resolvido.
@@ -1114,8 +1138,28 @@ function _materializarTarefasConcil(inv){
     _rotearDivergencia(d,estoque,cruz).forEach(x=>{const e=_fisCampos(x).endereco,k=_endChaves(e).exato;if(!pontos.has(k))pontos.set(k,{end:e,xs:[]});pontos.get(k).xs.push(x)});
     // ...somadas ao roteamento já persistido (nunca reduz uma divergência a um único endereço).
     (Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).forEach(r=>{const e=String(typeof r==='string'?r:r?.endereco||'').trim();if(!e)return;const k=_endChaves(e).exato;if(!pontos.has(k))pontos.set(k,{end:e,xs:[],r:typeof r==='string'?null:r});else if(!pontos.get(k).r&&typeof r!=='string')pontos.get(k).r=r});
-    if(!pontos.size){semRoteamento++;d.roteamentoStatus='SEM_ROTEAMENTO_FISICO';semRota.push({sku:v.sku,lote:v.lote,um:v.um,descricao:d.descricao||''});return;}
+    if(!pontos.size){
+      const skuNorm=_normRoteamento(v.sku);
+      const skuFisico=skuNorm?estoque.filter(x=>_normRoteamento(_fisCampos(x).sku)===skuNorm):[];
+      if(!skuFisico.length){
+        d.roteamentoStatus='SOBRA_FISCAL_CONTABIL';
+        d.classificacaoDivergencia='SOBRA FISCAL / CONTÁBIL';
+        d.exigeContagemFisica=false;
+        d.enderecosRoteados=[];
+        d.observacaoRoteamento='Não existe registro físico do SKU na Carga Estoque da operação. Divergência tratada diretamente como sobra fiscal/contábil, sem tarefa física.';
+        d.qtdFisica=0;
+      }else{
+        semRoteamento++;
+        d.roteamentoStatus='SEM_ENDERECO_FISICO';
+        d.classificacaoDivergencia='PENDENTE DE ENDEREÇO FÍSICO';
+        d.exigeContagemFisica=true;
+        semRota.push({sku:v.sku,lote:v.lote,um:v.um,descricao:d.descricao||'',motivo:'SKU localizado na carga física, porém sem endereço físico roteável'});
+      }
+      return;
+    }
     d.roteamentoStatus='ROTEADO';
+    d.classificacaoDivergencia='CONTAGEM FÍSICA';
+    d.exigeContagemFisica=true;
     const rotas=(Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).map(r=>typeof r==='string'?{endereco:r,rua:'',lado:'',nivel:''}:r).filter(r=>String(r?.endereco||'').trim());
     pontos.forEach(({end,xs,r},k)=>{
       const meta=_endMeta(_endLookup(idx,end)),rua=meta.rua||r?.rua||'',lado=meta.lado||r?.lado||'',nivel=meta.nivel||r?.nivel||'';
@@ -1317,7 +1361,7 @@ async function abrirLiberacaoTarefas(invId){
   </div>
   <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv" onchange="atualizarModoLiberacao()"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}" ${fonteInicial&&x.id===fonteInicial.id?'selected':''}>${esc(x.id)} · ${esc(x.operacao||x.cliente||'CONCILIAÇÃO')} · ${_divergenciaEscopoEnderecos(x).size} endereço(s) no escopo</option>`).join('')}</select></div><div class="mini" style="margin-top:8px">A referência é a conciliação. O endereço do cliente só participa do cruzamento quando o flag ENDEREÇO foi marcado; o endereço da base física continua sendo usado para rotear a contagem.</div></div>
   <div id="libFonteFisicaAlerta" class="info" style="display:none;margin-top:12px;border-color:rgba(248,113,113,.45)"></div>
-  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${aguardandoInicial}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" checked onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Divide o planejamento em ondas por RUA + LADO + NÍVEL e distribui uma próxima onda por CONTADOR ativo, priorizando o maior volume de endereços divergentes. Ao concluir uma onda, a próxima é proposta automaticamente.</div></span></label></div></div><div id="libWavePlan" class="card" style="margin-top:12px;border-color:rgba(251,146,60,.35)"></div>
+  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${aguardandoInicial}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" checked onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Divide o planejamento em ondas por RUA + LADO + NÍVEL e distribui uma próxima onda por CONTADOR ativo, priorizando o maior volume de endereços divergentes. Ao concluir uma onda, a próxima é proposta automaticamente.</div></span></label></div></div><div id="libWavePlan" class="card" style="margin-top:12px;border-color:rgba(251,146,60,.35)"></div><div id="libVisitasMapa" class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"></div>
   <div class="g3" style="margin-top:14px"><div class="card" id="libRuaBox"></div><div class="card" id="libLadoBox"></div><div class="card" id="libNivelBox"></div></div>
   <div id="libPreview" class="info" style="margin-top:14px"><b>Seleção:</b> marque a RUA, o LADO e/ou o NÍVEL disponíveis. <b>Cada combinação RUA + LADO + NÍVEL gera uma onda/card independente</b>. Se marcar somente uma RUA, todos os lados e níveis daquela RUA ficam disponíveis para fracionamento.</div>
   <div class="info"><b>Operação:</b> após liberar, os cards aparecem em <b>Tarefas de Contagem</b>. A seleção de mais de uma RUA/LADO/NÍVEL não vira uma única contagem: os endereços continuam agrupados por RUA + LADO, com níveis fracionáveis.</div>
@@ -1334,7 +1378,7 @@ function startReleaseTimer(invId){
     const st=_releaseStats(inv,_escopoLiberacao(inv,modo,fonteId));
     const k=document.querySelector('#modalBody .card[style*="rgba(251,146,60"]');
     if(k){const vals=k.querySelectorAll('.dash-highlight');if(vals[0])vals[0].textContent=st.ativos;if(vals[1])vals[1].textContent=st.fila.length;if(vals[2])vals[2].textContent=st.liberar;}
-    atualizarPreviewLiberacao();
+    atualizarPreviewLiberacao();_renderMapaVisitasLiberacao(inv,modo,fonteId);
   },3000);
 }
 function atualizarModoLiberacao(){
