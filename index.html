@@ -2775,32 +2775,43 @@ function _materializarTarefasConcil(inv){return _cl63RebuildRouting(inv)}
 function _obterLinhasDivergencias(invId){
   const concInvs=(DB.inventarios||[]).filter(i=>_ehConciliacao(i)&&(!invId||i.id===invId));
   const rows=[];let alterou=false;
+  const key=(a,b,c)=>[_normRoteamento(a),_normRoteamento(b||''),_normRoteamento(c||'')].join('|');
   concInvs.forEach(inv=>{
     if(inv.status!=='CANCELADO'&&Array.isArray(inv.divergencias)&&inv.divergencias.length){
       const r=_cl63RebuildRouting(inv);if(r.criados||r.semRoteamento||inv.fonteFisicaDiagnostico)alterou=true;
     }
     (inv.divergencias||[]).forEach(d=>{
-      const roteiro=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
+      const roteiro0=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
       const tarefas=[];
       (inv.tarefas||[]).forEach(t=>(t.itens||[]).forEach(it=>{
-        if(_normRoteamento(it.sku)===_normRoteamento(d.sku)&&_normRoteamento(it.lote||'')===_normRoteamento(d.lote||''))tarefas.push({t,it});
+        if(key(it.sku,it.lote,it.um)===key(d.sku,d.lote,d.um))tarefas.push({t,it});
       }));
-      // Fallback adicional: se a divergência ainda não persistiu os endereços,
-      // resolve diretamente no snapshot/carga física atual. Isso garante que a
-      // lista de Divergências nunca fique sem o ONDE quando o SKU existe fisicamente.
-      let roteiroEfetivo=roteiro;
-      if(!roteiroEfetivo.length){
+      let roteiro=roteiro0.slice();
+      if(!roteiro.length){
         const est=Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:_cl63BaseEstoque(inv)?.registros||[];
-        const cruz=_cruzConc(inv),matches=_cl63MatchFisico(d,est,cruz),seen=new Set();
-        roteiroEfetivo=[];
-        matches.forEach(x=>{const f=_fisCampos(x),e=f.endereco;if(!e)return;const k=_endChaves(e).exato;if(seen.has(k))return;seen.add(k);roteiroEfetivo.push({endereco:e,qtdFisica:matches.filter(y=>_endChaves(_fisCampos(y).endereco).exato===k).reduce((a,y)=>a+Number(_fisCampos(y).qtd||0),0)});});
-        if(roteiroEfetivo.length){d.enderecosRoteados=roteiroEfetivo;alterou=true;}
+        const cruz=_cruzConc(inv),matches=_cl63MatchFisico(d,est,cruz),by=new Map();
+        matches.forEach(x=>{const f=_fisCampos(x),e=String(f.endereco||'').trim();if(!e)return;const k=_endChaves(e).exato;const cur=by.get(k)||{endereco:e,qtdFisica:0};cur.qtdFisica+=Number(f.qtd||0);by.set(k,cur)});
+        roteiro=[...by.values()];
+        if(roteiro.length){d.enderecosRoteados=roteiro;alterou=true;}
       }
-      const counts=tarefas.map(x=>({x,lc:_latestCount(x.it)})).filter(x=>x.lc),current=counts.length?counts[0].lc:null;
-      const q=current?Number(current.q):Number(d.qtdFisica||0),qSys=Number(d.qtdSistema)||0,diff=q-qSys;
+      // Soma a quantidade física de TODOS os endereços do produto. A versão anterior
+      // considerava apenas a primeira contagem encontrada, o que mascarava divergências
+      // quando o mesmo SKU/lote/UM estava distribuído em vários endereços.
+      const porEndereco=new Map();
+      roteiro.forEach(e=>{const o=typeof e==='string'?{endereco:e}:e||{};const k=_endChaves(o.endereco||'').exato;if(k)porEndereco.set(k,{...o,endereco:o.endereco||'',qtdFisica:Number(o.qtdFisica||0)})});
+      tarefas.forEach(({t,it})=>{
+        const lc=_latestCount(it);const e=String(t.endereco||it.endereco||'').trim();if(!e)return;
+        const k=_endChaves(e).exato;const o=porEndereco.get(k)||{endereco:e,qtdFisica:0};
+        if(lc)o.qtdFisica=Number(lc.q||0); else if(it.qtdFisicaImportada!=null)o.qtdFisica=Number(it.qtdFisicaImportada||0);
+        porEndereco.set(k,o);
+      });
+      const enderecos=[...porEndereco.values()].map(x=>x.endereco).filter(Boolean);
+      const qFis=enderecos.length?[...porEndereco.values()].reduce((a,x)=>a+Number(x.qtdFisica||0),0):Number(d.qtdFisica||0);
+      const qSys=Number(d.qtdSistema)||0;
+      const diff=qFis-qSys;
       if(Math.abs(diff)<=0.000001)return;
-      const enderecos=roteiroEfetivo.map(x=>typeof x==='string'?x:x?.endereco).filter(Boolean);
-      rows.push({semRota:!enderecos.length,inv,t:tarefas[0]?.t||null,it:{endereco:d.endereco||'',enderecosRoteados:roteiroEfetivo,sku:d.sku,lote:d.lote,descricao:d.descricao,um:d.um,qtdSistema:qSys},q,qSys,diff,contador:current?.resp||'',data:current?.data||'',enderecos:[...new Set(enderecos)]});
+      const roteiroEfetivo=[...porEndereco.values()];
+      rows.push({semRota:!enderecos.length,inv,t:tarefas[0]?.t||null,it:{endereco:d.endereco||'',enderecosRoteados:roteiroEfetivo,sku:d.sku,lote:d.lote,descricao:d.descricao,um:d.um,qtdSistema:qSys},q:qFis,qSys,diff,contador:tarefas.map(x=>_latestCount(x.it)?.resp).find(Boolean)||'',data:tarefas.map(x=>_latestCount(x.it)?.data).find(Boolean)||'',enderecos});
     });
   });
   if(alterou)save();return {concInvs,rows,scope:invId?concInvs[0]:null};
