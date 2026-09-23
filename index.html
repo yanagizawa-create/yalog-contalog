@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.9.10<br>YALOG-CONTA-001 • v1.9.10 Build 061 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.11<br>YALOG-CONTA-001 • v1.9.11 Build 062 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -959,10 +959,10 @@ function _concilEnderecoMeta(enderecos,end){
 }
 /* ---------- Leitura tolerante dos registros (compatível com builds anteriores) ---------- */
 function _fisCampos(x){
-  return {sku:x?.SKU_CLIENTE??x?.SKU??x?.sku??'',lote:x?.LOTE??x?.lote??'',um:(x?.UNIDADE_MEDIDA??x?.UM??x?.um)||'UN',endereco:String(x?.ENDERECO??x?.['ENDEREÇO']??x?.endereco??'').trim(),descricao:x?.DESCRICAO??x?.descricao??'',qtd:_num(x?.QUANTIDADE??x?.qtd??x?.qtdSistema??0),cliente:x?.CLIENTE??x?.cliente??'',site:x?.SITE??x?.site??''};
+  return {sku:x?.SKU_CLIENTE??x?.SKU??x?.sku??x?.CODIGO??x?.COD_PRODUTO??x?.COD_PRODUTO_CLIENTE??x?.PRODUTO??x?.MATERIAL??x?.ITEM??'',lote:x?.LOTE??x?.lote??x?.LOT??'',um:(x?.UNIDADE_MEDIDA??x?.UM??x?.um??x?.UNIDADE??x?.UN)||'UN',endereco:String(x?.ENDERECO??x?.['ENDEREÇO']??x?.endereco??x?.LOCAÇÃO??x?.LOCACAO??x?.POSICAO??x?.POSIÇÃO??x?.LOCALIZACAO??x?.['LOCALIZAÇÃO']??x?.LOCAL??x?.END??x?.COD_ENDERECO??'').trim(),descricao:x?.DESCRICAO??x?.['DESCRIÇÃO']??x?.descricao??x?.PRODUTO_DESCRICAO??'',qtd:_num(x?.QUANTIDADE??x?.qtd??x?.qtdSistema??x?.SALDO??0),cliente:x?.CLIENTE??x?.cliente??'',site:x?.SITE??x?.site??''};
 }
 function _divCampos(d){
-  return {sku:d?.sku??d?.SKU_CLIENTE??d?.SKU??'',lote:d?.lote??d?.LOTE??'',um:(d?.um??d?.UNIDADE_MEDIDA??d?.UM)||'UN',endereco:String(d?.endereco??d?.ENDERECO??'').trim()};
+  return {sku:d?.sku??d?.SKU_CLIENTE??d?.SKU??d?.CODIGO??d?.COD_PRODUTO??'',lote:d?.lote??d?.LOTE??'',um:(d?.um??d?.UNIDADE_MEDIDA??d?.UM)||'UN',endereco:String(d?.endereco??d?.ENDERECO??d?.['ENDEREÇO']??'').trim(),descricao:d?.descricao??d?.DESCRICAO??d?.['DESCRIÇÃO']??''};
 }
 function _cruzConc(inv){return inv?.conciliacaoResumo?.tipoCruzamento||{endereco:false,sku:true,lote:true,quantidade:true,um:true}}
 function _concilRotaMatch(x,d,cruz,usarEndereco){
@@ -999,10 +999,20 @@ function _rotearDivergencia(d,fis,cruz){
   if(!c.length && sku){
     c=fis.filter(x=>_normRoteamento(_fisCampos(x).sku)===sku);
   }
-  // 4) Quando o mapa possui endereço e o endereço foi marcado, ainda permitimos
-  //    a localização por SKU caso a posição contábil não exista no mapa físico.
-  if(!c.length && cruz.endereco && sku){
-    c=fis.filter(x=>_normRoteamento(_fisCampos(x).sku)===sku);
+  // 4) Se o SKU do mapa contábil não veio no mesmo padrão do cadastro físico,
+  //    tentamos LOTE + UM como chave secundária. Isso NÃO transforma lote/UM em
+  //    requisito da conciliação; é somente uma recuperação operacional da posição.
+  if(!c.length && v.lote){
+    const lote=_normRoteamento(v.lote),um=_normRoteamento(v.um||'UN');
+    c=fis.filter(x=>{const f=_fisCampos(x);return _normRoteamento(f.lote)===lote&&(!um||_normRoteamento(f.um||'UN')===um)});
+  }
+  // 5) Último recurso seguro: descrição exata normalizada, somente quando
+  //    houver uma correspondência física não ambígua. Evita perder uma posição
+  //    por diferenças de codificação do SKU sem inventar endereço.
+  if(!c.length && String(v.descricao||'').trim()){
+    const desc=_normRoteamento(v.descricao);
+    const cand=fis.filter(x=>_normRoteamento(_fisCampos(x).descricao)===desc);
+    if(cand.length)c=cand;
   }
   return c;
 }
@@ -1135,27 +1145,43 @@ function _materializarTarefasConcil(inv){
   inv.divergencias.forEach(d=>{
     const v=_divCampos(d),pontos=new Map();
     // Todas as posições físicas do item na Carga Estoque...
-    _rotearDivergencia(d,estoque,cruz).forEach(x=>{const e=_fisCampos(x).endereco,k=_endChaves(e).exato;if(!pontos.has(k))pontos.set(k,{end:e,xs:[]});pontos.get(k).xs.push(x)});
+    _rotearDivergencia(d,estoque,cruz).forEach(x=>{const e=String(_fisCampos(x).endereco||'').trim();if(!e)return;const k=_endChaves(e).exato;if(!k)return;if(!pontos.has(k))pontos.set(k,{end:e,xs:[]});pontos.get(k).xs.push(x)});
     // ...somadas ao roteamento já persistido (nunca reduz uma divergência a um único endereço).
     (Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).forEach(r=>{const e=String(typeof r==='string'?r:r?.endereco||'').trim();if(!e)return;const k=_endChaves(e).exato;if(!pontos.has(k))pontos.set(k,{end:e,xs:[],r:typeof r==='string'?null:r});else if(!pontos.get(k).r&&typeof r!=='string')pontos.get(k).r=r});
     if(!pontos.size){
       const skuNorm=_normRoteamento(v.sku);
       const skuFisico=skuNorm?estoque.filter(x=>_normRoteamento(_fisCampos(x).sku)===skuNorm):[];
       if(!skuFisico.length){
+        // Confirma também os fallbacks usados pelo roteamento antes de classificar
+        // como sobra fiscal. Somente a ausência real de qualquer registro físico
+        // permite essa classificação.
+        const loteNorm=_normRoteamento(v.lote),umNorm=_normRoteamento(v.um||'UN');
+        const porLote=v.lote?estoque.filter(x=>{const f=_fisCampos(x);return _normRoteamento(f.lote)===loteNorm&&(!umNorm||_normRoteamento(f.um||'UN')===umNorm)}):[];
+        const porDesc=String(d.descricao||v.descricao||'').trim()?estoque.filter(x=>_normRoteamento(_fisCampos(x).descricao)===_normRoteamento(d.descricao||v.descricao)):[];
+        const fisicoFallback=porLote.length?porLote:porDesc;
+        if(fisicoFallback.length){
+          fisicoFallback.forEach(x=>{const e=_fisCampos(x).endereco;if(e)d.enderecosRoteados=d.enderecosRoteados||[],d.enderecosRoteados.push(e)});
+          // Reentra no fluxo abaixo em uma segunda passagem.
+        }
+        if(fisicoFallback.length){
+          // não classificar como sobra; a segunda etapa abaixo irá materializar a tarefa
+        } else {
         d.roteamentoStatus='SOBRA_FISCAL_CONTABIL';
         d.classificacaoDivergencia='SOBRA FISCAL / CONTÁBIL';
         d.exigeContagemFisica=false;
         d.enderecosRoteados=[];
         d.observacaoRoteamento='Não existe registro físico do SKU na Carga Estoque da operação. Divergência tratada diretamente como sobra fiscal/contábil, sem tarefa física.';
         d.qtdFisica=0;
-      }else{
+        }
+      }
+      if(d.roteamentoStatus!=='SOBRA_FISCAL_CONTABIL' && !(Array.isArray(d.enderecosRoteados)&&d.enderecosRoteados.length)){
         semRoteamento++;
         d.roteamentoStatus='SEM_ENDERECO_FISICO';
         d.classificacaoDivergencia='PENDENTE DE ENDEREÇO FÍSICO';
         d.exigeContagemFisica=true;
-        semRota.push({sku:v.sku,lote:v.lote,um:v.um,descricao:d.descricao||'',motivo:'SKU localizado na carga física, porém sem endereço físico roteável'});
+        semRota.push({sku:v.sku,lote:v.lote,um:v.um,descricao:d.descricao||'',motivo:'Registro físico localizado, porém sem endereço físico roteável'});
       }
-      return;
+      if(!(Array.isArray(d.enderecosRoteados)&&d.enderecosRoteados.length)) return;
     }
     d.roteamentoStatus='ROTEADO';
     d.classificacaoDivergencia='CONTAGEM FÍSICA';
