@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.9.7 · Planejamento de Ondas</title>
+<title>ContaLog · v1.9.8 · Build 057 · Planejamento de Ondas</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -124,7 +124,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.9.7<br>YALOG-CONTA-001 • v1.9.7 Build 056 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.9.8<br>YALOG-CONTA-001 • v1.9.8 Build 057 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -190,7 +190,8 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <script>
 const KEY='yalog_contalog_v1';
 const CONTALOG_MODULE_ID='contalog';
-const CONTALOG_VERSION='1.9.5';
+const CONTALOG_VERSION='1.9.8';
+const CONTALOG_BUILD='057';
 const SUPABASE_URL='https://pyckcyaojztixsujbylq.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_iHBh-BZsjisQc0i09QUDoQ_9mZl1vfk';
 const CONTALOG_TABLE='contalog_kv_store';
@@ -274,7 +275,7 @@ async function _loadRemote(companyId){
     _remoteLoading=true;_companyIdLocalAtual=companyId;
     const {data,error}=await c.from(CONTALOG_TABLE).select('key,state,updated_at,updated_by').eq('company_id',companyId).eq('module_id',CONTALOG_MODULE_ID).eq('key','main').maybeSingle();
     if(error)throw error;
-    if(data?.state){DB=data.state;DB.inventarios=Array.isArray(DB.inventarios)?DB.inventarios:[];DB.estoque=Array.isArray(DB.estoque)?DB.estoque:[];DB.enderecos=Array.isArray(DB.enderecos)?DB.enderecos:[];DB.clientesOperacoes=Array.isArray(DB.clientesOperacoes)?DB.clientesOperacoes:[];DB.basesEstoque=Array.isArray(DB.basesEstoque)?DB.basesEstoque:[];DB.basesEnderecos=Array.isArray(DB.basesEnderecos)?DB.basesEnderecos:[];DB.inventarios.forEach(i=>{if(!i.operacao)i.operacao=i.tipo==='CONCILIACAO_EXCEL'?'CONCILIAÇÃO':'INVENTÁRIO';});_ensureBaseCollections();_remoteUpdatedAt=new Date(data.updated_at||0).getTime()||0;localStorage.setItem(KEY,JSON.stringify(DB));}
+    if(data?.state){DB=data.state;DB.inventarios=Array.isArray(DB.inventarios)?DB.inventarios:[];DB.estoque=Array.isArray(DB.estoque)?DB.estoque:[];DB.enderecos=Array.isArray(DB.enderecos)?DB.enderecos:[];DB.clientesOperacoes=Array.isArray(DB.clientesOperacoes)?DB.clientesOperacoes:[];DB.basesEstoque=Array.isArray(DB.basesEstoque)?DB.basesEstoque:[];DB.basesEnderecos=Array.isArray(DB.basesEnderecos)?DB.basesEnderecos:[];DB.inventarios.forEach(i=>{if(!i.operacao)i.operacao=i.tipo==='CONCILIACAO_EXCEL'?'CONCILIAÇÃO':'INVENTÁRIO';});_ensureBaseCollections();_restaurarIdentidadeConciliacoes();_remoteUpdatedAt=new Date(data.updated_at||0).getTime()||0;localStorage.setItem(KEY,JSON.stringify(DB));}
     _remoteReady=true;_remoteStatus('● ONLINE · DADOS CENTRAIS',true);return true;
   }catch(e){console.warn('[ContaLog] leitura remota:',e);_remoteReady=false;_remoteStatus('● ONLINE · CACHE LOCAL',false);return false}
   finally{_remoteLoading=false}
@@ -290,7 +291,7 @@ async function _persistRemote(){
 function save(){localStorage.setItem(KEY,JSON.stringify(DB));if(!_remoteReady||_remoteLoading||!_companyIdLocalAtual)return;clearTimeout(_remoteSaveTimer);_remoteSaveTimer=setTimeout(()=>_persistRemote(),150)}
 async function _syncRemote(){
   if(!_remoteReady||_remoteLoading||!_companyIdLocalAtual||!navigator.onLine)return;const c=_supabaseClient();if(!c)return;
-  try{const {data,error}=await c.from(CONTALOG_TABLE).select('state,updated_at,updated_by').eq('company_id',_companyIdLocalAtual).eq('module_id',CONTALOG_MODULE_ID).eq('key','main').maybeSingle();if(error||!data?.state)return;const stamp=new Date(data.updated_at||0).getTime()||0;if(stamp>_remoteUpdatedAt+50){DB=data.state;DB.inventarios=Array.isArray(DB.inventarios)?DB.inventarios:[];DB.estoque=Array.isArray(DB.estoque)?DB.estoque:[];DB.enderecos=Array.isArray(DB.enderecos)?DB.enderecos:[];DB.clientesOperacoes=Array.isArray(DB.clientesOperacoes)?DB.clientesOperacoes:[];DB.basesEstoque=Array.isArray(DB.basesEstoque)?DB.basesEstoque:[];DB.basesEnderecos=Array.isArray(DB.basesEnderecos)?DB.basesEnderecos:[];_ensureBaseCollections();_remoteUpdatedAt=stamp;localStorage.setItem(KEY,JSON.stringify(DB));renderEstoque();renderEnd();renderInv();renderTarefas();renderDash();renderUsers();renderConc();if(document.getElementById('s-contagem')?.classList.contains('active'))renderContagem();_remoteStatus('● SINCRONIZADO · '+new Date(stamp).toLocaleTimeString('pt-BR'),true)}}catch(e){console.warn('[ContaLog Sync]',e)}
+  try{const {data,error}=await c.from(CONTALOG_TABLE).select('state,updated_at,updated_by').eq('company_id',_companyIdLocalAtual).eq('module_id',CONTALOG_MODULE_ID).eq('key','main').maybeSingle();if(error||!data?.state)return;const stamp=new Date(data.updated_at||0).getTime()||0;if(stamp>_remoteUpdatedAt+50){DB=data.state;DB.inventarios=Array.isArray(DB.inventarios)?DB.inventarios:[];DB.estoque=Array.isArray(DB.estoque)?DB.estoque:[];DB.enderecos=Array.isArray(DB.enderecos)?DB.enderecos:[];DB.clientesOperacoes=Array.isArray(DB.clientesOperacoes)?DB.clientesOperacoes:[];DB.basesEstoque=Array.isArray(DB.basesEstoque)?DB.basesEstoque:[];DB.basesEnderecos=Array.isArray(DB.basesEnderecos)?DB.basesEnderecos:[];_ensureBaseCollections();_restaurarIdentidadeConciliacoes();_remoteUpdatedAt=stamp;localStorage.setItem(KEY,JSON.stringify(DB));renderEstoque();renderEnd();renderInv();renderTarefas();renderDash();renderUsers();renderConc();if(document.getElementById('s-contagem')?.classList.contains('active'))renderContagem();_remoteStatus('● SINCRONIZADO · '+new Date(stamp).toLocaleTimeString('pt-BR'),true)}}catch(e){console.warn('[ContaLog Sync]',e)}
 }
 window.addEventListener('online',()=>{if(usuarioAtual)_syncRemote()});
 
@@ -319,6 +320,7 @@ function excluirBase(tipo,idBase){if(usuarioAtual?.perfil!=='MASTER')return toas
 function _renderBaseSelector(tipo){const el=document.getElementById(tipo==='estoque'?'estoqueBasePanel':'endBasePanel');if(!el)return;const list=tipo==='estoque'?DB.basesEstoque:DB.basesEnderecos;const active=tipo==='estoque'?DB.activeEstoqueBaseId:DB.activeEnderecosBaseId;const b=list.find(x=>String(x.id)===String(active));el.innerHTML=`<div class="base-panel"><div><div class="sec-t">${tipo==='estoque'?'CARGAS DE ESTOQUE DISPONÍVEIS':'CARGAS DE ENDEREÇOS DISPONÍVEIS'}</div><div class="mini">Cada carga possui identificação própria de <b>OPERAÇÃO</b> e <b>SITE</b>. O inventário/conciliação seleciona a carga correspondente e mantém seu snapshot.</div>${b?`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><span class="badge pen">OPERAÇÃO: ${esc(b.operacao||'—')}</span><span class="badge ok">SITE: ${esc(b.site||'—')}</span><span class="mini">Arquivo: ${esc(b.nome||b.arquivo||'—')}</span></div>`:''}</div><div class="base-select-row"><select class="base-select" onchange="selecionarBaseOperacional('${tipo}',this.value)"><option value="">Selecione uma carga</option>${list.map(b=>{const st=_baseStats(b.registros);return `<option value="${esc(b.id)}" ${String(b.id)===String(active)?'selected':''}>${esc(_baseLabel(b))} · ${st.registros} registro(s)${st.sites?' · '+st.sites+' site(s)':''}</option>`}).join('')}</select>${active?`<button class="btn btn-r" type="button" onclick="excluirBase('${tipo}','${esc(active)}')">Excluir carga</button>`:''}</div></div>`}
 function selecionarBaseOperacional(tipo,idBase){if(!idBase)return;_setActiveBase(tipo,idBase);if(tipo==='estoque'){renderEstoque();renderEnd()}else{renderEnd();renderEstoque()}toast('Carga ativa: '+_baseLabel(_getBase(tipo,idBase)));}
 _ensureBaseCollections();
+_restaurarIdentidadeConciliacoes();
 
 function toggleMobileMenu(force){const sb=document.querySelector('.sb'),bd=document.getElementById('mobileBackdrop');if(!sb||!bd)return;const open=typeof force==='boolean'?force:!sb.classList.contains('mobile-open');sb.classList.toggle('mobile-open',open);bd.classList.toggle('mobile-open',open)}
 function go(name){if(usuarioAtual?.perfil==='CONTADOR'&&name!=='contagem'){toast('O perfil CONTADOR possui acesso exclusivo à tela de sua tarefa.',false);return}if(name==='visaoTarefas'&&usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode acessar a Visão de Tarefas.',false);return}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));let s=document.getElementById('s-'+name);if(s)s.classList.add('active');let titles={estoque:'Carga Estoque',enderecos:'Carga Endereços do Estoque',configuracoes:'Configurações Gerais',inventario:'Inventário',tarefas:'Tarefas de Contagem',contagem:'Contagem Operacional',visaoTarefas:'Visão de Tarefas',conciliacao:'Conciliação',dashboard:'Dashboard',usuarios:'Usuários'};document.getElementById('tbTitle').textContent=titles[name]||'ContaLog';document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active')});if(name==='estoque')renderEstoque();if(name==='enderecos')renderEnd();if(name==='configuracoes')renderConfiguracoes();if(name==='inventario')renderInv();if(name==='tarefas')renderTarefas();if(name==='contagem')renderContagem();if(name==='visaoTarefas')renderVisaoTarefas();if(name==='conciliacao')renderConc();if(name==='dashboard')renderDash();if(name==='usuarios')renderUsers();if(typeof toggleMobileMenu==='function')toggleMobileMenu(false)}
@@ -494,16 +496,16 @@ function criarInventario(tipo){
   const endBaseId=document.getElementById('newEndBase')?.value||'',estBaseId=document.getElementById('newEstBase')?.value||'';const endBase=_getBase('enderecos',endBaseId),estBase=estBaseId?_getBase('estoque',estBaseId):null;if(!endBase)return toast('Selecione uma Carga de Endereços.',false);
   const cli=document.getElementById('newCli')?.value||'',site=document.getElementById('newSite')?.value||'',rua=document.getElementById('newRua')?.value||'',cfg=_configById(document.getElementById('newConfigOperacao')?.value||'');if(!cfg)return toast('Selecione a FILIAL / OPERAÇÃO do inventário.',false);const operacao=cfg.nome;if(!site)return toast('Informe o SITE do inventário.',false);
   const endReg=endBase.registros||[],stockReg=estBase?.registros||[];
-  const endBaseMap=new Map(endReg.map(x=>[String(x['ENDEREÇO']||'').trim(),x]));
+  const endBaseMap=new Map(endReg.map(x=>[String(x['ENDEREÇO']||'').trim(),x])),idxEnd=_endIndice(endReg);
   const endBaseFiltrada=endReg.filter(en=>en&&String(en['ENDEREÇO']||'').trim()&&(!rua||String(en.RUA||'')===String(rua))&&(!site||!en.SITE||String(en.SITE)===String(site))&&(!cli||!en.CLIENTE||String(en.CLIENTE)===String(cli)));
   if(!endBaseFiltrada.length)return toast('Nenhum endereço encontrado na Carga de Endereços selecionada.',false);
-  const base=stockReg.filter(x=>(!cli||x.CLIENTE===cli)&&(!site||x.SITE===site)&&String(x.ENDERECO||'').trim()&&endBaseMap.has(String(x.ENDERECO).trim()));
-  const grupos=new Map();endBaseFiltrada.forEach(en=>grupos.set(String(en['ENDEREÇO']).trim(),[]));base.forEach(x=>{const key=String(x.ENDERECO).trim();if(grupos.has(key))grupos.get(key).push(x)});
-  const seq=DB.inventarios.length+1;
+  const base=stockReg.filter(x=>(!cli||x.CLIENTE===cli)&&(!site||x.SITE===site)&&String(x.ENDERECO||'').trim()&&_endLookup(idxEnd,x.ENDERECO));
+  const grupos=new Map();endBaseFiltrada.forEach(en=>grupos.set(String(en['ENDEREÇO']).trim(),[]));base.forEach(x=>{const key=String(_endCampo(_endLookup(idxEnd,x.ENDERECO))||'').trim();if(grupos.has(key))grupos.get(key).push(x)});
+  const novoIdInv=_novoIdInventario('INV-'),seq=novoIdInv.seq;
   const tarefas=[...grupos.entries()].map(([k,items],i)=>{const en=endBaseMap.get(k)||{};return{id:'TAR-'+String(seq).padStart(3,'0')+'-'+String(i+1).padStart(3,'0'),endereco:k,rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||'',status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CEGA',itens:items.map(x=>({endereco:x.ENDERECO,sku:x.SKU_CLIENTE,lote:String(x.LOTE||''),descricao:x.DESCRICAO,qtdSistema:+x.QUANTIDADE||0,um:x.UNIDADE_MEDIDA||'UN',qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null}))}});
   if(!tarefas.length)return toast('Nenhum endereço gerado para o inventário.',false);
   const vazios=tarefas.filter(t=>!t.itens.length).length;
-  const inv={id:'INV-'+new Date().getFullYear()+'-'+String(seq).padStart(4,'0'),tipo:'BASE',modoContagem:null,configOperacaoId:cfg.id,filial:cfg.filial,cargaEstoqueId:estBase?.id||null,cargaEnderecosId:endBase.id,status:'ABERTO',operacao,cliente:cli||'TODOS',site:site||'TODOS',criadoEm:now(),totalEnderecosObrigatorios:tarefas.length,enderecosLiberados:0,tarefas,cargaEstoqueSnapshot:_clone(base),cargaEnderecosSnapshot:_clone(endBaseFiltrada),fonteCargaEstoque:estBase?_baseLabel(estBase):'SEM CARGA',fonteCargaEnderecos:_baseLabel(endBase)};
+  const inv={id:novoIdInv.id,tipo:'BASE',modoContagem:null,configOperacaoId:cfg.id,filial:cfg.filial,cargaEstoqueId:estBase?.id||null,cargaEnderecosId:endBase.id,status:'ABERTO',operacao,cliente:cli||'TODOS',site:site||'TODOS',criadoEm:now(),totalEnderecosObrigatorios:tarefas.length,enderecosLiberados:0,tarefas,cargaEstoqueSnapshot:_clone(base),cargaEnderecosSnapshot:_clone(endBaseFiltrada),fonteCargaEstoque:estBase?_baseLabel(estBase):'SEM CARGA',fonteCargaEnderecos:_baseLabel(endBase)};
   DB.inventarios.push(inv);save();closeModal();renderInv();toast(inv.id+' criado · '+operacao+' · '+_baseLabel(endBase)+' · '+tarefas.length+' endereço(s) · '+vazios+' sem produto');go('tarefas');setTimeout(()=>renderTarefas(inv.id),50);
 }
 
@@ -595,7 +597,7 @@ function abrirConcilExcel(){
   document.getElementById('concEndBase').addEventListener('change',refresh);
   document.getElementById('concCliente').addEventListener('change',_concAtualizarPreview);
   document.getElementById('concSite').addEventListener('change',_concAtualizarPreview);
-  const atualizarTipo=()=>{const c=_concTipoCruzamento();const req=[];if(c.endereco)req.push('ENDERECO');if(c.sku)req.push('SKU_CLIENTE');if(c.lote)req.push('LOTE');if(c.quantidade)req.push('QUANTIDADE');if(c.um)req.push('UNIDADE_MEDIDA');const info=document.getElementById('concExpectedInfo');if(info)info.innerHTML='<b>Arquivo esperado:</b> '+(req.length?req.join(' | '):'selecione ao menos um tipo de cruzamento')+'. '+(c.endereco?'ENDEREÇO será considerado no cruzamento e validado na Carga de Endereços.':'<b>ENDEREÇO não será considerado</b>; a coluna pode não existir no arquivo do cliente.');const reqEl=document.getElementById('concEndReq');if(reqEl)reqEl.textContent=c.endereco?'(obrigatória neste cruzamento)':'(não utilizada neste cruzamento)';const end=document.getElementById('concEndBase');if(end){end.disabled=!c.endereco;end.style.opacity=c.endereco?'1':'.55';}};
+  const atualizarTipo=()=>{const c=_concTipoCruzamento();const req=[];if(c.endereco)req.push('ENDERECO');if(c.sku)req.push('SKU_CLIENTE');if(c.lote)req.push('LOTE');if(c.quantidade)req.push('QUANTIDADE');if(c.um)req.push('UNIDADE_MEDIDA');const info=document.getElementById('concExpectedInfo');if(info)info.innerHTML='<b>Arquivo esperado:</b> '+(req.length?req.join(' | '):'selecione ao menos um tipo de cruzamento')+'. '+(c.endereco?'ENDEREÇO será considerado no cruzamento e validado na Carga de Endereços.':'<b>ENDEREÇO não será considerado no cruzamento</b>; a coluna pode não existir no arquivo do cliente. A Carga de Endereços continua sendo usada no roteamento físico.');const reqEl=document.getElementById('concEndReq');if(reqEl)reqEl.textContent=c.endereco?'(obrigatória · cruzamento e roteamento físico)':'(obrigatória · roteamento físico RUA / LADO / NÍVEL)';const end=document.getElementById('concEndBase');if(end){end.disabled=false;end.style.opacity='1';}};
   ['concCruzaEndereco','concCruzaSku','concCruzaLote','concCruzaQtd','concCruzaUm'].forEach(id=>document.getElementById(id)?.addEventListener('change',atualizarTipo));
   refresh();atualizarTipo();openModal();
 }
@@ -624,7 +626,7 @@ function gerarConcilExcel(){
   const endBase=_getBase('enderecos',document.getElementById('concEndBase')?.value||'');
   const cruzamento=_concTipoCruzamento();
   if(!estBase)return toast('Selecione a Carga de Estoque.',false);
-  if(cruzamento.endereco&&!endBase)return toast('Selecione a Carga de Endereços quando ENDEREÇO estiver selecionado.',false);
+  if(!endBase)return toast('Selecione a Carga de Endereços Operacional: ela é necessária para o roteamento físico (RUA / LADO / NÍVEL).',false);
   processarConcilExcel(_concilExcelPendente.rows,_concilExcelPendente.nomeArquivo);
 }
 function processarConcilExcel(rows,nomeArquivo){
@@ -664,12 +666,12 @@ function processarConcilExcel(rows,nomeArquivo){
     if(cruzamento.um&&!String(a.um??'').trim())return;
     const k=chaveCruzamento(a),old=sis.get(k);sis.set(k,{endereco:_normalizarConc(a.endereco),sku:_normalizarConc(a.sku),lote:_normalizarConc(a.lote),um:_normalizarConc(a.um||'UN'),qtdSis:(old?.qtdSis||0)+a.qtd,descricao:String(x.DESCRICAO||'').trim()||(old?.descricao||''),valorUnit:Number(x.VALOR_UNIT)||0});
   });
-  const allKeys=new Set([...sis.keys(),...fis.keys()]),divs=[],semEndereco=[];let confrontados=0,divergentes=0,unidadesDivergentes=0,valorSobra=0,valorFalta=0,estoqueContabil=0,itensSobra=0,itensFalta=0;
+  const allKeys=new Set([...sis.keys(),...fis.keys()]),divs=[],semEndereco=[],idxEndConc=_endIndice(endBase?.registros||[]);let confrontados=0,divergentes=0,unidadesDivergentes=0,valorSobra=0,valorFalta=0,estoqueContabil=0,itensSobra=0,itensFalta=0;
   sis.forEach(a=>{estoqueContabil+=Number(a.qtdSis||0)*Number(a.valorUnit||0)});
   allKeys.forEach(k=>{
     const a=sis.get(k),b=fis.get(k),qs=Number(a?.qtdSis||0),qf=Number(b?.qtdFis||0);confrontados++;
     const x=b||a,endereco=x.endereco;
-    if(cruzamento.endereco && endereco && !(new Set((endBase?.registros||[]).map(z=>_normalizarConc(z['ENDEREÇO'])))).has(endereco))semEndereco.push(endereco);
+    if(cruzamento.endereco && endereco && !_endLookup(idxEndConc,endereco))semEndereco.push(endereco);
     const diff=qf-qs;
     if(cruzamento.quantidade && Math.abs(diff)>0.000001){
       divergentes++;unidadesDivergentes+=Math.abs(diff);const vu=Number(a?.valorUnit||0);if(diff>0){valorSobra+=diff*vu;itensSobra++;}else{valorFalta+=Math.abs(diff)*vu;itensFalta++;}
@@ -689,41 +691,20 @@ function processarConcilExcel(rows,nomeArquivo){
      que contenham o item divergente entram na fila de contagem. Assim um arquivo contábil sem
      endereço continua gerando tarefas físicas corretas.
   */
-  const seq=DB.inventarios.length+1,byEnd={};
-  divs.forEach(d=>{
-    let candidatos=[];
-    candidatos=estoqueEscopo.filter(x=>_concilRotaMatch(x,d,cruzamento));
-    if(!candidatos.length){
-      divs.filter(z=>z===d); // mantém a divergência no resumo mesmo sem roteamento
-      return;
-    }
-    candidatos.forEach(x=>{
-      const end=String(x.ENDERECO||'').trim();if(!end)return;
-      const en=(endBase?.registros||[]).find(z=>_normalizarConc(z['ENDEREÇO'])===_normalizarConc(end))||{};
-      d._enderecosRoteados=d._enderecosRoteados||[];
-      if(!d._enderecosRoteados.some(z=>_normalizarConc(z.endereco)===_normalizarConc(end))){
-        d._enderecosRoteados.push({endereco:end,rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||''});
-      }
-      const key=end;
-      (byEnd[key]??=[]).push({
-        endereco:end,
-        sku:String(x.SKU_CLIENTE||d.sku||''),
-        lote:String(x.LOTE||d.lote||''),
-        descricao:String(x.DESCRICAO||d.descricao||''),
-        um:String(x.UNIDADE_MEDIDA||d.um||'UN'),
-        qtdSistema:_num(x.QUANTIDADE),
-        qtdFisicaImportada:d.qtdFisica,
-        divergenciaConsolidada:d.qtdFisica-d.qtdSistema,
-        rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||''
-      });
-    });
-  });
-  const tarefas=Object.entries(byEnd).map(([end,items],i)=>{const en=(endBase?.registros||[]).find(x=>_normalizarConc(x['ENDEREÇO'])===_normalizarConc(end))||{};return{id:'TAR-'+String(seq).padStart(3,'0')+'-'+String(i+1).padStart(3,'0'),endereco:end,rua:en.RUA||'',lado:en.LADO||en['ÍMPAR/PAR']||'',nivel:en['NÍVEL']||'',status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO_EXCEL',itens:items.map(x=>({endereco:x.endereco,sku:x.sku,lote:x.lote,descricao:x.descricao,qtdSistema:x.qtdSistema,um:x.um,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:x.qtdFisicaImportada,divergenciaConsolidada:x.divergenciaConsolidada}))}});
+  /*
+     ROTEAMENTO OPERACIONAL (v1.9.8):
+     O flag ENDEREÇO controla apenas o cruzamento. Depois de identificada, cada divergência é
+     localizada na Carga Estoque física por SKU + LOTE + UM (conforme os critérios) e TODOS os
+     endereços físicos do item entram no escopo. RUA / LADO / NÍVEL vêm da Carga de Endereços.
+     A mesma função (_materializarTarefasConcil) é usada na criação e em qualquer reprocessamento.
+  */
+  const novoId=_novoIdInventario('INV-CONC-');
   const valorDivergencias=valorSobra+valorFalta,unidadesSistema=[...sis.values()].reduce((a,x)=>a+Number(x.qtdSis||0),0),pctDivQtd=unidadesSistema?unidadesDivergentes/unidadesSistema*100:0,accQtd=unidadesSistema?Math.max(0,100-pctDivQtd):null,pctDivValor=estoqueContabil?valorDivergencias/estoqueContabil*100:0,accValor=estoqueContabil?Math.max(0,100-pctDivValor):null;
-  const inv={configOperacaoId:cfg.id,filial:cfg.filial,id:'INV-CONC-'+new Date().getFullYear()+'-'+String(seq).padStart(4,'0'),tipo:'CONCILIACAO_EXCEL',modoContagem:'CONCILIACAO_EXCEL',cargaConciliacaoId:nomeArquivo,cargaEstoqueId:estBase.id,cargaEnderecosId:endBase.id,status:'ABERTO',operacao:cfg.nome,cliente:cli||'MÚLTIPLOS',site:site||'MÚLTIPLOS',criadoEm:now(),arquivoConcil:nomeArquivo,totalDivergencias:divs.length,divergencias:divs.map(d=>({endereco:d.endereco||'',sku:d.sku||'',lote:d.lote||'',qtdSistema:d.qtdSistema||0,qtdFisica:d.qtdFisica||0,descricao:d.descricao||'',um:d.um||'UN',cliente:d.cliente||'TODOS',site:d.site||'TODOS',enderecosRoteados:Array.isArray(d._enderecosRoteados)?_clone(d._enderecosRoteados):[]})),tarefas,conciliacaoResumo:{confrontados,divergentes,unidadesDivergentes,unidadesSistema,valorSobra,valorFalta,valorDivergencias,estoqueContabil,itensSobra,itensFalta,pctDivQtd,accQtd,pctDivValor,accValor,semDivergencia:divs.length===0,tipoCruzamento:cruzamento,roteamentoSemEndereco:!cruzamento.endereco},cargaEstoqueSnapshot:_clone(estoqueEscopo),cargaEnderecosSnapshot:_clone(endBase?.registros||[]),fonteCargaEstoque:_baseLabel(estBase),fonteCargaEnderecos:_baseLabel(endBase)};
+  const inv={configOperacaoId:cfg.id,filial:cfg.filial,id:novoId.id,tipo:'CONCILIACAO_EXCEL',tipoOriginal:'CONCILIACAO_EXCEL',modoContagem:'CONCILIACAO_EXCEL',cargaConciliacaoId:nomeArquivo,cargaEstoqueId:estBase.id,cargaEnderecosId:endBase.id,status:'ABERTO',operacao:cfg.nome,cliente:cli||'MÚLTIPLOS',site:site||'MÚLTIPLOS',criadoEm:now(),arquivoConcil:nomeArquivo,totalDivergencias:divs.length,divergencias:divs.map(d=>({endereco:d.endereco||'',sku:d.sku||'',lote:d.lote||'',qtdSistema:d.qtdSistema||0,qtdFisica:d.qtdFisica||0,descricao:d.descricao||'',um:d.um||'UN',cliente:d.cliente||'TODOS',site:d.site||'TODOS',enderecosRoteados:[]})),tarefas:[],conciliacaoResumo:{confrontados,divergentes,unidadesDivergentes,unidadesSistema,valorSobra,valorFalta,valorDivergencias,estoqueContabil,itensSobra,itensFalta,pctDivQtd,accQtd,pctDivValor,accValor,semDivergencia:divs.length===0,tipoCruzamento:cruzamento,roteamentoSemEndereco:!cruzamento.endereco},cargaEstoqueSnapshot:_clone(estoqueEscopo),cargaEnderecosSnapshot:_clone(endBase?.registros||[]),fonteCargaEstoque:_baseLabel(estBase),fonteCargaEnderecos:_baseLabel(endBase),fonteFisica:{estoque:{metodo:'SNAPSHOT',baseId:estBase.id,em:now()},enderecos:{metodo:'SNAPSHOT',baseId:endBase.id,em:now()}}};
+  const rot=_materializarTarefasConcil(inv);_planejarOndasConcil(inv);const tarefas=inv.tarefas;
   DB.inventarios.push(inv);save();_concilExcelPendente=null;closeModal();renderInv();renderDash();renderConc();
   if(divs.length){go('tarefas');setTimeout(()=>renderTarefas(inv.id),50)}else{go('dashboard')}
-  toast('Conciliação concluída · '+confrontados+' cruzamento(s) realizado(s) · '+divs.length+' divergência(s) · '+cfg.nome+' · '+tarefas.length+' endereço(s) encaminhado(s) para contagem');
+  toast('Conciliação concluída · '+confrontados+' cruzamento(s) realizado(s) · '+divs.length+' divergência(s) · '+cfg.nome+' · '+tarefas.length+' endereço(s) físico(s) encaminhado(s) para contagem'+(rot.semRoteamento?' · '+rot.semRoteamento+' SEM ROTEAMENTO FÍSICO':''));
 }
 function verTarefas(invId){go('tarefas');setTimeout(()=>{document.getElementById('tarefasBody').dataset.inv=invId;renderTarefas(invId)},0)}
 function _invDivEnderecos(invId){
@@ -764,31 +745,30 @@ function _invDivEnderecos(invId){
 
 function _liberacaoCandidatos(inv,modo,fonteId){
   if(!inv)return [];
-  if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId||inv.id);
-  return (inv.tarefas||[]).filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))&&String(t.status||'')!=='FORA_CICLO');
+  return _escopoLiberacao(inv,modo,fonteId).filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));
 }
 function _renderLiberacaoFiltros(invId){
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
-  _materializarTarefasConcil(inv);
-  _planejarOndasConcil(inv);
   const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL';
   const fonteId=document.getElementById('libFonteInv')?.value||invId;
-  if(modo==='CICLICO')_ensureCiclicoTarefas(inv,fonteId);
   const candidatos=_liberacaoCandidatos(inv,modo,fonteId);
   const uni=(fn)=>[...new Set(candidatos.map(fn).map(v=>String(v??'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR',{numeric:true}));
   const ruas=uni(t=>t.rua),lados=uni(t=>t.lado),niveis=uni(t=>t.nivel);
   const boxes=[['libRuaBox','libRua','Ruas',ruas],['libLadoBox','libLado','Lado',lados],['libNivelBox','libNivel','Níveis',niveis]];
   boxes.forEach(([id,cls,label,vals])=>{
     const el=document.getElementById(id);if(!el)return;
-    el.innerHTML='<div class="sec-t">'+label+'</div><label style="display:block;margin-bottom:8px"><input type="checkbox" data-lib-all="'+cls+'" onchange="toggleChecks(\''+cls+'\',this.checked)"> Todos</label>'+vals.map(v=>'<label style="display:block;margin:7px 0;font-size:11px"><input class="'+cls+'" type="checkbox" value="'+esc(v)+'" onchange="atualizarPreviewLiberacao()"> '+esc(v)+'</label>').join('') || '<div class="mini">Nenhum item disponível.</div>';
+    el.innerHTML='<div class="sec-t">'+label+'</div>'+(vals.length?'<label style="display:block;margin-bottom:8px"><input type="checkbox" data-lib-all="'+cls+'" onchange="toggleChecks(\''+cls+'\',this.checked)"> Todos</label>'+vals.map(v=>'<label style="display:block;margin:7px 0;font-size:11px"><input class="'+cls+'" type="checkbox" value="'+esc(v)+'" onchange="atualizarPreviewLiberacao()"> '+esc(v)+'</label>').join(''):'<div class="mini">Nenhum item disponível.</div>');
   });
   atualizarPreviewLiberacao();
 }
 function _renderPlanejamentoLiberacao(inv,modo,fonteId){
   const el=document.getElementById('libWavePlan');if(!el||!inv)return;
-  const grupos=_planejarOndasConcil(inv);const pend=grupos.filter(g=>g.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))));
-  const users=_contadoresDisponiveisWave();const top=pend.slice(0,Math.max(users.length,5));
-  el.innerHTML='<div class="sec-t">PLANEJAMENTO DE ONDAS · MAIOR → MENOR</div><div class="mini" style="margin:5px 0 10px">Critério primário: <b>quantidade de endereços divergentes</b>. Desempate: unidades divergentes, itens e ordem física. A cada CONTADOR ativo é proposta uma onda por vez.</div>'+(top.length?top.map((g,i)=>'<div style="display:grid;grid-template-columns:42px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)"><b style="color:var(--orange2)">#'+String(g.seq).padStart(3,'0')+'</b><div><b>RUA '+esc(g.rua)+' · LADO '+esc(g.lado)+' · NÍVEL '+esc(g.nivel||'—')+'</b><div class="mini">'+g.enderecos.size+' endereço(s) · '+g.unidades.toLocaleString('pt-BR')+' unidade(s) divergente(s) · '+g.itens+' item(ns)</div></div><span class="badge pen">'+(i<users.length?'PRÓXIMA':'FILA')+'</span></div>').join(''):'<div class="mini">Nenhuma onda pendente para este inventário.</div>')+(inv.enderecosSemRoteamento?'<div class="info" style="margin-top:10px;border-color:rgba(248,113,113,.35)"><b>Atenção:</b> '+inv.enderecosSemRoteamento+' divergência(s) não puderam ser roteadas para um endereço físico. Elas permanecem no resumo, mas não entram na liberação até existir uma rota física.</div>':'');
+  const escopo=_escopoLiberacao(inv,modo,fonteId);
+  const grupos=_planejarOndasConcil(inv,escopo);const pend=grupos.filter(g=>g.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))));
+  const livres=_contadoresLivres();const users=_contadoresDisponiveisWave();const top=pend.slice(0,Math.max(users.length,5));
+  const fonte=modo==='CICLICO'?(DB.inventarios.find(x=>x.id===(fonteId||inv.id))||inv):null;
+  const semRota=fonte?(fonte.divergenciasSemRoteamento||[]):[];
+  el.innerHTML='<div class="sec-t">PLANEJAMENTO DE ONDAS · MAIOR → MENOR</div><div class="mini" style="margin:5px 0 10px">Critério primário: <b>quantidade de endereços divergentes</b>. Desempate: unidades divergentes, itens e ordem física. A cada CONTADOR ativo é proposta uma onda por vez.</div>'+(top.length?top.map((g,i)=>{const u=livres[i];return '<div style="display:grid;grid-template-columns:42px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)"><b style="color:var(--orange2)">#'+String(g.seq).padStart(3,'0')+'</b><div><b>RUA '+esc(g.rua)+' · LADO '+esc(g.lado)+' · NÍVEL '+esc(g.nivel||'—')+'</b><div class="mini">'+g.enderecos.size+' endereço(s) · '+g.unidades.toLocaleString('pt-BR')+' unidade(s) divergente(s) · '+g.itens+' item(ns)'+(u?' · sugerido para <b>'+esc(u.nome||u.login||'—')+'</b>':'')+'</div></div><span class="badge pen">'+(i<livres.length?'PRÓXIMA':'FILA')+'</span></div>'}).join(''):'<div class="mini">Nenhuma onda pendente para este inventário.</div>')+(semRota.length?'<div class="info" style="margin-top:10px;border-color:rgba(248,113,113,.35)"><b style="color:#f87171">SEM ROTEAMENTO FÍSICO</b> · '+semRota.length+' divergência(s) não localizadas em nenhum endereço da Carga Estoque. Permanecem visíveis nas Divergências e não geram onda até existir rota física.<div class="mini" style="margin-top:6px">'+semRota.slice(0,8).map(x=>'SKU '+esc(x.sku||'—')+(x.lote?' · LOTE '+esc(x.lote):'')).join(' | ')+(semRota.length>8?' | …':'')+'</div></div>':'');
 }
 function atualizarPreviewLiberacao(){
   const pv=document.getElementById('libPreview');if(!pv)return;
@@ -798,7 +778,8 @@ function atualizarPreviewLiberacao(){
   const auto=!!document.getElementById('libDistribuirAuto')?.checked;
   const base=_liberacaoCandidatos(inv,modo,fonteId);
   const candidatos=base.filter(t=>(!r.length||r.includes(String(t.rua)))&&(!l.length||l.includes(String(t.lado)))&&(!n.length||n.includes(String(t.nivel))));
-  const st=_releaseStats(inv);pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' endereço(s) disponíveis'+(auto&&!r.length&&!l.length&&!n.length?' · <b>modo automático:</b> 1 onda por CONTADOR ativo':' · <b>modo manual:</b> RUA + LADO + NÍVEL')+' · <b>recomendadas agora:</b> '+st.liberar;_renderPlanejamentoLiberacao(inv,modo,fonteId);
+  const ondas=new Set(candidatos.map(t=>[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||'))).size;
+  const st=_releaseStats(inv);pv.innerHTML='<b>Seleção:</b> '+candidatos.length+' endereço(s) disponíveis em '+ondas+' onda(s) RUA + LADO + NÍVEL'+(auto?' · <b>modo automático:</b> 1 onda por CONTADOR livre ('+_contadoresLivres().length+')':' · <b>modo manual:</b> RUA + LADO + NÍVEL')+' · <b>recomendadas agora:</b> '+st.liberar;_renderPlanejamentoLiberacao(inv,modo,fonteId);
 }
 
 function toggleChecks(cls,checked){
@@ -806,24 +787,37 @@ function toggleChecks(cls,checked){
   const master=document.querySelector('[data-lib-all="'+cls+'"]');if(master)master.checked=!!checked;
   atualizarPreviewLiberacao();
 }
-function _releaseStats(inv){
-  const ts=inv?.tarefas||[],pend=ts.filter(t=>t.status==='AGUARDANDO'),fila=ts.filter(t=>t.status==='LIBERADA'),andamento=ts.filter(t=>t.status==='ANDAMENTO'),concl=ts.filter(t=>t.status==='CONCLUIDO'),aguard2=ts.filter(t=>['AGUARDANDO_2C','AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status));
-  const users=_contadoresDisponiveisWave();
-  const designados=new Set([...fila,...andamento].map(t=>String(t.contadorDesignadoId||t.contadorDesignadoLogin||t.contadorDesignado||t.contadorId||t.contadorLogin||t.contador||'').trim()).filter(Boolean));
-  const ativos=users.length,slots=Math.max(0,ativos-designados.size),liberar=Math.min(pend.length,slots);
-  return {ts,pend,fila,andamento,concl,aguard2,ativos,alvoFila:ativos,liberar,slots,users};
+function _releaseStats(inv,escopo){
+  const ts=Array.isArray(escopo)?escopo:(inv?.tarefas||[]).filter(t=>t.status!=='FORA_CICLO'),pend=ts.filter(t=>t.status==='AGUARDANDO'),fila=ts.filter(t=>t.status==='LIBERADA'),andamento=ts.filter(t=>t.status==='ANDAMENTO'),concl=ts.filter(t=>t.status==='CONCLUIDO'),aguard2=ts.filter(t=>['AGUARDANDO_2C','AGUARDANDO_3C','AGUARDANDO_APROV'].includes(t.status));
+  const users=_contadoresDisponiveisWave(),livres=_contadoresLivres();
+  // Cadência: 1 onda (RUA+LADO+NÍVEL) por CONTADOR livre; contadores com onda liberada/em execução não recebem outra.
+  const ondasPend=new Set(pend.map(t=>[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||'))).size;
+  const ativos=users.length,slots=livres.length,liberar=Math.min(ondasPend,slots);
+  return {ts,pend,fila,andamento,concl,aguard2,ativos,alvoFila:ativos,liberar,slots,users,livres,ondasPend};
+}
+function _escopoMonitor(inv){
+  if(!inv)return null;
+  if(_ehConciliacao(inv)&&Array.isArray(inv.divergencias)&&inv.divergencias.length)return _escopoLiberacao(inv,'CICLICO',inv.id);
+  if(inv.modoLiberacao==='CICLICO'&&inv.cargaConciliacaoId&&DB.inventarios.some(x=>x.id===inv.cargaConciliacaoId))return _escopoLiberacao(inv,'CICLICO',inv.cargaConciliacaoId);
+  return null;
 }
 function _renderReleaseMonitor(inv){
   const el=document.getElementById('releaseMonitor');if(!el)return;
   if(!inv){el.innerHTML='';return}
-  const st=_releaseStats(inv);
-  const prox=st.pend.slice().sort((a,b)=>String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.endereco).localeCompare(String(b.endereco),'pt-BR',{numeric:true}));
-  const grupos={};prox.forEach(t=>{const k=(t.rua||'—')+' · '+(t.lado||'—')+' · Nível '+(t.nivel||'—');if(!grupos[k])grupos[k]={k,q:0,end:[]};grupos[k].q++;if(grupos[k].end.length<3)grupos[k].end.push(t.endereco)});
-  const g=Object.values(grupos).slice(0,5);
+  const escopo=_escopoMonitor(inv),st=_releaseStats(inv,escopo);
+  let g;
+  if(escopo){
+    // Próxima onda sugerida segue o planejamento MAIOR → MENOR e indica o CONTADOR livre.
+    g=_planejarOndasConcil(inv,escopo).filter(x=>x.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')))).slice(0,5).map((x,i)=>{const pend=x.ts.filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));const u=st.livres[i];return {k:'#'+String(x.seq).padStart(3,'0')+' · '+(x.rua||'—')+' · '+(x.lado||'—')+' · Nível '+(x.nivel||'—')+(u?' → '+(u.nome||u.login||''):''),q:pend.length,end:pend.slice(0,3).map(t=>t.endereco)}});
+  }else{
+    const prox=st.pend.slice().sort((a,b)=>String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.endereco).localeCompare(String(b.endereco),'pt-BR',{numeric:true}));
+    const grupos={};prox.forEach(t=>{const k=(t.rua||'—')+' · '+(t.lado||'—')+' · Nível '+(t.nivel||'—');if(!grupos[k])grupos[k]={k,q:0,end:[]};grupos[k].q++;if(grupos[k].end.length<3)grupos[k].end.push(t.endereco)});
+    g=Object.values(grupos).slice(0,5);
+  }
   const pulse=st.liberar>0?'Há capacidade para nova onda.':'Fila de contagem abastecida.';
   el.innerHTML=`<div class="card" style="border-color:${st.liberar>0?'rgba(251,146,60,.38)':'var(--border)'}">
     <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
-      <div><div class="sec-t" style="margin-bottom:8px">Cadência de Liberação · ${esc(inv.id)}</div><div class="mini">${pulse} O sistema usa <b>1 tarefa em fila por contador ativo</b> como referência para evitar excesso de tarefas liberadas.</div></div>
+      <div><div class="sec-t" style="margin-bottom:8px">Cadência de Liberação · ${esc(inv.id)}</div><div class="mini">${pulse} O sistema usa <b>1 onda por contador livre</b> como referência para evitar excesso de tarefas liberadas.</div></div>
       <button class="btn btn-b" onclick="abrirLiberacaoTarefas('${esc(inv.id)}')">⚡ Abrir Liberação</button>
     </div>
     <div class="kpis" style="margin:14px 0 0">
@@ -838,176 +832,397 @@ function _renderReleaseMonitor(inv){
     </div>
   </div>`;
 }
+/* =====================================================================
+   v1.9.8 · Build 057 — ROTEAMENTO FÍSICO DA CONCILIAÇÃO
+   DIVERGÊNCIA → SKU+LOTE+UM → CARGA ESTOQUE FÍSICA → ENDEREÇO(S) FÍSICO(S)
+   → CARGA DE ENDEREÇOS → RUA + LADO + NÍVEL → ONDAS → CONTADORES
+   Regras:
+   · O flag ENDEREÇO só define o cruzamento; o endereço físico vem SEMPRE da Carga Estoque.
+   · Uma divergência pode ocupar VÁRIOS endereços físicos: todos entram no escopo.
+   · A fonte física é recuperada automaticamente (snapshot → ID → mesma operação → metadados).
+     Nunca se cria dado fictício e nunca se escolhe carga arbitrária.
+   ===================================================================== */
 function _normOperFlex(v){
   const s=_normalizarConc(v);
   return s.replace(/^0+(?=\d)/,'');
 }
-function _concilRotaMatch(x,d,cruz){
-  if(cruz.sku && _normOperFlex(x.SKU_CLIENTE)!==_normOperFlex(d.sku))return false;
-  if(cruz.lote && _normOperFlex(x.LOTE||'')!==_normOperFlex(d.lote||''))return false;
-  if(cruz.um && _normOperFlex(x.UNIDADE_MEDIDA||'UN')!==_normOperFlex(d.um||'UN'))return false;
-  if(cruz.endereco && String(d.endereco||'').trim() && _normalizarConc(x.ENDERECO)!==_normalizarConc(d.endereco))return false;
-  return String(x.ENDERECO||'').trim()!=='';
+function _ehConciliacao(inv){
+  if(!inv)return false;
+  return inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL'||inv.tipoOriginal==='CONCILIACAO_EXCEL'||/^INV-CONC-/.test(String(inv.id||''))||(Array.isArray(inv.divergencias)&&!!inv.conciliacaoResumo);
 }
+// Conciliações liberadas em builds anteriores tiveram tipo/modoContagem sobrescritos por executarLiberacao().
+// Restaura a identidade original e move o modo de liberação para o campo próprio.
+function _restaurarIdentidadeConciliacoes(){
+  let n=0;
+  (DB.inventarios||[]).forEach(inv=>{
+    if(!inv||!_ehConciliacao(inv))return;
+    if(inv.tipo!=='CONCILIACAO_EXCEL'||inv.modoContagem!=='CONCILIACAO_EXCEL'){
+      if(!inv.modoLiberacao&&(inv.tipo==='CICLICO'||inv.tipo==='GERAL'))inv.modoLiberacao=inv.tipo;
+      inv.tipo='CONCILIACAO_EXCEL';inv.modoContagem='CONCILIACAO_EXCEL';n++;
+    }
+  });
+  return n;
+}
+/* ---------- IDs sem colisão ---------- */
+function _novoIdInventario(prefixo){
+  const ano=new Date().getFullYear(),ids=new Set((DB.inventarios||[]).map(i=>String(i?.id||'')));
+  let max=0;ids.forEach(id=>{const m=id.match(new RegExp('-'+ano+'-(\\d+)$'));if(m)max=Math.max(max,parseInt(m[1],10)||0)});
+  let seq=Math.max(max,(DB.inventarios||[]).length)+1;
+  while(ids.has(prefixo+ano+'-'+String(seq).padStart(4,'0')))seq++;
+  return {id:prefixo+ano+'-'+String(seq).padStart(4,'0'),seq};
+}
+function _geradorIdTarefa(inv){
+  const usados=new Set();(DB.inventarios||[]).forEach(i=>(i.tarefas||[]).forEach(t=>usados.add(String(t?.id||''))));(inv?.tarefas||[]).forEach(t=>usados.add(String(t?.id||'')));
+  const pref='TAR-'+String(inv?.id||'INV').replace(/^INV-/,'')+'-';let n=0;
+  return ()=>{let id;do{n++;id=pref+String(n).padStart(4,'0')}while(usados.has(id));usados.add(id);return id};
+}
+/* ---------- Normalização de ENDEREÇO ---------- */
+function _endCampo(z){return z?.['ENDEREÇO']??z?.ENDERECO??z?.endereco??''}
+function _endChaves(v){
+  const exato=_normalizarConc(v),plano=exato.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const alnum=plano.replace(/[^A-Z0-9]/g,'');
+  const segs=plano.split(/[^A-Z0-9]+/).filter(Boolean).map(s=>/^\d+$/.test(s)?String(parseInt(s,10)):s).join('|');
+  return {exato,alnum,segs};
+}
+function _endIndice(enderecos){
+  const idx={exato:new Map(),alnum:new Map(),segs:new Map()};
+  (enderecos||[]).forEach(z=>{
+    const e=String(_endCampo(z)).trim();if(!e)return;const k=_endChaves(e);
+    if(!idx.exato.has(k.exato))idx.exato.set(k.exato,z);
+    ['alnum','segs'].forEach(tp=>{if(!k[tp])return;const m=idx[tp],old=m.get(k[tp]);
+      if(!old)m.set(k[tp],{rec:z,exato:k.exato});else if(old.exato!==k.exato)m.set(k[tp],{rec:null,exato:'*AMBIGUO*'});});
+  });
+  return idx;
+}
+function _endLookup(idx,end){
+  const k=_endChaves(end);if(!k.exato||!idx)return null;
+  if(idx.exato.has(k.exato))return idx.exato.get(k.exato);
+  const a=k.alnum&&idx.alnum.get(k.alnum);if(a?.rec)return a.rec;
+  const s=k.segs&&idx.segs.get(k.segs);if(s?.rec)return s.rec;
+  return null;
+}
+function _endMeta(z){
+  if(!z)return {rua:'',lado:'',nivel:'',encontrado:false};
+  const g=(...ks)=>{for(const k of ks){const v=z[k];if(v!==undefined&&v!==null&&String(v).trim()!=='')return String(v).trim()}return ''};
+  return {rua:g('RUA','Rua','rua'),lado:g('LADO','Lado','lado','ÍMPAR/PAR','IMPAR/PAR','IMPAR_PAR'),nivel:g('NÍVEL','NIVEL','Nível','Nivel','nivel'),endereco:String(_endCampo(z)).trim(),encontrado:true};
+}
+const _endIndiceCache=new WeakMap();
 function _concilEnderecoMeta(enderecos,end){
-  const key=_normalizarConc(end);
-  return (enderecos||[]).find(z=>_normalizarConc(z['ENDEREÇO']||z.ENDERECO||'')===key)||{};
+  const arr=Array.isArray(enderecos)?enderecos:[];let idx=_endIndiceCache.get(arr);if(!idx){idx=_endIndice(arr);_endIndiceCache.set(arr,idx)}
+  return _endLookup(idx,end)||{};
 }
-function _concilTaskItem(x,d,end){
-  const sku=String(x?.SKU_CLIENTE??d?.sku??'').trim(),lote=String(x?.LOTE??d?.lote??'').trim(),um=String(x?.UNIDADE_MEDIDA??d?.um??'UN').trim()||'UN';
-  return {endereco:end,sku,lote,descricao:String(x?.DESCRICAO??d?.descricao??'').trim(),qtdSistema:_num(x?.QUANTIDADE??d?.qtdSistema??0),um,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:Number(d?.qtdFisica||0),divergenciaConsolidada:Number(d?.qtdFisica||0)-Number(d?.qtdSistema||0)};
+/* ---------- Leitura tolerante dos registros (compatível com builds anteriores) ---------- */
+function _fisCampos(x){
+  return {sku:x?.SKU_CLIENTE??x?.SKU??x?.sku??'',lote:x?.LOTE??x?.lote??'',um:(x?.UNIDADE_MEDIDA??x?.UM??x?.um)||'UN',endereco:String(x?.ENDERECO??x?.['ENDEREÇO']??x?.endereco??'').trim(),descricao:x?.DESCRICAO??x?.descricao??'',qtd:_num(x?.QUANTIDADE??x?.qtd??x?.qtdSistema??0),cliente:x?.CLIENTE??x?.cliente??'',site:x?.SITE??x?.site??''};
+}
+function _divCampos(d){
+  return {sku:d?.sku??d?.SKU_CLIENTE??d?.SKU??'',lote:d?.lote??d?.LOTE??'',um:(d?.um??d?.UNIDADE_MEDIDA??d?.UM)||'UN',endereco:String(d?.endereco??d?.ENDERECO??'').trim()};
+}
+function _cruzConc(inv){return inv?.conciliacaoResumo?.tipoCruzamento||{endereco:false,sku:true,lote:true,quantidade:true,um:true}}
+function _concilRotaMatch(x,d,cruz,usarEndereco){
+  const f=_fisCampos(x),v=_divCampos(d);
+  if(!f.endereco)return false;
+  if(cruz.sku&&_normOperFlex(f.sku)!==_normOperFlex(v.sku))return false;
+  if(cruz.lote&&_normOperFlex(f.lote)!==_normOperFlex(v.lote))return false;
+  if(cruz.um&&_normOperFlex(f.um||'UN')!==_normOperFlex(v.um||'UN'))return false;
+  const porEndereco=usarEndereco!==false&&cruz.endereco&&!!v.endereco;
+  if(porEndereco){const a=_endChaves(f.endereco),b=_endChaves(v.endereco);if(a.exato!==b.exato&&a.alnum!==b.alnum)return false;}
+  // Sem nenhum critério identificador o item não é roteado (evita espalhar para todo o estoque).
+  if(!cruz.sku&&!cruz.lote&&!porEndereco)return false;
+  return true;
+}
+// Retorna TODOS os registros físicos da divergência (um SKU/lote pode estar em vários endereços).
+function _rotearDivergencia(d,fis,cruz){
+  if(!Array.isArray(fis)||!fis.length)return [];
+  let c=fis.filter(x=>_concilRotaMatch(x,d,cruz,true));
+  if(!c.length&&cruz.endereco)c=fis.filter(x=>_concilRotaMatch(x,d,cruz,false));
+  if(!c.length&&!cruz.sku){const v=_divCampos(d);if(String(v.sku).trim())c=fis.filter(x=>_concilRotaMatch(x,d,{...cruz,sku:true},false));}
+  return c;
+}
+function _coberturaRoteamento(inv,fis){
+  const cruz=_cruzConc(inv),ends=new Set();let roteaveis=0;
+  (inv?.divergencias||[]).forEach(d=>{const c=_rotearDivergencia(d,fis,cruz);if(c.length){roteaveis++;c.forEach(x=>ends.add(_endChaves(_fisCampos(x).endereco).exato))}});
+  return {roteaveis,total:(inv?.divergencias||[]).length,enderecos:ends.size};
+}
+/* ---------- Recuperação automática da fonte física ---------- */
+function _mesmaOperacao(inv,b){
+  if(!inv||!b)return false;
+  if(inv.configOperacaoId&&b.configOperacaoId)return String(inv.configOperacaoId)===String(b.configOperacaoId);
+  const fi=_normalizarConc(inv.filial),fb=_normalizarConc(b.filial),oi=_normalizarConc(inv.operacao),ob=_normalizarConc(b.operacao);
+  return !!(fi&&fb&&fi===fb&&oi&&ob&&oi===ob);
+}
+function _filtroEscopoConc(inv){
+  const cli=String(inv?.cliente||'').trim(),site=String(inv?.site||'').trim(),livre=v=>!v||['MÚLTIPLOS','MULTIPLOS','TODOS'].includes(_normalizarConc(v));
+  return r=>{const f=_fisCampos(r);return (livre(cli)||_concEq(f.cliente,cli))&&(livre(site)||_concEq(f.site,site))};
+}
+function _registrosCarga(inv,tipo,b){const arr=Array.isArray(b?.registros)?b.registros:[];return tipo==='estoque'?arr.filter(_filtroEscopoConc(inv)):arr}
+function _fonteValida(tipo,arr){return Array.isArray(arr)&&(tipo==='estoque'?arr.some(r=>_fisCampos(r).endereco):arr.some(r=>String(_endCampo(r)).trim()))}
+function _enderecosCobertos(fisEst,ends){if(!Array.isArray(fisEst)||!fisEst.length)return 1;const idx=_endIndice(ends);return fisEst.some(x=>_endLookup(idx,_fisCampos(x).endereco))?1:0}
+const _fonteCache=new Map();
+function _resolverFonteFisica(inv,tipo,estoqueResolvido){
+  const snapKey=tipo==='estoque'?'cargaEstoqueSnapshot':'cargaEnderecosSnapshot',idKey=tipo==='estoque'?'cargaEstoqueId':'cargaEnderecosId',lblKey=tipo==='estoque'?'fonteCargaEstoque':'fonteCargaEnderecos';
+  // 1) Snapshot da própria conciliação.
+  if(_fonteValida(tipo,inv[snapKey]))return {metodo:'SNAPSHOT',registros:inv[snapKey],baseId:inv[idKey]||null};
+  const list=(tipo==='estoque'?DB.basesEstoque:DB.basesEnderecos)||[];
+  const sig=[inv[idKey]||'',(inv[snapKey]||[]).length,(inv.divergencias||[]).length,inv.configOperacaoId||'',inv[lblKey]||'',list.map(b=>b.id+':'+((b.registros||[]).length)).join(','),(estoqueResolvido||[]).length].join('#');
+  const ck=inv.id+'|'+tipo,c=_fonteCache.get(ck);if(c&&c.sig===sig)return c.res;
+  const aceita=b=>{const r=_registrosCarga(inv,tipo,b);if(!_fonteValida(tipo,r))return null;if(tipo==='estoque'&&!_coberturaRoteamento(inv,r).roteaveis)return null;if(tipo==='enderecos'&&!_enderecosCobertos(estoqueResolvido,r))return null;return r};
+  let res=null;
+  // 2) Carga pelo ID gravado na conciliação.
+  if(inv[idKey]){const b=_getBase(tipo,inv[idKey]);const r=b?_registrosCarga(inv,tipo,b):null;if(r&&_fonteValida(tipo,r))res={metodo:'CARGA_ID',registros:r,baseId:b.id,base:b};}
+  // 3) Carga da mesma filial/operação — somente quando há exatamente UMA candidata que roteia.
+  const mesma=list.filter(b=>_mesmaOperacao(inv,b)),aceitas=[];
+  if(!res){mesma.forEach(b=>{const r=aceita(b);if(r)aceitas.push({b,r})});if(aceitas.length===1)res={metodo:'MESMA_OPERACAO',registros:aceitas[0].r,baseId:aceitas[0].b.id,base:aceitas[0].b};}
+  // 4) Metadados gravados pela própria conciliação (rótulo/arquivo da carga de origem).
+  if(!res){
+    const lbl=_normalizarConc(inv[lblKey]);
+    if(lbl){const pool=aceitas.length>1?aceitas.map(x=>x.b):list;
+      const hits=pool.filter(b=>_normalizarConc(_baseLabel(b))===lbl||(b.nome&&lbl.endsWith(_normalizarConc(b.nome))&&_mesmaOperacao(inv,b))).map(b=>({b,r:aceita(b)})).filter(x=>x.r);
+      if(hits.length===1)res={metodo:'METADADOS',registros:hits[0].r,baseId:hits[0].b.id,base:hits[0].b};}
+  }
+  if(!res)res={metodo:'NAO_LOCALIZADA',registros:[],baseId:null,candidatas:mesma.map(b=>b.id),ambiguo:aceitas.length>1};
+  _fonteCache.set(ck,{sig,res});
+  return res;
 }
 function _obterFontesConcil(inv){
-  if(!inv)return {estoque:[],enderecos:[]};
-  let estoque=Array.isArray(inv.cargaEstoqueSnapshot)?inv.cargaEstoqueSnapshot:[];
-  let enderecos=Array.isArray(inv.cargaEnderecosSnapshot)?inv.cargaEnderecosSnapshot:[];
-  // Compatibilidade com conciliações criadas antes da persistência dos snapshots.
-  if(!estoque.length&&inv.cargaEstoqueId){
-    const b=_getBase('estoque',inv.cargaEstoqueId);if(b?.registros?.length)estoque=_clone(b.registros);
-  }
-  if(!enderecos.length&&inv.cargaEnderecosId){
-    const b=_getBase('enderecos',inv.cargaEnderecosId);if(b?.registros?.length)enderecos=_clone(b.registros);
-  }
-  return {estoque,enderecos};
+  if(!inv)return {estoque:[],enderecos:[],resolucaoEstoque:{metodo:'NAO_LOCALIZADA'},resolucaoEnderecos:{metodo:'NAO_LOCALIZADA'}};
+  const re=_resolverFonteFisica(inv,'estoque'),rd=_resolverFonteFisica(inv,'enderecos',re.registros);
+  return {estoque:re.registros||[],enderecos:rd.registros||[],resolucaoEstoque:re,resolucaoEnderecos:rd};
 }
+function _persistirFonte(inv,tipo,res){
+  if(!res||res.metodo==='SNAPSHOT'||res.metodo==='NAO_LOCALIZADA')return false;
+  const snapKey=tipo==='estoque'?'cargaEstoqueSnapshot':'cargaEnderecosSnapshot',idKey=tipo==='estoque'?'cargaEstoqueId':'cargaEnderecosId';
+  inv[snapKey]=_clone(res.registros);
+  if(res.baseId&&String(inv[idKey]||'')!==String(res.baseId)){if(inv[idKey+'Original']===undefined)inv[idKey+'Original']=inv[idKey]||null;inv[idKey]=res.baseId;}
+  inv.fonteFisica=inv.fonteFisica||{};inv.fonteFisica[tipo]={metodo:res.metodo,baseId:res.baseId||null,em:now()};
+  return true;
+}
+function _concilTaskItem(x,d,end,qtdSomada){
+  const f=x?_fisCampos(x):null,v=_divCampos(d);
+  const sku=String(f?f.sku:v.sku).trim(),lote=String(f?f.lote:v.lote).trim(),um=String(f?f.um:v.um).trim()||'UN';
+  return {endereco:end,sku,lote,descricao:String((f&&f.descricao)||d?.descricao||'').trim(),qtdSistema:qtdSomada!=null?qtdSomada:(f?f.qtd:_num(d?.qtdSistema??0)),um,qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,qtdFisicaImportada:Number(d?.qtdFisica||0),divergenciaConsolidada:Number(d?.qtdFisica||0)-Number(d?.qtdSistema||0)};
+}
+const _STATUS_EDITAVEL_PLANO=['AGUARDANDO','CANCELADO','FORA_CICLO'];
 function _materializarTarefasConcil(inv){
-  if(!inv||!Array.isArray(inv.divergencias)||!inv.divergencias.length)return {criados:0,enderecos:new Set(),semRoteamento:0};
-  const cruz=inv.conciliacaoResumo?.tipoCruzamento||{endereco:false,sku:true,lote:true,quantidade:true,um:true};
-  const fontes=_obterFontesConcil(inv),estoque=fontes.estoque,enderecos=fontes.enderecos;
-  // Persistir a fonte reconstruída para que o planejamento seja estável nas próximas aberturas.
-  if(!Array.isArray(inv.cargaEstoqueSnapshot)||!inv.cargaEstoqueSnapshot.length)inv.cargaEstoqueSnapshot=_clone(estoque);
-  if(!Array.isArray(inv.cargaEnderecosSnapshot)||!inv.cargaEnderecosSnapshot.length)inv.cargaEnderecosSnapshot=_clone(enderecos);
+  if(!inv||!Array.isArray(inv.divergencias)||!inv.divergencias.length){if(inv&&Array.isArray(inv.divergencias)){inv.enderecosSemRoteamento=0;inv.divergenciasSemRoteamento=[]}return {criados:0,enderecos:new Set(),semRoteamento:0};}
+  const cruz=_cruzConc(inv),fontes=_obterFontesConcil(inv),estoque=fontes.estoque,enderecos=fontes.enderecos;
+  _persistirFonte(inv,'estoque',fontes.resolucaoEstoque);_persistirFonte(inv,'enderecos',fontes.resolucaoEnderecos);
+  inv.fonteFisicaStatus={estoque:fontes.resolucaoEstoque.metodo,enderecos:fontes.resolucaoEnderecos.metodo,ambiguo:!!fontes.resolucaoEstoque.ambiguo};
+  const idx=_endIndice(enderecos);
   inv.tarefas=Array.isArray(inv.tarefas)?inv.tarefas:[];
-  const byEnd=new Map(inv.tarefas.filter(t=>t?.endereco).map(t=>[String(t.endereco).trim(),t]));
-  let criados=0,semRoteamento=0;
+  const byEnd=new Map();inv.tarefas.forEach(t=>{const k=_endChaves(t?.endereco).exato;if(k&&!byEnd.has(k))byEnd.set(k,t)});
+  const novoId=_geradorIdTarefa(inv);
+  let criados=0,semRoteamento=0;const semRota=[];
   inv.divergencias.forEach(d=>{
-    let candidatos=[];
-    // 1) Roteamento já persistido na própria divergência é a fonte de verdade.
-    const roteados=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
-    if(roteados.length){
-      candidatos=roteados.map(r=>({ENDERECO:typeof r==='string'?r:r?.endereco,SKU_CLIENTE:d.sku,LOTE:d.lote,UNIDADE_MEDIDA:d.um,DESCRICAO:d.descricao,QUANTIDADE:d.qtdSistema})).filter(x=>String(x.ENDERECO||'').trim());
-    }
-    // 2) Se não houver roteamento persistido, reconstruir SEM usar ENDEREÇO do cliente quando o flag estiver desligado.
-    if(!candidatos.length){
-      candidatos=estoque.filter(x=>_concilRotaMatch(x,d,cruz));
-    }
-    // 3) Último fallback: SKU é a âncora física. Isso atende mapas contábeis agregados que não carregam endereço/lote/UM exatamente como o WMS.
-    if(!candidatos.length && d.sku){
-      candidatos=estoque.filter(x=>_normOperFlex(x.SKU_CLIENTE)===_normOperFlex(d.sku)&&String(x.ENDERECO||'').trim());
-      if(cruz.lote&&d.lote)candidatos=candidatos.filter(x=>_normOperFlex(x.LOTE||'')===_normOperFlex(d.lote));
-      if(cruz.um&&d.um)candidatos=candidatos.filter(x=>_normOperFlex(x.UNIDADE_MEDIDA||'UN')===_normOperFlex(d.um||'UN'));
-    }
-    if(!candidatos.length){semRoteamento++;return;}
-    const seenEnd=new Set();
-    candidatos.forEach(x=>{
-      const end=String(x.ENDERECO||'').trim();if(!end||seenEnd.has(_normalizarConc(end)))return;seenEnd.add(_normalizarConc(end));
-      const meta=_concilEnderecoMeta(enderecos,end),rua=String(meta.RUA||'').trim(),lado=String(meta.LADO||meta['ÍMPAR/PAR']||'').trim(),nivel=String(meta['NÍVEL']||'').trim();
-      let t=byEnd.get(end);
-      if(!t){t={id:'TAR-'+String(inv.id||'INV').slice(-8)+'-'+String(inv.tarefas.length+1).padStart(4,'0'),endereco:end,rua,lado,nivel,status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO',itens:[]};inv.tarefas.push(t);byEnd.set(end,t);criados++;}
-      else{t.rua=rua||t.rua||'';t.lado=lado||t.lado||'';t.nivel=nivel||t.nivel||'';if(t.status==='FORA_CICLO')t.status='AGUARDANDO';}
+    const v=_divCampos(d),pontos=new Map();
+    // Todas as posições físicas do item na Carga Estoque...
+    _rotearDivergencia(d,estoque,cruz).forEach(x=>{const e=_fisCampos(x).endereco,k=_endChaves(e).exato;if(!pontos.has(k))pontos.set(k,{end:e,xs:[]});pontos.get(k).xs.push(x)});
+    // ...somadas ao roteamento já persistido (nunca reduz uma divergência a um único endereço).
+    (Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).forEach(r=>{const e=String(typeof r==='string'?r:r?.endereco||'').trim();if(!e)return;const k=_endChaves(e).exato;if(!pontos.has(k))pontos.set(k,{end:e,xs:[],r:typeof r==='string'?null:r});else if(!pontos.get(k).r&&typeof r!=='string')pontos.get(k).r=r});
+    if(!pontos.size){semRoteamento++;d.roteamentoStatus='SEM_ROTEAMENTO_FISICO';semRota.push({sku:v.sku,lote:v.lote,um:v.um,descricao:d.descricao||''});return;}
+    d.roteamentoStatus='ROTEADO';
+    const rotas=(Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[]).map(r=>typeof r==='string'?{endereco:r,rua:'',lado:'',nivel:''}:r).filter(r=>String(r?.endereco||'').trim());
+    pontos.forEach(({end,xs,r},k)=>{
+      const meta=_endMeta(_endLookup(idx,end)),rua=meta.rua||r?.rua||'',lado=meta.lado||r?.lado||'',nivel=meta.nivel||r?.nivel||'';
+      let t=byEnd.get(k);
+      if(!t){t={id:novoId(),endereco:end,rua,lado,nivel,status:'AGUARDANDO',contador:null,contadorHistorico:[],criadoEm:now(),rodada:1,modeloContagem:'CONCILIACAO',itens:[],semEstruturaFisica:!meta.encontrado&&!(rua||lado||nivel)};inv.tarefas.push(t);byEnd.set(k,t);criados++;}
+      else{
+        const livre=_STATUS_EDITAVEL_PLANO.includes(String(t.status||''));
+        if(rua&&(livre||!t.rua))t.rua=rua;if(lado&&(livre||!t.lado))t.lado=lado;if(nivel&&(livre||!t.nivel))t.nivel=nivel;
+        if(meta.encontrado||(t.rua||t.lado||t.nivel))t.semEstruturaFisica=false;
+        if(t.status==='FORA_CICLO')t.status='AGUARDANDO';
+      }
       t.itens=Array.isArray(t.itens)?t.itens:[];
-      const item=_concilTaskItem(x,d,end),ik=[item.sku,item.lote,item.um].map(_normalizarConc).join('||');
-      if(!t.itens.some(it=>[it.sku,it.lote,it.um].map(_normalizarConc).join('||')===ik))t.itens.push(item);
-      d.enderecosRoteados=Array.isArray(d.enderecosRoteados)?d.enderecosRoteados:[];
-      if(!d.enderecosRoteados.some(z=>_normalizarConc(z?.endereco||z)===_normalizarConc(end)))d.enderecosRoteados.push({endereco:end,rua,lado,nivel});
+      const grupos=new Map();
+      (xs.length?xs:[null]).forEach(x=>{const it=_concilTaskItem(x,d,end),ik=[it.sku,it.lote,it.um].map(_normOperFlex).join('||');if(!grupos.has(ik))grupos.set(ik,{x,soma:0,n:0});const g=grupos.get(ik);g.n++;if(x)g.soma+=_fisCampos(x).qtd;});
+      grupos.forEach((g,ik)=>{if(t.itens.some(it=>[it.sku,it.lote,it.um].map(_normOperFlex).join('||')===ik))return;t.itens.push(_concilTaskItem(g.x,d,end,g.x?g.soma:null))});
+      const ex=rotas.find(z=>_endChaves(z.endereco).exato===k);
+      if(!ex)rotas.push({endereco:end,rua,lado,nivel});else{if(!ex.rua&&rua)ex.rua=rua;if(!ex.lado&&lado)ex.lado=lado;if(!ex.nivel&&nivel)ex.nivel=nivel;}
     });
+    d.enderecosRoteados=rotas;
   });
   inv.totalEnderecosObrigatorios=inv.tarefas.filter(t=>t.status!=='FORA_CICLO').length;
-  inv.enderecosSemRoteamento=semRoteamento;
+  inv.enderecosSemRoteamento=semRoteamento;inv.divergenciasSemRoteamento=semRota;
   return {criados,enderecos:new Set(inv.tarefas.filter(t=>t.status!=='FORA_CICLO').map(t=>String(t.endereco||'').trim()).filter(Boolean)),semRoteamento};
 }
-
-function _planejarOndasConcil(inv){
+function _ondaChaveOrd(a,b){return String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true})}
+// Planejamento: agrupa por RUA+LADO+NÍVEL e ordena do MAIOR para o MENOR
+// (endereços → unidades divergentes → itens → ordem física).
+function _planejarOndasConcil(inv,escopo){
   if(!inv)return [];
   _materializarTarefasConcil(inv);
+  const base=Array.isArray(escopo)?escopo:(inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO');
   const map=new Map();
-  (inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO'&&t.status!=='CONCLUIDO').forEach(t=>{
+  base.filter(t=>t&&t.status!=='FORA_CICLO'&&t.status!=='CONCLUIDO').forEach(t=>{
     const k=[String(t.rua||'—'),String(t.lado||'—'),String(t.nivel||'—')].join('||');
     if(!map.has(k))map.set(k,{rua:t.rua||'—',lado:t.lado||'—',nivel:t.nivel||'—',ts:[]});map.get(k).ts.push(t);
   });
-  const arr=[...map.values()].map(g=>{g.enderecos=new Set(g.ts.map(t=>String(t.endereco||'').trim()).filter(Boolean));g.unidades=g.ts.reduce((a,t)=>a+(t.itens||[]).reduce((s,it)=>s+Math.abs(Number(it.divergenciaConsolidada||0)),0),0);g.itens=g.ts.reduce((a,t)=>a+(t.itens||[]).length,0);g.score=(g.enderecos.size*100000000)+(g.unidades*1000)+g.itens;return g;}).sort((a,b)=>b.score-a.score||String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true}));
-  arr.forEach((g,i)=>{g.seq=i+1;g.chave=[g.rua,g.lado,g.nivel].join('||');g.ts.forEach(t=>{t.ondaPlanejadaSeq=g.seq;t.ondaPlanejadaScore=g.score;t.ondaPlanejadaChave=g.chave})});
+  const arr=[...map.values()].map(g=>{g.enderecos=new Set(g.ts.map(t=>String(t.endereco||'').trim()).filter(Boolean));g.unidades=g.ts.reduce((a,t)=>a+(t.itens||[]).reduce((s,it)=>s+Math.abs(Number(it.divergenciaConsolidada||0)),0),0);g.itens=g.ts.reduce((a,t)=>a+(t.itens||[]).length,0);g.score=(g.enderecos.size*100000000)+(g.unidades*1000)+g.itens;return g;})
+    .sort((a,b)=>b.enderecos.size-a.enderecos.size||b.unidades-a.unidades||b.itens-a.itens||_ondaChaveOrd(a,b));
+  arr.forEach((g,i)=>{g.seq=i+1;g.chave=[g.rua,g.lado,g.nivel].join('||');g.ts.forEach(t=>{if(_STATUS_EDITAVEL_PLANO.includes(String(t.status||''))||!t.ondaPlanejadaSeq){t.ondaPlanejadaSeq=g.seq;t.ondaPlanejadaScore=g.score;t.ondaPlanejadaChave=g.chave}})});
   inv.planoOndas=arr.map(g=>({seq:g.seq,rua:g.rua,lado:g.lado,nivel:g.nivel,enderecos:g.enderecos.size,unidades:g.unidades,itens:g.itens,score:g.score}));
   return arr;
 }
+function _chavesEscopoFonte(fonte){
+  _materializarTarefasConcil(fonte);
+  return new Set((fonte?.tarefas||[]).filter(t=>t.status!=='FORA_CICLO').map(t=>_endChaves(t.endereco).exato).filter(Boolean));
+}
+// CÍCLICO / CONCILIAÇÃO = somente os endereços físicos impactados pelas divergências da fonte.
 function _ensureCiclicoTarefas(inv,fonteId){
-  if(!inv)return {enderecos:new Set(),criados:0};
+  if(!inv)return {enderecos:new Set(),criados:0,escopo:[]};
+  if(_ehConciliacao(inv))fonteId=inv.id;
   const fonte=DB.inventarios.find(x=>x.id===fonteId)||inv;
   const r=_materializarTarefasConcil(fonte);
+  let escopo;
   if(fonte!==inv){
     inv.tarefas=Array.isArray(inv.tarefas)?inv.tarefas:[];
-    const existing=new Map(inv.tarefas.map(t=>[_normalizarConc(t.endereco),t]));
-    (fonte.tarefas||[]).filter(t=>t.status!=='FORA_CICLO').forEach(src=>{let t=existing.get(_normalizarConc(src.endereco));if(!t){t=_clone(src);inv.tarefas.push(t);existing.set(_normalizarConc(t.endereco),t)}else{t.rua=src.rua;t.lado=src.lado;t.nivel=src.nivel;if(!t.itens?.length)t.itens=_clone(src.itens||[])}});
-  }
-  _planejarOndasConcil(inv);
-  return {enderecos:new Set((inv.tarefas||[]).map(t=>String(t.endereco||'').trim()).filter(Boolean)),criados:r.criados};
+    const chaves=_chavesEscopoFonte(fonte),existing=new Map(inv.tarefas.map(t=>[_endChaves(t.endereco).exato,t])),novoId=_geradorIdTarefa(inv);
+    (fonte.tarefas||[]).filter(t=>t.status!=='FORA_CICLO').forEach(src=>{
+      const k=_endChaves(src.endereco).exato;let t=existing.get(k);
+      if(!t){t=_clone(src);t.id=novoId();t.status='AGUARDANDO';t.contador=null;t.contadorHistorico=[];t.ondaId=null;t.ondaNumero=null;inv.tarefas.push(t);existing.set(k,t)}
+      else if(_STATUS_EDITAVEL_PLANO.includes(String(t.status||''))){t.rua=src.rua||t.rua;t.lado=src.lado||t.lado;t.nivel=src.nivel||t.nivel;if(!t.itens?.length)t.itens=_clone(src.itens||[])}
+    });
+    escopo=inv.tarefas.filter(t=>t.status!=='FORA_CICLO'&&chaves.has(_endChaves(t.endereco).exato));
+  }else escopo=(inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO');
+  _planejarOndasConcil(inv,escopo);
+  return {enderecos:new Set(escopo.map(t=>String(t.endereco||'').trim()).filter(Boolean)),criados:r.criados,escopo};
 }
 function _divergenciaEscopoEnderecos(inv){
   if(!inv)return new Set();
   _materializarTarefasConcil(inv);
   return new Set((inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO').map(t=>String(t.endereco||'').trim()).filter(Boolean));
 }
-
 function _encontrarFonteCiclica(invId){
   const atual=DB.inventarios.find(x=>x.id===invId);
-  const ehConc=!!(atual&&(atual.tipo==='CONCILIACAO_EXCEL'||atual.modoContagem==='CONCILIACAO_EXCEL'||atual.modoContagem==='CONCILIACAO'));
-  // Se a própria tela foi aberta sobre uma conciliação com divergências,
-  // ela é a fonte. Não procurar outra conciliação e não depender de contagem prévia.
-  if(ehConc&&Array.isArray(atual.divergencias)&&atual.divergencias.length)return atual;
-  const concs=DB.inventarios.filter(x=>
-    (x.tipo==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO') &&
-    Array.isArray(x.divergencias) && x.divergencias.length>0
-  ).sort((a,b)=>{
-    const ae=_divergenciaEscopoEnderecos(a).size,be=_divergenciaEscopoEnderecos(b).size;
-    if(be!==ae)return be-ae;
-    return String(b.criadoEm||'').localeCompare(String(a.criadoEm||''));
-  });
+  // Uma conciliação é fonte somente de si mesma (sem divergência = sem escopo cíclico; nunca herda outra conciliação).
+  if(_ehConciliacao(atual))return (Array.isArray(atual.divergencias)&&atual.divergencias.length)?atual:null;
   if(atual?.cargaConciliacaoId){
     const direto=DB.inventarios.find(x=>x.id===atual.cargaConciliacaoId);
-    if(direto&&Array.isArray(direto.divergencias)&&direto.divergencias.length)return direto;
+    if(_ehConciliacao(direto)&&Array.isArray(direto.divergencias)&&direto.divergencias.length)return direto;
   }
-  const mesmo=concs.find(x=>{
-    if(!atual)return true;
-    return String(x.configOperacaoId||'')===String(atual.configOperacaoId||'')&&String(x.filial||'')===String(atual.filial||'');
-  });
-  return mesmo||concs[0]||null;
+  const concs=DB.inventarios.filter(x=>_ehConciliacao(x)&&Array.isArray(x.divergencias)&&x.divergencias.length>0&&x.status!=='CANCELADO')
+    .sort((a,b)=>String(b.criadoEm||'').localeCompare(String(a.criadoEm||'')));
+  const mesmo=concs.find(x=>!atual||(String(x.configOperacaoId||'')===String(atual.configOperacaoId||'')&&String(x.filial||'')===String(atual.filial||'')));
+  return mesmo||null;
+}
+/* ---------- Escopo real de liberação ---------- */
+// GERAL = 100% da estrutura física do inventário · CÍCLICO = somente endereços impactados.
+function _escopoLiberacao(inv,modo,fonteId){
+  if(!inv)return [];
+  if(modo==='CICLICO')return _ensureCiclicoTarefas(inv,fonteId||inv.id).escopo;
+  return (inv.tarefas||[]).filter(t=>t&&t.status!=='FORA_CICLO');
+}
+function _contadorOcupado(u){
+  if(_contadorTemTarefaPendente(u))return true;const x=_contadorIdentidade(u);
+  return DB.inventarios.some(i=>(i.tarefas||[]).some(t=>{if(!['LIBERADA','ANDAMENTO'].includes(String(t.status||'')))return false;
+    const a=String(t.contadorDesignadoId||t.contadorId||'').trim(),b=String(t.contadorDesignadoLogin||t.contadorLogin||'').trim().toLowerCase(),c=String(t.contadorDesignado||t.contador||'').trim().toLowerCase();
+    return (x.id&&a===x.id)||(x.login&&b===x.login)||(!a&&!b&&x.nome&&x.nome===c)}));
+}
+function _contadoresLivres(){return _contadoresDisponiveisWave().filter(u=>u.ativo!==false&&String(u.perfil||'').toUpperCase()==='CONTADOR'&&!_contadorOcupado(u)).sort((a,b)=>_contadorFeitosPercent(a)-_contadorFeitosPercent(b)||String(a.nome).localeCompare(String(b.nome),'pt-BR'))}
+/* ---------- Recuperação excepcional: FONTE FÍSICA NÃO LOCALIZADA ---------- */
+function _fonteFisicaPendente(fonte){
+  if(!fonte||!Array.isArray(fonte.divergencias)||!fonte.divergencias.length)return null;
+  _materializarTarefasConcil(fonte);
+  const st=fonte.fonteFisicaStatus||{},semEstr=(fonte.tarefas||[]).filter(t=>t.status!=='FORA_CICLO'&&!(t.rua||t.lado||t.nivel)).length;
+  const estoque=st.estoque==='NAO_LOCALIZADA'&&Number(fonte.enderecosSemRoteamento||0)>0,enderecos=st.enderecos==='NAO_LOCALIZADA'&&semEstr>0;
+  return (estoque||enderecos)?{estoque,enderecos,semEstr,semRota:Number(fonte.enderecosSemRoteamento||0),ambiguo:!!st.ambiguo}:null;
+}
+function _renderAlertaFonteFisica(fonte,retornoInvId){
+  const el=document.getElementById('libFonteFisicaAlerta');if(!el)return;
+  const p=_fonteFisicaPendente(fonte);
+  if(!p||usuarioAtual?.perfil!=='MASTER'){el.innerHTML='';el.style.display='none';return}
+  el.style.display='block';
+  el.innerHTML='<div class="sec-t" style="color:#f87171">FONTE FÍSICA NÃO LOCALIZADA</div><div class="mini" style="margin:6px 0 10px">A recuperação automática da conciliação <b>'+esc(fonte.id)+'</b> não encontrou '+(p.estoque?'a <b>Carga Estoque</b> de origem (snapshot, ID, mesma filial/operação e metadados)'+(p.ambiguo?' — há mais de uma carga compatível e o Sistema não escolhe carga arbitrária':''):'')+(p.estoque&&p.enderecos?' nem ':'')+(p.enderecos?'a <b>Carga de Endereços</b> que define RUA / LADO / NÍVEL':'')+'. '+(p.semRota?'<b>'+p.semRota+'</b> divergência(s) estão SEM ROTEAMENTO FÍSICO.':'')+(p.semEstr?' <b>'+p.semEstr+'</b> endereço(s) sem RUA/LADO/NÍVEL.':'')+'</div><button class="btn btn-r" type="button" onclick="abrirVinculoCargaEstoque(\''+esc(fonte.id)+'\',\''+esc(retornoInvId||fonte.id)+'\')">VINCULAR CARGA ESTOQUE</button>';
+}
+function _basesMesmaOperacao(conc,tipo){return ((tipo==='estoque'?DB.basesEstoque:DB.basesEnderecos)||[]).filter(b=>_mesmaOperacao(conc,b))}
+function abrirVinculoCargaEstoque(concId,retornoInvId){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const conc=DB.inventarios.find(x=>x.id===concId);if(!conc)return;clearReleaseTimer();
+  const p=_fonteFisicaPendente(conc)||{estoque:true,enderecos:false};
+  const est=_basesMesmaOperacao(conc,'estoque'),end=_basesMesmaOperacao(conc,'enderecos');
+  const opt=(list)=>'<option value="">Selecione</option>'+list.map(b=>'<option value="'+esc(b.id)+'">'+esc(_baseLabel(b))+' · '+((b.registros||[]).length)+' registro(s)</option>').join('');
+  document.getElementById('modalBody').innerHTML='<div class="mt">Vincular Carga Estoque · '+esc(conc.id)+'</div><div class="ms">Recuperação excepcional. Somente cargas da mesma <b>FILIAL / OPERAÇÃO</b> da conciliação ('+esc(conc.operacao||'—')+' · '+esc(conc.filial||'—')+') são listadas. Após confirmar, o roteamento físico é reprocessado automaticamente.</div>'
+    +(p.estoque?'<div class="fg" style="margin-top:12px"><label>CARGA ESTOQUE *</label><select id="vincEstBase" onchange="atualizarResumoVinculo(\''+esc(concId)+'\')">'+opt(est)+'</select></div>'+(est.length?'':'<div class="info" style="margin-top:8px">Nenhuma Carga Estoque cadastrada para esta filial/operação. Importe a carga em <b>Carga Estoque</b>.</div>'):'')
+    +(p.enderecos?'<div class="fg" style="margin-top:12px"><label>CARGA DE ENDEREÇOS *</label><select id="vincEndBase" onchange="atualizarResumoVinculo(\''+esc(concId)+'\')">'+opt(end)+'</select></div>'+(end.length?'':'<div class="info" style="margin-top:8px">Nenhuma Carga de Endereços cadastrada para esta filial/operação.</div>'):'')
+    +'<div id="vincResumo" class="info" style="margin-top:12px">Selecione a carga para visualizar o resumo antes de confirmar.</div>'
+    +'<div class="mfoot"><button class="btn" type="button" onclick="abrirLiberacaoTarefas(\''+esc(retornoInvId)+'\')">Voltar</button><button class="btn btn-p" id="vincConfirmar" type="button" disabled onclick="confirmarVinculoCargaEstoque(\''+esc(concId)+'\',\''+esc(retornoInvId)+'\')">Confirmar vínculo e reprocessar</button></div>';
+  openModal();
+}
+function _simularVinculo(conc,estId,endId){
+  const bE=estId?_getBase('estoque',estId):null,bD=endId?_getBase('enderecos',endId):null;
+  if(bE&&!_mesmaOperacao(conc,bE))return {erro:'Carga Estoque de outra filial/operação.'};
+  if(bD&&!_mesmaOperacao(conc,bD))return {erro:'Carga de Endereços de outra filial/operação.'};
+  const fis=bE?_registrosCarga(conc,'estoque',bE):_obterFontesConcil(conc).estoque;
+  const ends=bD?(bD.registros||[]):_obterFontesConcil(conc).enderecos;
+  const cob=_coberturaRoteamento(conc,fis),idx=_endIndice(ends),cruz=_cruzConc(conc),endSet=new Set();
+  (conc.divergencias||[]).forEach(d=>_rotearDivergencia(d,fis,cruz).forEach(x=>endSet.add(_fisCampos(x).endereco)));
+  const comEstr=[...endSet].filter(e=>_endMeta(_endLookup(idx,e)).encontrado).length;
+  return {bE,bD,fis,cob,comEstr,totalEnd:endSet.size,skus:new Set(fis.map(x=>_normOperFlex(_fisCampos(x).sku))).size,ends:new Set(fis.map(x=>_fisCampos(x).endereco).filter(Boolean)).size};
+}
+function atualizarResumoVinculo(concId){
+  const conc=DB.inventarios.find(x=>x.id===concId);if(!conc)return;
+  const eSel=document.getElementById('vincEstBase'),dSel=document.getElementById('vincEndBase'),box=document.getElementById('vincResumo'),btn=document.getElementById('vincConfirmar');
+  const estId=eSel?.value||'',endId=dSel?.value||'';
+  if((eSel&&!estId)||(dSel&&!endId)){box.innerHTML='Selecione a carga para visualizar o resumo antes de confirmar.';if(btn)btn.disabled=true;return}
+  const s=_simularVinculo(conc,estId,endId);
+  if(s.erro){box.innerHTML='<b>'+esc(s.erro)+'</b>';if(btn)btn.disabled=true;return}
+  const b=s.bE||s.bD;
+  box.innerHTML=(s.bE?'<b>Carga Estoque:</b> '+esc(_baseLabel(s.bE))+' · criada em '+esc(s.bE.criadoEm||'—')+'<br>'+s.fis.length+' registro(s) no escopo Cliente/Site · '+s.skus+' SKU(s) · '+s.ends+' endereço(s) físico(s)<br>':'')
+    +(s.bD?'<b>Carga de Endereços:</b> '+esc(_baseLabel(s.bD))+' · '+((s.bD.registros||[]).length)+' endereço(s) estruturais<br>':'')
+    +'<b>Divergências que poderão ser roteadas:</b> '+s.cob.roteaveis+' de '+s.cob.total+' · <b>'+s.totalEnd+'</b> endereço(s) físico(s) · '+s.comEstr+' com RUA/LADO/NÍVEL'
+    +(s.cob.roteaveis<s.cob.total?'<br><span class="mini">'+(s.cob.total-s.cob.roteaveis)+' divergência(s) permanecerão como SEM ROTEAMENTO FÍSICO.</span>':'');
+  if(btn)btn.disabled=!(s.cob.roteaveis>0&&(!dSel||s.comEstr>0));
+  if(b){}
+}
+function confirmarVinculoCargaEstoque(concId,retornoInvId){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const conc=DB.inventarios.find(x=>x.id===concId);if(!conc)return;
+  const estId=document.getElementById('vincEstBase')?.value||'',endId=document.getElementById('vincEndBase')?.value||'';
+  const s=_simularVinculo(conc,estId,endId);if(s.erro)return toast(s.erro,false);
+  if(!s.cob.roteaveis)return toast('A carga selecionada não roteia nenhuma divergência. Vínculo não realizado.',false);
+  const stamp=now();conc.fonteFisica=conc.fonteFisica||{};
+  if(s.bE){if(conc.cargaEstoqueIdOriginal===undefined)conc.cargaEstoqueIdOriginal=conc.cargaEstoqueId||null;if(conc.fonteCargaEstoqueOriginal===undefined)conc.fonteCargaEstoqueOriginal=conc.fonteCargaEstoque||null;conc.cargaEstoqueId=s.bE.id;conc.cargaEstoqueSnapshot=_clone(s.fis);conc.fonteCargaEstoque=_baseLabel(s.bE);conc.fonteFisica.estoque={metodo:'VINCULO_MANUAL',baseId:s.bE.id,por:usuarioAtual.nome,em:stamp};}
+  if(s.bD){if(conc.cargaEnderecosIdOriginal===undefined)conc.cargaEnderecosIdOriginal=conc.cargaEnderecosId||null;conc.cargaEnderecosId=s.bD.id;conc.cargaEnderecosSnapshot=_clone(s.bD.registros||[]);conc.fonteCargaEnderecos=_baseLabel(s.bD);conc.fonteFisica.enderecos={metodo:'VINCULO_MANUAL',baseId:s.bD.id,por:usuarioAtual.nome,em:stamp};}
+  _fonteCache.clear();
+  const r=_materializarTarefasConcil(conc);_planejarOndasConcil(conc);save();
+  toast('Carga vinculada · '+r.criados+' endereço(s) físico(s) roteado(s) · '+(conc.enderecosSemRoteamento||0)+' sem roteamento físico');
+  abrirLiberacaoTarefas(retornoInvId||concId);
 }
 
 async function abrirLiberacaoTarefas(invId){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
   if(typeof _listarUsuariosPlatform==='function')await _listarUsuariosPlatform();
   const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return;
+  const ehConc=_ehConciliacao(inv);
   let fonteInicial=null;
-  if(inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO')fonteInicial=inv;
+  if(ehConc)fonteInicial=inv;
   else fonteInicial=_encontrarFonteCiclica(invId);
   if(fonteInicial && Array.isArray(fonteInicial.divergencias) && fonteInicial.divergencias.length){
     _materializarTarefasConcil(fonteInicial);
-    inv.cargaConciliacaoId=fonteInicial.id;
+    // A conciliação nunca tem cargaConciliacaoId sobrescrito (preserva o arquivo de origem).
+    if(!ehConc)inv.cargaConciliacaoId=fonteInicial.id;
     _ensureCiclicoTarefas(inv,fonteInicial.id);
     save();
   }
   const tarefas=inv.tarefas||[];
-  const estrutura=DB.enderecos.filter(x=>x&&String(x['ENDEREÇO']||'').trim());
-  const enderecosEstrutura=new Set(estrutura.map(x=>String(x['ENDEREÇO']).trim()));
-  const tarefasEstrutura=tarefas.filter(t=>enderecosEstrutura.has(String(t.endereco||'').trim()) && t.status!=='FORA_CICLO');
+  // KPI usa o escopo REAL do inventário (não a carga ativa global).
+  const modoInicial=fonteInicial?'CICLICO':'GERAL';
+  const tarefasEstrutura=_escopoLiberacao(inv,modoInicial,fonteInicial?.id||invId);
   const enderecosSemProduto=tarefasEstrutura.filter(t=>!(t.itens||[]).length).length;
-  const fontesRaw=DB.inventarios.filter(x=>(x.tipo==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO_EXCEL'||x.modoContagem==='CONCILIACAO') && Array.isArray(x.divergencias) && x.divergencias.length>0).sort((a,b)=>{
-    const ae=_divergenciaEscopoEnderecos(a).size,be=_divergenciaEscopoEnderecos(b).size;
-    if(be!==ae)return be-ae;
-    return String(b.criadoEm||'').localeCompare(String(a.criadoEm||''));
-  });
-  const fontes=fontesRaw;
-  const st=_releaseStats(inv);
+  const aguardandoInicial=tarefasEstrutura.filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))).length;
+  const fontes=DB.inventarios.filter(x=>_ehConciliacao(x) && x.status!=='CANCELADO' && Array.isArray(x.divergencias) && x.divergencias.length>0).sort((a,b)=>String(b.criadoEm||'').localeCompare(String(a.criadoEm||'')));
+  const st=_releaseStats(inv,tarefasEstrutura);
   document.getElementById('modalBody').dataset.invId=invId;
   document.getElementById('modalBody').innerHTML=`
   <div class="mt">Liberar Inventário · ${esc(inv.id)}</div>
   <div class="ms">Libere em <b>ondas independentes por RUA + LADO + NÍVEL</b>. Cada combinação selecionada poderá formar cards/tarefas separados em Tarefas de Contagem, permitindo distribuir a produtividade entre CONTADORES.</div>
   <div class="g2">
-    <label class="card" style="cursor:pointer;border:1px solid var(--orange);"><input type="radio" name="libModo" value="GERAL" ${fonteInicial?'':'checked'} onchange="atualizarModoLiberacao()"><strong style="color:var(--orange2)"> INVENTÁRIO GERAL</strong><div class="mini" style="margin-top:8px">Contagem cega. A 1ª contagem é obrigatória para 100% dos endereços da base.</div></label>
+    <label class="card" style="cursor:pointer;border:1px solid var(--orange);"><input type="radio" name="libModo" value="GERAL" ${ehConc?'disabled':(fonteInicial?'':'checked')} onchange="atualizarModoLiberacao()"><strong style="color:var(--orange2)"> INVENTÁRIO GERAL</strong><div class="mini" style="margin-top:8px">Contagem cega. A 1ª contagem é obrigatória para 100% dos endereços da base.${ehConc?' Indisponível para conciliação: o escopo da conciliação são somente os endereços impactados.':''}</div></label>
     <label class="card" style="cursor:pointer;"><input type="radio" name="libModo" value="CICLICO" ${fonteInicial?'checked':'disabled'} onchange="atualizarModoLiberacao()"><strong style="color:#60a5fa"> INVENTÁRIO CÍCLICO / CONCILIAÇÃO</strong><div class="mini" style="margin-top:8px">Somente endereços divergentes da referência selecionada.</div></label>
   </div>
   <div id="libFonteBox" class="fsec" style="display:none;margin-top:14px"><div class="sec-t">Carga de Conciliação</div><div class="fg"><label>Inventário / carga de referência</label><select id="libFonteInv" onchange="atualizarModoLiberacao()"><option value="">Selecione</option>${fontes.map(x=>`<option value="${esc(x.id)}" ${fonteInicial&&x.id===fonteInicial.id?'selected':''}>${esc(x.id)} · ${esc(x.operacao||x.cliente||'CONCILIAÇÃO')} · ${_divergenciaEscopoEnderecos(x).size} endereço(s) no escopo</option>`).join('')}</select></div><div class="mini" style="margin-top:8px">A referência é a conciliação. O endereço do cliente só participa do cruzamento quando o flag ENDEREÇO foi marcado; o endereço da base física continua sendo usado para rotear a contagem.</div></div>
-  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${tarefas.filter(t=>t.status==='AGUARDANDO').length}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" checked onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Divide o planejamento em ondas por RUA + LADO + NÍVEL e distribui uma próxima onda por CONTADOR ativo, priorizando o maior volume de endereços divergentes. Ao concluir uma onda, a próxima é proposta automaticamente.</div></span></label></div></div><div id="libWavePlan" class="card" style="margin-top:12px;border-color:rgba(251,146,60,.35)"></div>
+  <div id="libFonteFisicaAlerta" class="info" style="display:none;margin-top:12px;border-color:rgba(248,113,113,.45)"></div>
+  <div class="card" style="margin-top:14px;border-color:rgba(251,146,60,.3)"><div class="sec-t">Cadência em tempo real</div><div class="g3"><div><div class="dash-highlight" style="font-size:24px">${st.ativos}</div><div class="mini">Contadores ativos</div></div><div><div class="dash-highlight" style="font-size:24px">${st.fila.length}</div><div class="mini">Tarefas na fila</div></div><div><div class="dash-highlight" style="font-size:24px">${st.liberar}</div><div class="mini">Recomendadas agora</div></div></div><div class="g3" style="margin-top:12px"><div><div class="dash-highlight" id="libEstruturaCount" style="font-size:20px">${tarefasEstrutura.length}</div><div class="mini">Endereços no escopo</div></div><div><div class="dash-highlight" id="libSemProdutoCount" style="font-size:20px">${enderecosSemProduto}</div><div class="mini">Endereços sem produto</div></div><div><div class="dash-highlight" id="libAguardandoCount" style="font-size:20px">${aguardandoInicial}</div><div class="mini">Aguardando liberação</div></div></div><div class="info" style="margin:12px 0 0"><b>Cadência:</b> a recomendação é de 1 onda/tarefa aguardando por contador ativo. O MASTER pode, entretanto, fracionar manualmente por <b>RUA, LADO e NÍVEL</b> para criar vários cards e distribuir a operação entre pessoas.</div></div><div class="card" style="margin-top:12px;border-color:rgba(96,165,250,.35)"><label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer"><input id="libDistribuirAuto" type="checkbox" checked onchange="atualizarPreviewLiberacao()"><span><b>DISTRIBUIR AUTOMATICAMENTE ENTRE CONTADORES</b><div class="mini" style="margin-top:5px">Divide o planejamento em ondas por RUA + LADO + NÍVEL e distribui uma próxima onda por CONTADOR ativo, priorizando o maior volume de endereços divergentes. Ao concluir uma onda, a próxima é proposta automaticamente.</div></span></label></div></div><div id="libWavePlan" class="card" style="margin-top:12px;border-color:rgba(251,146,60,.35)"></div>
   <div class="g3" style="margin-top:14px"><div class="card" id="libRuaBox"></div><div class="card" id="libLadoBox"></div><div class="card" id="libNivelBox"></div></div>
   <div id="libPreview" class="info" style="margin-top:14px"><b>Seleção:</b> marque a RUA, o LADO e/ou o NÍVEL disponíveis. <b>Cada combinação RUA + LADO + NÍVEL gera uma onda/card independente</b>. Se marcar somente uma RUA, todos os lados e níveis daquela RUA ficam disponíveis para fracionamento.</div>
   <div class="info"><b>Operação:</b> após liberar, os cards aparecem em <b>Tarefas de Contagem</b>. A seleção de mais de uma RUA/LADO/NÍVEL não vira uma única contagem: os endereços continuam agrupados por RUA + LADO, com níveis fracionáveis.</div>
@@ -1020,7 +1235,8 @@ function startReleaseTimer(invId){
   clearReleaseTimer();
   releaseTimer=setInterval(()=>{
     const inv=DB.inventarios.find(x=>x.id===invId);if(!inv||!document.getElementById('modal')?.classList.contains('open'))return;
-    const st=_releaseStats(inv);
+    const modo=document.querySelector('input[name="libModo"]:checked')?.value||'GERAL',fonteId=document.getElementById('libFonteInv')?.value||invId;
+    const st=_releaseStats(inv,_escopoLiberacao(inv,modo,fonteId));
     const k=document.querySelector('#modalBody .card[style*="rgba(251,146,60"]');
     if(k){const vals=k.querySelectorAll('.dash-highlight');if(vals[0])vals[0].textContent=st.ativos;if(vals[1])vals[1].textContent=st.fila.length;if(vals[2])vals[2].textContent=st.liberar;}
     atualizarPreviewLiberacao();
@@ -1034,13 +1250,16 @@ function atualizarModoLiberacao(){
   const sel=document.getElementById('libFonteInv');
   let fonteId=sel?.value||'';
   if(modo==='CICLICO'){
-    if(!fonteId){const f=_encontrarFonteCiclica(invId);if(f){fonteId=f.id;if(sel)sel.value=f.id;inv.cargaConciliacaoId=f.id;}}
+    if(!fonteId){const f=_encontrarFonteCiclica(invId);if(f){fonteId=f.id;if(sel)sel.value=f.id;if(!_ehConciliacao(inv))inv.cargaConciliacaoId=f.id;}}
     if(fonteId){_ensureCiclicoTarefas(inv,fonteId);save();}
   }
+  _renderAlertaFonteFisica(modo==='CICLICO'&&fonteId?DB.inventarios.find(x=>x.id===fonteId):null,invId);
   _renderLiberacaoFiltros(invId);
-  const cand=_liberacaoCandidatos(inv,modo,fonteId);
+  const escopo=_escopoLiberacao(inv,modo,fonteId),cand=escopo.filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));
   const ec=document.getElementById('libEstruturaCount'),sc=document.getElementById('libSemProdutoCount'),ac=document.getElementById('libAguardandoCount');
-  if(ec)ec.textContent=cand.length;if(sc)sc.textContent=cand.filter(t=>!(t.itens||[]).length).length;if(ac)ac.textContent=cand.filter(t=>t.status==='AGUARDANDO').length;
+  if(ec)ec.textContent=escopo.length;if(sc)sc.textContent=escopo.filter(t=>!(t.itens||[]).length).length;if(ac)ac.textContent=cand.length;
+  const st=_releaseStats(inv,escopo),k=document.querySelector('#modalBody .card[style*="rgba(251,146,60"]');
+  if(k){const vals=k.querySelectorAll('.dash-highlight');if(vals[0])vals[0].textContent=st.ativos;if(vals[1])vals[1].textContent=st.fila.length;if(vals[2])vals[2].textContent=st.liberar;}
   atualizarPreviewLiberacao();
 }
 
@@ -1051,6 +1270,7 @@ function executarLiberacao(invId){
   let fonteId=document.getElementById('libFonteInv')?.value||'';
   if(modo==='CICLICO'&&!fonteId){const f=_encontrarFonteCiclica(invId);if(f){fonteId=f.id;const sel=document.getElementById('libFonteInv');if(sel)sel.value=f.id;}}
   if(modo==='CICLICO'&&!fonteId)return toast('Selecione uma conciliação com divergências para liberar.',false);
+  if(modo==='GERAL'&&_ehConciliacao(inv))return toast('INVENTÁRIO GERAL exige 100% da estrutura física. Para a conciliação utilize INVENTÁRIO CÍCLICO / CONCILIAÇÃO.',false);
   if(modo==='CICLICO'){_ensureCiclicoTarefas(inv,fonteId);}
   const ruas=[...document.querySelectorAll('.libRua:checked')].map(x=>x.value),lados=[...document.querySelectorAll('.libLado:checked')].map(x=>x.value),niveis=[...document.querySelectorAll('.libNivel:checked')].map(x=>x.value);
   const auto=!!document.getElementById('libDistribuirAuto')?.checked;
@@ -1059,22 +1279,26 @@ function executarLiberacao(invId){
   candidatos=candidatos.filter(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||'')));
   if(!candidatos.length)return toast('Nenhuma tarefa disponível para os filtros selecionados. Confira RUA, LADO e NÍVEL.',false);
   const stamp=now();let maxOnda=0;DB.inventarios.forEach(ii=>(ii.tarefas||[]).forEach(tt=>{maxOnda=Math.max(maxOnda,Number(tt.ondaNumero||0)||0)}));let numero=maxOnda+1;
-  inv.tipo=modo;inv.modoContagem=modo==='GERAL'?'CEGA_100':'CONCILIACAO';inv.cargaConciliacaoId=modo==='CICLICO'?fonteId:null;
+  // Identidade preservada: o modo de liberação fica em campo próprio (tipo/modoContagem originais intactos).
+  inv.modoLiberacao=modo;inv.modoContagemLiberacao=modo==='GERAL'?'CEGA_100':'CONCILIACAO';
+  if(!_ehConciliacao(inv))inv.cargaConciliacaoId=modo==='CICLICO'?fonteId:(inv.cargaConciliacaoId||null);
   const grupos=[];
   const waveMap=new Map();candidatos.forEach(t=>{const k=[t.rua||'—',t.lado||'—',t.nivel||'—'].join('||');if(!waveMap.has(k))waveMap.set(k,[]);waveMap.get(k).push(t);});
-  const orderedGroups=[...waveMap.entries()].map(([key,ts])=>{const [rua,lado,nivel]=key.split('||');return {ts,rua,lado,nivel,user:null,score:(ts.length*100000000)+ts.reduce((a,t)=>a+(t.itens||[]).reduce((s,it)=>s+Math.abs(Number(it.divergenciaConsolidada||0)),0),0)*1000+(ts.reduce((a,t)=>a+(t.itens||[]).length,0))};}).sort((a,b)=>b.score-a.score||String(a.rua).localeCompare(String(b.rua),'pt-BR',{numeric:true})||String(a.lado).localeCompare(String(b.lado),'pt-BR')||String(a.nivel).localeCompare(String(b.nivel),'pt-BR',{numeric:true}));
+  const orderedGroups=[...waveMap.entries()].map(([key,ts])=>{const [rua,lado,nivel]=key.split('||');const enderecos=new Set(ts.map(t=>String(t.endereco||'').trim())).size,unidades=ts.reduce((a,t)=>a+(t.itens||[]).reduce((s,it)=>s+Math.abs(Number(it.divergenciaConsolidada||0)),0),0),itens=ts.reduce((a,t)=>a+(t.itens||[]).length,0);return {ts,rua,lado,nivel,user:null,enderecos,unidades,itens};}).sort((a,b)=>b.enderecos-a.enderecos||b.unidades-a.unidades||b.itens-a.itens||_ondaChaveOrd(a,b));
   if(auto){
-    const users=_contadoresDisponiveisWave().filter(u=>u.ativo!==false&&String(u.perfil||'').toUpperCase()==='CONTADOR'&&!_contadorTemTarefaPendente(u)).sort((a,b)=>_contadorFeitosPercent(a)-_contadorFeitosPercent(b)||String(a.nome).localeCompare(String(b.nome),'pt-BR'));
-    if(!users.length)return toast('Não há CONTADORES ativos cadastrados para distribuição automática. Cadastre pelo menos um usuário com perfil CONTADOR.',false);
+    // Respeita execução: CONTADOR com onda liberada ou em contagem não recebe nova onda.
+    const users=_contadoresLivres();
+    if(!users.length)return toast(_contadoresDisponiveisWave().length?'Todos os CONTADORES ativos já possuem onda liberada ou em execução. A próxima onda será sugerida quando um deles concluir.':'Não há CONTADORES ativos cadastrados para distribuição automática. Cadastre pelo menos um usuário com perfil CONTADOR.',false);
     const slots=Math.min(users.length,orderedGroups.length);
     for(let i=0;i<slots;i++){const g=orderedGroups[i];g.user=users[i];grupos.push(g);}
   }else{
     orderedGroups.forEach(g=>grupos.push(g));
   }
-  grupos.forEach(g=>{const ondaId=_waveScopeId(inv,g.rua,g.lado,g.nivel,1);const planned=g.ts.reduce((m,t)=>Math.min(m,Number(t.ondaPlanejadaSeq||Infinity)),Infinity);const seqWave=Number.isFinite(planned)?planned:numero;g.ts.forEach(t=>{if(t.status==='CANCELADO'){t.contagens=[];t.contadorHistorico=t.contadorHistorico||[];t.rodada=1;t.contador=null;t.contadorId=null;t.contadorLogin=null;t.iniciadoEm=null;t.iniciadoEmMs=null;t.concluidoEm=null;t.concluidoEmMs=null;t.contagemVazia=null}t.status='LIBERADA';t.rodada=1;t.ondaId=ondaId;t.ondaNumero=seqWave;t.ondaEscopo='NIVEL';t.ondaNivel=g.nivel;t.ondaPlanejadaSeq=seqWave;t.contadorDesignado=g.user?(g.user.nome||g.user.login||''):null;t.contadorDesignadoId=g.user?.id||null;t.contadorDesignadoLogin=g.user?.login||null;t.liberadoEm=stamp;t.liberadoEmMs=Date.now();t.liberadoPor=usuarioAtual.nome;t.modeloContagem=modo==='GERAL'?'CEGA':'CONCILIACAO';});numero=Math.max(numero,seqWave+1);});
+  grupos.forEach(g=>{const ondaId=_waveScopeId(inv,g.rua,g.lado,g.nivel,1);const seqWave=numero;g.ts.forEach(t=>{if(t.status==='CANCELADO'){t.contagens=[];t.contadorHistorico=t.contadorHistorico||[];t.rodada=1;t.contador=null;t.contadorId=null;t.contadorLogin=null;t.iniciadoEm=null;t.iniciadoEmMs=null;t.concluidoEm=null;t.concluidoEmMs=null;t.contagemVazia=null}t.status='LIBERADA';t.rodada=1;t.ondaId=ondaId;t.ondaNumero=seqWave;t.ondaEscopo='NIVEL';t.ondaNivel=g.nivel;t.ondaPlanejadaSeq=seqWave;t.contadorDesignado=g.user?(g.user.nome||g.user.login||''):null;t.contadorDesignadoId=g.user?.id||null;t.contadorDesignadoLogin=g.user?.login||null;t.liberadoEm=stamp;t.liberadoEmMs=Date.now();t.liberadoPor=usuarioAtual.nome;t.modeloContagem=modo==='GERAL'?'CEGA':'CONCILIACAO';});numero=Math.max(numero,seqWave+1);});
   inv.totalEnderecosObrigatorios=inv.tarefas.length;inv.enderecosLiberados=(inv.tarefas||[]).filter(t=>['LIBERADA','ANDAMENTO','CONCLUIDO','CONGELADA'].includes(t.status)).length;
   save();clearReleaseTimer();closeModal();renderInv();renderTarefas();renderDash();if(usuarioAtual?.perfil==='MASTER')renderVisaoTarefas();
-  toast(candidatos.length+' endereço(s) liberado(s) em '+grupos.length+' onda(s)'+(auto?' · '+grupos.length+' CONTADOR(es) designado(s)':' · planejamento manual por RUA + LADO + NÍVEL'));
+  const liberados=grupos.reduce((a,g)=>a+g.ts.length,0);
+  toast(liberados+' endereço(s) liberado(s) em '+grupos.length+' onda(s)'+(auto?' · '+grupos.length+' CONTADOR(es) designado(s)':' · planejamento manual por RUA + LADO + NÍVEL'));
 }
 
 function _statusCounts(ts){return{total:ts.length,aguardar:ts.filter(t=>t.status==='AGUARDANDO').length,liberadas:ts.filter(t=>t.status==='LIBERADA').length,andamento:ts.filter(t=>t.status==='ANDAMENTO').length,congeladas:ts.filter(t=>t.status==='CONGELADA').length,concluidas:ts.filter(t=>t.status==='CONCLUIDO').length,canceladas:ts.filter(t=>t.status==='CANCELADO').length};}
@@ -1365,7 +1589,8 @@ function continuarMesmoEndereco(){const g=_getOndaAtiva(),end=String(document.ge
 function proximoEndereco(){const g=_getOndaAtiva(),end=String(document.getElementById('mobEndereco')?.value||'').trim(),t=_getTaskByEndereco(end),r=Number(t?.rodada||g?.ts?.[0]?.rodada||1);if(!g||!t)return toast('Selecione um endereço da onda.',false);if(!_taskEnderecoCompleto(t,r))return toast('FINALIZE TODOS OS ITENS/PALETES DESTE ENDEREÇO ANTES DE IR PARA O PRÓXIMO.',false);_clearContagemCampos();setTimeout(()=>abrirScanner('endereco'),120)}
 function _proximaOndaSugerida(inv,g){
   if(!inv)return null;
-  const ondas=_planejarOndasConcil(inv).filter(x=>x.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))));
+  const escopo=_escopoMonitor(inv);
+  const ondas=_planejarOndasConcil(inv,escopo||undefined).filter(x=>x.ts.some(t=>['AGUARDANDO','CANCELADO'].includes(String(t.status||''))));
   return ondas[0]||null;
 }
 function _mostrarFimOnda(g){
@@ -1666,7 +1891,7 @@ function _fmtPct(v){return v===null||v===undefined||!Number.isFinite(Number(v))?
 function _renderConcResumo(){
   const el=document.getElementById('concResumoKpis'), statusEl=document.getElementById('concResumoStatus'), compEl=document.getElementById('concComposicaoBody'), finEl=document.getElementById('concFinanceiro');
   if(!el)return;
-  const selected=document.getElementById('concInventarioFiltro')?.value||'';const concInvs=(DB.inventarios||[]).filter(i=>(i.tipo==='CONCILIACAO_EXCEL'||i.modoContagem==='CONCILIACAO_EXCEL')&&(!selected||i.id===selected));
+  const selected=document.getElementById('concInventarioFiltro')?.value||'';const concInvs=(DB.inventarios||[]).filter(i=>(_ehConciliacao(i))&&(!selected||i.id===selected));
   const items=concInvs.flatMap(inv=>(inv.tarefas||[]).flatMap(t=>(t.itens||[]).map(it=>({inv,t,it}))));
   const storedSummary=concInvs.length===1?concInvs[0].conciliacaoResumo:null;
   const initial=items.filter(x=>Number.isFinite(Number(x.it.qtdSistema)));
@@ -1727,9 +1952,11 @@ function _renderConcResumo(){
 
 
 function _obterLinhasDivergencias(invId){
-  const concInvs=(DB.inventarios||[]).filter(i=>(i.tipo==='CONCILIACAO_EXCEL'||i.modoContagem==='CONCILIACAO_EXCEL')&&(!invId||i.id===invId));
+  const concInvs=(DB.inventarios||[]).filter(i=>(_ehConciliacao(i))&&(!invId||i.id===invId));
   const rows=[];
+  let alterou=false;
   concInvs.forEach(inv=>{
+    if(Array.isArray(inv.divergencias)&&inv.divergencias.length&&inv.status!=='CANCELADO'){const r=_materializarTarefasConcil(inv);if(r.criados)alterou=true;}
     const snapshot=Array.isArray(inv.divergencias)?inv.divergencias:[];
     if(snapshot.length){
       snapshot.forEach(d=>{
@@ -1744,8 +1971,8 @@ function _obterLinhasDivergencias(invId){
         const qSys=Number(d.qtdSistema)||0;
         const diff=q-qSys;
         if(Math.abs(diff)<=0.000001)return;
-        const enderecos=roteiro.length?roteiro.map(x=>x.endereco).filter(Boolean):tarefasDoItem.map(x=>x.t.endereco).filter(Boolean);
-        rows.push({inv,t:tarefasDoItem[0]?.t||null,it:{endereco: d.endereco||'',enderecosRoteados:roteiro,sku:d.sku,lote:d.lote,descricao:d.descricao,um:d.um,qtdSistema:qSys},q,qSys,diff,contador:current?.resp||'',data:current?.data||'',enderecos});
+        const enderecos=roteiro.length?roteiro.map(x=>x.endereco).filter(Boolean):[...new Set(tarefasDoItem.map(x=>x.t.endereco).filter(Boolean))];
+        rows.push({semRota:!enderecos.length,inv,t:tarefasDoItem[0]?.t||null,it:{endereco: d.endereco||'',enderecosRoteados:roteiro,sku:d.sku,lote:d.lote,descricao:d.descricao,um:d.um,qtdSistema:qSys},q,qSys,diff,contador:current?.resp||'',data:current?.data||'',enderecos});
       });
       return;
     }
@@ -1756,6 +1983,7 @@ function _obterLinhasDivergencias(invId){
       rows.push({inv,t,it,q,qSys,diff:q-qSys,contador:lc?.resp||'',data:lc?.data||'',enderecos:[t.endereco||it.endereco].filter(Boolean)});
     }));
   });
+  if(alterou)save();
   return {concInvs,rows,scope:invId?concInvs[0]:null};
 }
 
@@ -1776,7 +2004,8 @@ async function exportarDivergenciasExcel(invId){
     ['INDICADOR','VALOR'],
     ['Registros divergentes',rows.length],
     ['Produtos divergentes',new Set(rows.map(x=>String(x.it.sku||'').trim())).size],
-    ['Endereços divergentes',new Set(rows.map(x=>String(x.it.endereco||'').trim()).filter(Boolean)).size],
+    ['Endereços físicos para contagem',new Set(rows.flatMap(x=>(x.enderecos||[]).map(e=>String(e||'').trim())).filter(Boolean)).size],
+    ['Divergências SEM ROTEAMENTO FÍSICO',rows.filter(x=>x.semRota).length],
     ['Unidades divergentes',rows.reduce((a,x)=>a+Math.abs(x.diff),0)],
     ['Sobra (unidades)',rows.filter(x=>x.diff>0).reduce((a,x)=>a+x.diff,0)],
     ['Falta (unidades)',rows.filter(x=>x.diff<0).reduce((a,x)=>a+Math.abs(x.diff),0)]
@@ -1784,7 +2013,7 @@ async function exportarDivergenciasExcel(invId){
   const wsR=XLSX.utils.aoa_to_sheet(resumo);wsR['!cols']=[{wch:34},{wch:28}];XLSX.utils.book_append_sheet(wb,wsR,'Resumo');
   const dados=rows.map(x=>({
     'OPERAÇÃO':x.inv.operacao||'—','INVENTÁRIO':x.inv.id,'CLIENTE':x.inv.cliente||'—','SITE':x.inv.site||'—',
-    'ENDEREÇOS PARA CONTAGEM':(x.enderecos&&x.enderecos.length)?x.enderecos.join(' · '):(x.it.endereco||'—'),'SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UNIDADE DE MEDIDA':x.it.um||'—',
+    'ENDEREÇOS PARA CONTAGEM':(x.enderecos&&x.enderecos.length)?x.enderecos.join(' · '):'SEM ROTEAMENTO FÍSICO','SKU':x.it.sku||'—','DESCRIÇÃO':x.it.descricao||'—','LOTE':x.it.lote||'—','UNIDADE DE MEDIDA':x.it.um||'—',
     'QUANTIDADE SISTEMA':fmt(x.qSys),'QUANTIDADE FÍSICA':fmt(x.q),'DIFERENÇA':fmt(x.diff),
     'TIPO':x.diff>0?'SOBRA':'FALTA','CONTADOR':x.contador||'—','DATA/HORA':x.data||'—','STATUS':'DIVERGENTE'
   }));
@@ -1798,17 +2027,17 @@ function abrirVisualizacaoDivergencias(invId){
   const modal=document.getElementById('modal'),body=document.getElementById('modalBody');if(!modal||!body)return;
   const {concInvs,rows,scope}=_obterLinhasDivergencias(invId);
   const fmt=n=>Number(n||0).toLocaleString('pt-BR',{maximumFractionDigits:3});
-  body.innerHTML=`<div class="mt">Divergências ${scope?'· '+esc(scope.id):'das Conciliações'}</div><div class="ms">Visão analítica das divergências identificadas. ${scope?`Operação: <b>${esc(scope.operacao||'—')}</b> · Cliente: <b>${esc(scope.cliente||'—')}</b> · Site: <b>${esc(scope.site||'—')}</b>.`:'A seleção considera todas as operações de conciliação existentes.'}</div><div class="acts" style="margin-top:14px;justify-content:flex-end"><button type="button" class="btn btn-p" onclick="exportarDivergenciasExcel(${scope?`'${esc(scope.id)}'`:"''"})">↓ Baixar Excel para análise</button></div><div class="kpis" style="margin-top:14px"><div class="kpi"><div class="v">${rows.length}</div><div class="l">Registros divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.map(x=>String(x.it.sku||'').trim())).size}</div><div class="l">Produtos divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.flatMap(x=>(x.enderecos||[]).map(e=>String(e||'').trim())).filter(Boolean)).size}</div><div class="l">Endereços para contagem</div></div><div class="kpi"><div class="v">${fmt(rows.reduce((a,x)=>a+Math.abs(x.diff),0))}</div><div class="l">Unidades divergentes</div></div></div><div class="tw" style="margin-top:14px;max-height:58vh;overflow:auto"><table class="dt"><thead><tr><th>OPERAÇÃO</th><th>INVENTÁRIO</th><th>ENDEREÇOS PARA CONTAGEM</th><th>SKU</th><th>DESCRIÇÃO</th><th>LOTE</th><th>UM</th><th>SISTEMA</th><th>FÍSICO</th><th>DIF.</th><th>STATUS</th></tr></thead><tbody>${rows.length?rows.map(x=>`<tr><td>${esc(x.inv.operacao||'—')}</td><td>${esc(x.inv.id)}</td><td>${esc((x.enderecos&&x.enderecos.length)?x.enderecos.join(' · '):(x.it.endereco||'—'))}</td><td class="mn">${esc(x.it.sku)}</td><td>${esc(x.it.descricao||'—')}</td><td class="mn">${esc(x.it.lote||'—')}</td><td>${esc(x.it.um||'—')}</td><td>${fmt(x.qSys)}</td><td>${fmt(x.q)}</td><td style="color:${x.diff>0?'#60a5fa':'#f87171'};font-weight:800">${x.diff>0?'+':''}${fmt(x.diff)}</td><td><span class="badge div">DIVERGENTE</span></td></tr>`).join(''):'<tr><td colspan="11" style="text-align:center;padding:30px">Nenhuma divergência encontrada.</td></tr>'}</tbody></table></div><div class="mfoot"><button type="button" class="btn" onclick="closeModal()">Fechar</button></div>`;
+  body.innerHTML=`<div class="mt">Divergências ${scope?'· '+esc(scope.id):'das Conciliações'}</div><div class="ms">Visão analítica das divergências identificadas. ${scope?`Operação: <b>${esc(scope.operacao||'—')}</b> · Cliente: <b>${esc(scope.cliente||'—')}</b> · Site: <b>${esc(scope.site||'—')}</b>.`:'A seleção considera todas as operações de conciliação existentes.'}</div><div class="acts" style="margin-top:14px;justify-content:flex-end"><button type="button" class="btn btn-p" onclick="exportarDivergenciasExcel(${scope?`'${esc(scope.id)}'`:"''"})">↓ Baixar Excel para análise</button></div><div class="kpis" style="margin-top:14px"><div class="kpi"><div class="v">${rows.length}</div><div class="l">Registros divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.map(x=>String(x.it.sku||'').trim())).size}</div><div class="l">Produtos divergentes</div></div><div class="kpi"><div class="v">${new Set(rows.flatMap(x=>(x.enderecos||[]).map(e=>String(e||'').trim())).filter(Boolean)).size}</div><div class="l">Endereços para contagem${rows.some(x=>x.semRota)?' · '+rows.filter(x=>x.semRota).length+' sem roteamento físico':''}</div></div><div class="kpi"><div class="v">${fmt(rows.reduce((a,x)=>a+Math.abs(x.diff),0))}</div><div class="l">Unidades divergentes</div></div></div><div class="tw" style="margin-top:14px;max-height:58vh;overflow:auto"><table class="dt"><thead><tr><th>OPERAÇÃO</th><th>INVENTÁRIO</th><th>ENDEREÇOS PARA CONTAGEM</th><th>SKU</th><th>DESCRIÇÃO</th><th>LOTE</th><th>UM</th><th>SISTEMA</th><th>FÍSICO</th><th>DIF.</th><th>STATUS</th></tr></thead><tbody>${rows.length?rows.map(x=>`<tr><td>${esc(x.inv.operacao||'—')}</td><td>${esc(x.inv.id)}</td><td>${(x.enderecos&&x.enderecos.length)?esc(x.enderecos.join(' · ')):'<span class="badge div">SEM ROTEAMENTO FÍSICO</span>'}</td><td class="mn">${esc(x.it.sku)}</td><td>${esc(x.it.descricao||'—')}</td><td class="mn">${esc(x.it.lote||'—')}</td><td>${esc(x.it.um||'—')}</td><td>${fmt(x.qSys)}</td><td>${fmt(x.q)}</td><td style="color:${x.diff>0?'#60a5fa':'#f87171'};font-weight:800">${x.diff>0?'+':''}${fmt(x.diff)}</td><td><span class="badge div">DIVERGENTE</span></td></tr>`).join(''):'<tr><td colspan="11" style="text-align:center;padding:30px">Nenhuma divergência encontrada.</td></tr>'}</tbody></table></div><div class="mfoot"><button type="button" class="btn" onclick="closeModal()">Fechar</button></div>`;
   openModal();
 }
 
 function renderConc(){
   const sel=document.getElementById('concInventarioFiltro');
-  if(sel){const current=sel.value||'';const invs=(DB.inventarios||[]).filter(i=>i.tipo==='CONCILIACAO_EXCEL'||i.modoContagem==='CONCILIACAO_EXCEL');sel.innerHTML='<option value="">Todas as conciliações</option>'+invs.slice().reverse().map(i=>'<option value="'+esc(i.id)+'">'+esc(i.operacao||i.id)+' · '+esc(i.site||'MÚLTIPLOS')+' · '+esc(i.id)+'</option>').join('');if(current&&invs.some(i=>i.id===current))sel.value=current;}
+  if(sel){const current=sel.value||'';const invs=(DB.inventarios||[]).filter(i=>_ehConciliacao(i));sel.innerHTML='<option value="">Todas as conciliações</option>'+invs.slice().reverse().map(i=>'<option value="'+esc(i.id)+'">'+esc(i.operacao||i.id)+' · '+esc(i.site||'MÚLTIPLOS')+' · '+esc(i.id)+'</option>').join('');if(current&&invs.some(i=>i.id===current))sel.value=current;}
   _renderConcResumo();
   const selected=sel?.value||'';
   let rows=[];
-  DB.inventarios.filter(inv=>(!selected||inv.id===selected)&&(inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL')).forEach(inv=>(inv.tarefas||[]).forEach(t=>(t.itens||[]).forEach(it=>{
+  DB.inventarios.filter(inv=>(!selected||inv.id===selected)&&(_ehConciliacao(inv))).forEach(inv=>(inv.tarefas||[]).forEach(t=>(t.itens||[]).forEach(it=>{
     const lc=_latestCount(it); if(!lc)return;
     const q=lc.q;
     const m=_metodoConciliacao(it,q);
@@ -1833,7 +2062,7 @@ function renderVisaoTarefas(){if(usuarioAtual?.perfil!=='MASTER')return;const ta
 
 function renderDash(){
   const allInvs=DB.inventarios||[];
-  const concInvs=allInvs.filter(i=>(i.tipo==='CONCILIACAO_EXCEL'||i.modoContagem==='CONCILIACAO_EXCEL'));
+  const concInvs=allInvs.filter(i=>(_ehConciliacao(i)));
   const concFiltered=concInvs.filter(i=>{const op=document.getElementById('dashOperacaoFiltro')?.value||'',site=document.getElementById('dashSiteFiltro')?.value||'';return (!op||String(i.operacao||'')===op)&&(!site||String(i.site||'')===site)});
   const concLast=[...concFiltered].sort((a,b)=>String(b.criadoEm||'').localeCompare(String(a.criadoEm||'')))[0]||null,cr=concLast?.conciliacaoResumo||null;
   const dcs=document.getElementById('dashConcStatus'),dck=document.getElementById('dashConcKpis');
@@ -2221,7 +2450,7 @@ function renderInv(){const all=DB.inventarios||[];
     if(usuarioAtual?.perfil==='MASTER'){
       if(inv.status==='ABERTO'||inv.status==='CONTANDO')actions+=`<button class="btn btn-b" onclick="abrirLiberacaoTarefas('${iid}')">Liberar</button> `;
       actions+=`<button class="btn btn-b" onclick="verTarefas('${iid}')">Tarefas</button> `;
-      if(inv.tipo==='CONCILIACAO_EXCEL'||inv.modoContagem==='CONCILIACAO_EXCEL')actions+=`<button class="btn btn-a" onclick="abrirVisualizacaoDivergencias('${iid}')">⌕ Divergências</button> `;
+      if(_ehConciliacao(inv))actions+=`<button class="btn btn-a" onclick="abrirVisualizacaoDivergencias('${iid}')">⌕ Divergências</button> `;
       actions+=`<button class="btn btn-p" onclick="_invRelatorioOficial('${iid}')">📊 Relatório Excel</button> `;
       if(inv.status!=='CANCELADO'&&inv.status!=='CONCLUIDO')actions+=`<button class="btn btn-r" onclick="cancelarInventario('${iid}')">Cancelar</button> `;
       actions+=`<button class="btn btn-r" onclick="excluirInventario('${iid}')">Excluir</button>`;
