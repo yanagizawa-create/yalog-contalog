@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="contalog-version" content="v1.11.9">
-<meta name="contalog-build" content="078">
+<meta name="contalog-version" content="v1.11.10">
+<meta name="contalog-build" content="080">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.9 · Build 079 · Sessão Persistente</title>
+<title>ContaLog · v1.11.10 · Build 080 · Sessão Transversal Persistente</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -240,7 +240,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
     const chaveVersao='contalog-app-version';
     const chaveReload='contalog-update-reload:'+atual;
     const anterior=localStorage.getItem(chaveVersao)||'';
-    const temSessao=!!(sessionStorage.getItem('contalog-session')||localStorage.getItem('contalog-session-persist'));
+    const temSessao=!!(sessionStorage.getItem('contalog-session')||localStorage.getItem('contalog-session-persist')||localStorage.getItem('yalog-auth-session-v1'));
     const jaRecarregou=sessionStorage.getItem(chaveReload)==='1';
 
     // Primeiro acesso sem sessão: apenas registra a versão, sem reload.
@@ -272,10 +272,10 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 })();
 </script>
 </head><body>
-<div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
+<div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:none;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('apuracao')"><span class="ni-ic">◎</span>Apuração</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.9<br>YALOG-CONTA-001 • Build 079 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.10<br>YALOG-CONTA-001 • Build 080 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
 <div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button></div></div>
 <div class="top-nav-group" data-nav-group="apuracao"><button class="top-nav-parent" type="button">Apuração</button><div class="top-subnav"><button type="button" data-nav="apuracao" onclick="go('apuracao')"><span class="sub-ic">◎</span>Visão de Apuração</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button><button type="button" data-nav="novoInventarioCarga" onclick="abrirNovoInv('CARGA')"><span class="sub-ic">＋</span>Novo Inventário por Carga</button><button type="button" data-nav="historicoApuracoes" onclick="go('inventario')"><span class="sub-ic">◷</span>Histórico de Apurações</button></div></div>
@@ -3137,8 +3137,7 @@ async function _tentarSSOHandoffContaLog(){
 
 async function _restaurarSessaoContaLog(){
   try{
-    let raw=sessionStorage.getItem(CONTALOG_SESSION_KEY)||localStorage.getItem(CONTALOG_PERSIST_SESSION_KEY);
-    let ss=raw?JSON.parse(raw):null;
+    let ss=_lerSessaoStorageContaLog();
     // Fallback canônico: refresh/publicação não pode depender exclusivamente
     // do cache síncrono do navegador. Se ele estiver vazio, recupera a sessão
     // persistida no IndexedDB e repõe as duas cópias síncronas.
@@ -3217,7 +3216,7 @@ async function _restaurarSessaoContaLog(){
     _clearSession();return false;
   }catch(e){
     // Erro inesperado de leitura/rede NÃO deve converter refresh em logout.
-    try{const ss=JSON.parse(sessionStorage.getItem(CONTALOG_SESSION_KEY)||localStorage.getItem(CONTALOG_PERSIST_SESSION_KEY)||'null');if(_restaurarSessaoLocalContaLog(ss,'exceção transitória'))return true}catch(ignore){}
+    try{const ss=await _lerSessaoPersistidaContaLog();if(_restaurarSessaoLocalContaLog(ss,'exceção transitória'))return true}catch(ignore){}
     return false;
   }
 }
@@ -3232,7 +3231,19 @@ function initLogin(clear=true){
    e IndexedDB mantém uma terceira cópia independente para publicação/reload.
    Nenhuma dessas cópias é removida por refresh, deploy ou troca de versão.
 */
-const CONTALOG_SESSION_IDB_NAME='YALOG_CONTALOG_SESSION_DB';
+/*
+   BUILD 080 · YALOG SESSION CONTRACT V1
+   Regra transversal: ciclo de vida da página NÃO encerra autenticação.
+   A sessão é mantida em três camadas independentes:
+     1) sessionStorage  -> aba atual
+     2) localStorage     -> refresh/reload/deploy
+     3) IndexedDB        -> cópia canônica independente
+   A chave canônica é comum ao contrato de autenticação da YALog; o módulo
+   mantém sua chave legada por compatibilidade. Nenhum dado de negócio é salvo
+   aqui e nenhuma senha é persistida.
+*/
+const YALOG_AUTH_SESSION_KEY='yalog-auth-session-v1';
+const CONTALOG_SESSION_IDB_NAME='YALOG_AUTH_SESSION_DB';
 const CONTALOG_SESSION_IDB_VERSION=1;
 const CONTALOG_SESSION_IDB_STORE='sessao';
 const CONTALOG_SESSION_IDB_KEY='sessao-canonica';
@@ -3254,7 +3265,7 @@ async function _idbGravarSessaoContaLog(sessao){
   return new Promise(resolve=>{
     try{
       const tx=db.transaction(CONTALOG_SESSION_IDB_STORE,'readwrite');
-      tx.objectStore(CONTALOG_SESSION_IDB_STORE).put({sessao:JSON.parse(JSON.stringify(sessao)),salvoEm:new Date().toISOString(),schema:'YALOG-CONTALOG-SESSION-001'},CONTALOG_SESSION_IDB_KEY);
+      tx.objectStore(CONTALOG_SESSION_IDB_STORE).put({sessao:JSON.parse(JSON.stringify(sessao)),salvoEm:new Date().toISOString(),schema:'YALOG-AUTH-SESSION-001'},CONTALOG_SESSION_IDB_KEY);
       tx.oncomplete=()=>{try{db.close()}catch(e){}resolve(true)};
       tx.onerror=()=>{try{db.close()}catch(e){}resolve(false)};
       tx.onabort=()=>{try{db.close()}catch(e){}resolve(false)};
@@ -3287,42 +3298,89 @@ async function _idbRemoverSessaoContaLog(){
     }catch(e){try{db.close()}catch(_e){}resolve(false)}
   });
 }
-async function _lerSessaoPersistidaContaLog(){
+function _lerSessaoStorageContaLog(){
+  const chaves=[CONTALOG_SESSION_KEY,CONTALOG_PERSIST_SESSION_KEY,YALOG_AUTH_SESSION_KEY];
+  for(const chave of chaves){
+    try{
+      const raw=(chave===CONTALOG_SESSION_KEY?sessionStorage.getItem(chave):localStorage.getItem(chave));
+      if(raw){const parsed=JSON.parse(raw);if(parsed?.company_id&&parsed?.login)return parsed;}
+    }catch(e){}
+  }
   try{
-    const raw=sessionStorage.getItem(CONTALOG_SESSION_KEY)||localStorage.getItem(CONTALOG_PERSIST_SESSION_KEY);
-    if(raw)return JSON.parse(raw);
+    const raw=sessionStorage.getItem(CONTALOG_SESSION_KEY);
+    if(raw){const parsed=JSON.parse(raw);if(parsed?.company_id&&parsed?.login)return parsed;}
   }catch(e){}
+  return null;
+}
+async function _lerSessaoPersistidaContaLog(){
+  const local=_lerSessaoStorageContaLog();
+  if(local)return local;
   return await _idbLerSessaoContaLog();
 }
-function _saveSession(){
-  if(!usuarioAtual)return;
-  const anterior=(()=>{try{return JSON.parse(sessionStorage.getItem(CONTALOG_SESSION_KEY)||localStorage.getItem(CONTALOG_PERSIST_SESSION_KEY)||'null')}catch(e){return null}})();
-  const payload={company_id:usuarioAtual.company_id,id:usuarioAtual.id,nome:usuarioAtual.nome,login:usuarioAtual.login,perfil:usuarioAtual.perfil,ts:Date.now(),module_session_token:usuarioAtual._moduleSessionToken||null,sso:!!usuarioAtual._sso};
-  if(anterior?.sessionValidatedAt)payload.sessionValidatedAt=anterior.sessionValidatedAt;
-  try{const txt=JSON.stringify(payload);sessionStorage.setItem(CONTALOG_SESSION_KEY,txt);localStorage.setItem(CONTALOG_PERSIST_SESSION_KEY,txt)}catch(e){}
+function _payloadSessaoContaLog(){
+  if(!usuarioAtual)return null;
+  const anterior=_lerSessaoStorageContaLog();
+  const payload={
+    schema:'YALOG-AUTH-SESSION-001',
+    company_id:usuarioAtual.company_id,
+    id:usuarioAtual.id,
+    nome:usuarioAtual.nome,
+    login:usuarioAtual.login,
+    perfil:usuarioAtual.perfil,
+    ts:Date.now(),
+    module_session_token:usuarioAtual._moduleSessionToken||anterior?.module_session_token||null,
+    sso:!!usuarioAtual._sso,
+    sessionValidatedAt:anterior?.sessionValidatedAt||null
+  };
+  return payload;
+}
+function _gravarSessaoCanonicaContaLog(payload){
+  if(!payload)return;
+  try{const txt=JSON.stringify(payload);localStorage.setItem(YALOG_AUTH_SESSION_KEY,txt)}catch(e){console.warn('[YALog Session] localStorage canônico indisponível:',e)}
   _idbGravarSessaoContaLog(payload).catch(()=>{});
 }
-function _markSessionValidated(){
+function _saveSession(){
+  const payload=_payloadSessaoContaLog();if(!payload)return;
   try{
-    const raw=sessionStorage.getItem(CONTALOG_SESSION_KEY)||localStorage.getItem(CONTALOG_PERSIST_SESSION_KEY);if(!raw)return;
-    const ss=JSON.parse(raw);ss.sessionValidatedAt=Date.now();const txt=JSON.stringify(ss);sessionStorage.setItem(CONTALOG_SESSION_KEY,txt);localStorage.setItem(CONTALOG_PERSIST_SESSION_KEY,txt);_idbGravarSessaoContaLog(ss).catch(()=>{});
-  }catch(e){}
+    const txt=JSON.stringify(payload);
+    sessionStorage.setItem(CONTALOG_SESSION_KEY,txt);
+    localStorage.setItem(CONTALOG_PERSIST_SESSION_KEY,txt);
+  }catch(e){console.warn('[ContaLog Session] falha ao persistir sessão:',e)}
+  _gravarSessaoCanonicaContaLog(payload);
 }
-function _clearSession(){sessionStorage.removeItem(CONTALOG_SESSION_KEY);localStorage.removeItem(CONTALOG_PERSIST_SESSION_KEY);_idbRemoverSessaoContaLog().catch(()=>{})}
+function _markSessionValidated(){
+  const payload=_lerSessaoStorageContaLog();if(!payload)return;
+  payload.sessionValidatedAt=Date.now();
+  try{
+    const txt=JSON.stringify(payload);
+    sessionStorage.setItem(CONTALOG_SESSION_KEY,txt);
+    localStorage.setItem(CONTALOG_PERSIST_SESSION_KEY,txt);
+  }catch(e){}
+  _gravarSessaoCanonicaContaLog(payload);
+}
+function _clearSession(){
+  // ÚNICO ponto autorizado a remover a sessão. Nunca chamado por refresh/reload/deploy.
+  try{sessionStorage.removeItem(CONTALOG_SESSION_KEY)}catch(e){}
+  try{localStorage.removeItem(CONTALOG_PERSIST_SESSION_KEY)}catch(e){}
+  try{localStorage.removeItem(YALOG_AUTH_SESSION_KEY)}catch(e){}
+  _idbRemoverSessaoContaLog().catch(()=>{});
+}
 function _restaurarSessaoLocalContaLog(ss,motivo=''){
-  // Não existe TTL artificial aqui. A validade real é determinada pela
-  // validação de autenticação/acesso quando a conexão estiver disponível.
+  // Não existe TTL artificial. A validade real é determinada pela autenticação.
   if(!ss?.company_id||!ss?.login)return false;
   usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true,_sso:!!ss.sso,_moduleSessionToken:ss.module_session_token||null};
   _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;
   const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
-  document.getElementById('loginOverlay').style.display='none';
+  const overlay=document.getElementById('loginOverlay');if(overlay)overlay.style.display='none';
   aplicarPermissoes();
   _remoteReady=false;
-  _remoteStatus('● SESSÃO RESTAURADA · CACHE LOCAL',false);
-  console.warn('[ContaLog Session] sessão preservada sem reautenticação:',motivo||'validação remota indisponível');
+  _remoteStatus('● SESSÃO RESTAURADA · AUTENTICAÇÃO PRESERVADA',false);
+  // Regrava a cópia canônica para garantir continuidade após novo deploy/reload.
+  _gravarSessaoCanonicaContaLog(ss);
+  console.warn('[YALog Session] sessão preservada sem novo login:',motivo||'bootstrap/reload');
   return true;
 }
+
 async function _validarUsuarioPersistido(ss){
   const c=_platformClient();if(!c)return {ok:false,motivo:'sem-conexao'};
   try{
@@ -3408,7 +3466,7 @@ function aplicarPermissoes(){
 }
 
 async function bootContaLog(){
-  if(window.__contalogBooted)return;window.__contalogBooted=true;initLogin(false);_remoteStatus('● RESTAURANDO SESSÃO...',true);
+  if(window.__contalogBooted)return;window.__contalogBooted=true;_remoteStatus('● RESTAURANDO SESSÃO...',true);
   try{
     // Primeiro reidrata localmente a identidade persistida. Isso elimina a
     // janela em que o refresh mostrava login enquanto a conexão inicializava.
