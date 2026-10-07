@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="contalog-version" content="v1.11.0">
+<meta name="contalog-version" content="v1.11.2">
 <meta name="contalog-build" content="069">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.0 · Build 069 · Mapa de Estoque</title>
+<title>ContaLog · v1.11.2 · Build 071 · V045 Navegação Superior</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -39,6 +39,55 @@
 .onda-alvo-mobile .alvo-label{display:block;font:700 8px var(--mono);letter-spacing:.14em;color:var(--orange2);margin-bottom:5px}.onda-alvo-mobile strong{display:block;font:700 15px var(--mono);line-height:1.45;color:#fff;text-transform:uppercase}
 .mobile-step-title{font:10px var(--mono);letter-spacing:.14em;color:#64748b;margin:8px 0 14px}.mobile-label{display:block;font:9px var(--mono);letter-spacing:.12em;color:#64748b;margin:10px 0 5px}.mobile-big-input{width:100%;min-height:52px;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#111827;font-size:17px;box-sizing:border-box}.mobile-field-title{font:800 10px var(--mono);letter-spacing:.12em;color:#475569;margin-bottom:7px}.mobile-step{margin-top:12px;padding:12px;background:#fff;border-radius:10px;border:1px solid #e2e8f0}.mobile-primary{width:100%;min-height:52px;padding:12px;margin-top:12px;background:#FB923C;color:#fff;border:0;border-radius:10px;font-size:13px;font-weight:900}.mobile-input-methods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.mobile-method-btn{min-height:44px;padding:9px 10px;border:1px solid #cbd5e1;border-radius:9px;background:#e2e8f0;color:#334155;font-size:12px;font-weight:900}.mobile-method-btn:active{transform:translateY(1px)}.mobile-input-methods .mobile-method-btn:first-child{background:#fff7ed;border-color:#fb923c;color:#c2410c}.mobile-input-methods .mobile-method-btn:last-child{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}.mobile-nav-actions{display:grid;grid-template-columns:1fr 1.45fr;gap:8px;margin-top:12px}.mobile-nav-actions .mobile-primary{margin-top:0}.mobile-secondary{width:100%;min-height:48px;padding:10px;background:#fff;color:#334155;border:1px solid #cbd5e1;border-radius:10px;font-size:12px;font-weight:900}.mobile-secondary:active{transform:translateY(1px)}.mobile-link{width:auto!important;min-height:38px!important;margin-top:6px!important;background:transparent!important;color:#2563eb!important;padding:5px 2px!important;font-size:11px!important}.mobile-empty-btn{background:#fff!important;color:#475569!important;border:1px solid #cbd5e1!important}.mobile-preview{box-shadow:0 4px 18px rgba(0,0,0,.08)}@media(max-width:900px){.contagem-head,.contagem-desktop-panel{display:none}.contagem-layout{display:block}.mobile-preview{width:100%;max-width:520px;margin:0 auto;background:#f5f5f5;padding:14px;box-sizing:border-box}.mobile-preview h3{font-size:18px;margin-bottom:14px}.mobile-onda{font-size:12px;padding:12px}.onda-alvo-mobile{margin-top:10px!important;background:#0f172a!important;color:#fff!important;border:2px solid #fb923c!important;border-radius:12px!important;padding:16px!important}.onda-alvo-mobile strong{font-size:18px!important;line-height:1.35!important;display:block}.mobile-step .scan-input{font-size:18px!important;text-align:center;font-weight:700}.mobile-step[style*="display:none"]{display:none!important}}</style><style>
 @media(max-width:900px){#s-usuarios .tw{overflow-x:auto}#s-usuarios .actions-cell{min-width:430px}.modal .grid{grid-template-columns:1fr!important}}
+</style>
+<style id="yalog-v045-topnav-build071">
+/* BUILD 071 — V045 / Radar de Cargas navigation shell. Visual/UX only. */
+.sb{display:none!important}
+.main{margin-left:0!important;width:100%;min-width:0}
+.topbar{height:68px;min-height:68px;background:rgba(12,16,30,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.09);padding:0 22px;gap:18px;position:sticky;top:0;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.topbar-brand{display:flex;align-items:center;gap:10px;flex:0 0 auto;min-width:158px}
+.topbar-brand .yb{font-weight:900;letter-spacing:.02em;font-size:18px;color:#fff}
+.topbar-brand .yb em{color:var(--orange);font-style:normal}
+.topbar-brand .ca{font:9px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--w40);border-left:1px solid var(--border2);padding-left:10px}
+.top-nav-toggle{display:none;border:1px solid var(--border2);background:var(--bg3);color:var(--w);border-radius:10px;min-height:42px;padding:8px 12px;font:700 10px var(--mono);letter-spacing:.08em;cursor:pointer}
+.top-nav{display:flex;align-items:center;gap:3px;flex:1;min-width:0;height:100%}
+.top-nav-group{position:relative;height:100%;display:flex;align-items:center}
+.top-nav-parent{height:42px;border:1px solid transparent;background:transparent;color:var(--w70);padding:0 11px;border-radius:10px;cursor:pointer;font:700 9px var(--mono);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.top-nav-parent::after{content:'⌄';font-size:11px;color:var(--w40);transition:transform .15s ease}
+.top-nav-group:hover .top-nav-parent,.top-nav-group.active .top-nav-parent,.top-nav-parent:focus-visible{color:#fff;background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.08)}
+.top-nav-group.active .top-nav-parent{color:var(--orange2);border-color:rgba(251,146,60,.18);background:rgba(251,146,60,.07)}
+.top-nav-group:hover .top-nav-parent::after,.top-nav-group:focus-within .top-nav-parent::after{transform:rotate(180deg);color:var(--orange2)}
+.top-nav-group.active .top-nav-parent::before{content:'';position:absolute;bottom:0;left:12px;right:12px;height:2px;background:var(--orange);box-shadow:0 0 10px rgba(251,146,60,.45)}
+.top-subnav{position:absolute;top:calc(100% - 1px);left:0;min-width:220px;padding:7px;background:rgba(18,22,43,.985);border:1px solid var(--border2);border-radius:0 0 14px 14px;box-shadow:0 18px 45px rgba(0,0,0,.38);opacity:0;visibility:hidden;transform:translateY(-5px);pointer-events:none;transition:opacity .14s ease,transform .14s ease,visibility .14s ease;z-index:120}
+.top-nav-group:hover .top-subnav,.top-nav-group:focus-within .top-subnav{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.top-subnav button{width:100%;display:flex;align-items:center;gap:9px;text-align:left;border:0;background:transparent;color:var(--w70);padding:10px 11px;border-radius:9px;cursor:pointer;font-size:10px;white-space:nowrap}
+.top-subnav button:hover,.top-subnav button.active{background:rgba(251,146,60,.10);color:var(--orange2)}
+.top-subnav .sub-ic{width:18px;text-align:center;opacity:.9}
+.top-nav-sep{width:1px;height:28px;background:var(--border);margin:0 4px}
+.topbar-actions{display:flex;gap:9px;align-items:center;flex:0 0 auto}
+.topbar-actions .tb-date{white-space:nowrap}
+.topbar-actions .btn.btn-r{white-space:nowrap}
+.content{padding:28px 30px}
+@media(max-width:1200px){.topbar{padding:0 15px;gap:10px}.topbar-brand{min-width:140px}.top-nav-parent{padding:0 8px;font-size:8px}.topbar-actions #remoteStatus,.topbar-actions #clock{display:none}}
+@media(max-width:900px){
+ .topbar{height:auto;min-height:60px;padding:8px 10px;flex-wrap:wrap;gap:8px;position:sticky}
+ .topbar-brand{min-width:0;flex:1}
+ .topbar-brand .yb{font-size:17px}
+ .top-nav-toggle{display:block}
+ .top-nav{display:none;order:10;width:100%;height:auto;flex-direction:column;align-items:stretch;gap:3px;padding:7px 0 3px;border-top:1px solid var(--border)}
+ .top-nav.mobile-open{display:flex}
+ .top-nav-group{height:auto;display:block}
+ .top-nav-parent{width:100%;height:42px;justify-content:space-between;padding:0 12px}
+ .top-nav-group.active .top-nav-parent::before{display:none}
+ .top-subnav{position:static;min-width:0;margin:0 0 4px;padding:3px 5px;background:rgba(0,0,0,.16);border:0;border-radius:9px;box-shadow:none;display:none;opacity:1;visibility:visible;transform:none;pointer-events:auto}
+ .top-nav-group.mobile-open .top-subnav{display:block}
+ .top-nav-group:hover .top-subnav{opacity:1;visibility:visible;transform:none}
+ .topbar-actions{flex:0 0 auto}
+ .topbar-actions #sessionUser{max-width:24vw;overflow:hidden;text-overflow:ellipsis}
+ .topbar-actions .btn.btn-r{min-height:42px;padding:9px 10px!important}
+ .content{padding:12px}
+}
+@media(max-width:520px){.topbar-brand .ca{display:none}.topbar-actions #sessionUser{display:none}.topbar-brand{flex:1}.top-nav-toggle{min-height:42px}.topbar-actions .btn.btn-r{font-size:9px}.content{padding:10px}}
 </style>
 <style>
 /* ContaLog Mobile Shell v1.5.3 */
@@ -178,8 +227,14 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.0<br>YALOG-CONTA-001 • v1.11.0 Build 070 · ONLINE • MULTIUSUÁRIO</div></aside>
-<main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
+</nav><div class="sb-foot">ContaLog • v1.11.2<br>YALOG-CONTA-001 • v1.11.2 Build 071 · ONLINE • MULTIUSUÁRIO</div></aside>
+<main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
+<div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button></div></div>
+<div class="top-nav-group" data-nav-group="operacao"><button class="top-nav-parent" type="button">Operação</button><div class="top-subnav"><button type="button" data-nav="tarefas" onclick="go('tarefas')"><span class="sub-ic">✓</span>Tarefas de Contagem</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Execução de Contagem</button></div></div>
+<div class="top-nav-group" data-nav-group="estoque"><button class="top-nav-parent" type="button">Estoque</button><div class="top-subnav"><button type="button" data-nav="estoque" onclick="go('estoque')"><span class="sub-ic">📦</span>Carga Estoque</button><button type="button" data-nav="enderecos" onclick="go('enderecos')"><span class="sub-ic">▦</span>Endereços do Estoque</button></div></div>
+<div class="top-nav-group" data-nav-group="gestao"><button class="top-nav-parent" type="button">Gestão</button><div class="top-subnav"><button type="button" data-nav="dashboard" onclick="go('dashboard')"><span class="sub-ic">📊</span>Dashboard</button><button type="button" data-nav="configuracoes" data-master-only onclick="go('configuracoes')"><span class="sub-ic">⚙</span>Configurações Gerais</button><button type="button" data-nav="usuarios" onclick="go('usuarios')"><span class="sub-ic">👤</span>Usuários</button></div></div>
+<div class="top-nav-group" data-nav-group="relatorios"><button class="top-nav-parent" type="button">Relatórios</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📊</span>Relatório de Inventário</button><button type="button" data-nav="estoque" onclick="go('estoque')"><span class="sub-ic">🗺</span>Mapa de Estoque / Backup / WMS</button></div></div>
+</nav><div class="topbar-actions"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><button class="btn btn-a" onclick="abrirMapaEstoqueExport()">↓ Baixar Mapa de Estoque</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
 <section class="screen" id="s-configuracoes"><div class="ph"><div><div class="ph-eye">ContaLog · Administração</div><div class="ph-title">Configurações <em>Gerais</em></div><div class="ph-sub">Cadastre as filiais/operações que serão utilizadas nas cargas, inventários e conciliações.</div></div><div class="acts"><button class="btn btn-p" onclick="abrirCadastroOperacao()">＋ Nova Filial / Operação</button></div></div><div class="info"><b>Regra:</b> cada carga e cada inventário deve estar vinculado a uma filial/operação cadastrada aqui. Isso mantém estruturas, estoques, conciliações e indicadores organizados sem misturar operações.</div><div class="tw"><table class="dt"><thead><tr><th>OPERAÇÃO / CLIENTE</th><th>FILIAL</th><th>CNPJ</th><th>CIDADE</th><th>STATUS</th><th>AÇÕES</th></tr></thead><tbody id="configOperacoesBody"></tbody></table></div></section><section class="screen" id="s-inventario"><div class="ph"><div><div class="ph-eye">ContaLog · Inventário</div><div class="ph-title">Gestão de <em>Inventários</em></div><div class="ph-sub">Gere a base de inventário e, quando necessário, concilie diretamente a carga de estoque por Excel.</div></div><div class="acts"><button class="btn btn-b" onclick="abrirConcilExcel()">⇄ Importar Estoque Contábil Cliente</button><button class="btn btn-a" onclick="abrirVisualizacaoDivergencias('')">⌕ Visualizar Divergências</button><button class="btn btn-p" onclick="abrirNovoInv('BASE')">＋ Novo Inventário</button><button class="btn btn-r" onclick="limparInventarios()" data-master-action>🗑 Limpar</button></div></div><div class="info"><b>Estoque Contábil do Cliente:</b> importe o mapa de estoque contábil do cliente. Depois de carregar o arquivo, o MASTER executa a <b>CONCILIAÇÃO</b> contra o estoque físico e o mapa de endereços da filial.</div><div class="kpis" id="invKpis"></div><div id="releaseMonitor" style="margin-bottom:16px"></div><div class="tw"><table class="dt"><thead><tr><th>INVENTÁRIO</th><th>TIPO</th><th>OPERAÇÃO</th><th>CLIENTE</th><th>SITE</th><th>CRIADO</th><th>TAREFAS</th><th>PROGRESSO</th><th>STATUS</th><th>AÇÕES</th></tr></thead><tbody id="invBody"></tbody></table></div></section>
@@ -411,8 +466,40 @@ function selecionarBaseOperacional(tipo,idBase){if(!idBase)return;_setActiveBase
 _ensureBaseCollections();
 _restaurarIdentidadeConciliacoes();
 
+function toggleTopNav(force){
+  const nav=document.getElementById('topNav'),btn=document.querySelector('.top-nav-toggle');
+  if(!nav)return;
+  const open=typeof force==='boolean'?force:!nav.classList.contains('mobile-open');
+  nav.classList.toggle('mobile-open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+}
+function updateTopNavState(name){
+  document.querySelectorAll('.top-nav-group').forEach(g=>g.classList.remove('active'));
+  document.querySelectorAll('.top-nav [data-nav]').forEach(b=>b.classList.toggle('active',b.getAttribute('data-nav')===name));
+  const map={estoque:'estoque',enderecos:'estoque',inventario:'inventario',visaoTarefas:'inventario',contagem:'operacao',tarefas:'operacao',conciliacao:'inventario',dashboard:'gestao',configuracoes:'gestao',usuarios:'gestao'};
+  const group=map[name];if(group)document.querySelector(`.top-nav-group[data-nav-group="${group}"]`)?.classList.add('active');
+  document.querySelectorAll('.top-nav-group').forEach(g=>g.classList.remove('mobile-open'));
+  toggleTopNav(false);
+}
+function atualizarMenuMobile(){
+  const master=String(usuarioAtual?.perfil||'').toUpperCase()==='MASTER';
+  document.querySelectorAll('.top-nav [data-master-only]').forEach(e=>e.style.display=master?'flex':'none');
+}
 function toggleMobileMenu(force){const sb=document.querySelector('.sb'),bd=document.getElementById('mobileBackdrop');if(!sb||!bd)return;const open=typeof force==='boolean'?force:!sb.classList.contains('mobile-open');sb.classList.toggle('mobile-open',open);bd.classList.toggle('mobile-open',open)}
-function go(name){if(usuarioAtual?.perfil==='CONTADOR'&&name!=='contagem'){toast('O perfil CONTADOR possui acesso exclusivo à tela de sua tarefa.',false);return}if(name==='visaoTarefas'&&usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode acessar a Visão de Tarefas.',false);return}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));let s=document.getElementById('s-'+name);if(s)s.classList.add('active');let titles={estoque:'Carga Estoque',enderecos:'Carga Endereços do Estoque',configuracoes:'Configurações Gerais',inventario:'Inventário',tarefas:'Tarefas de Contagem',contagem:'Contagem Operacional',visaoTarefas:'Controle do Inventário',conciliacao:'Conciliação',dashboard:'Dashboard',usuarios:'Usuários'};document.getElementById('tbTitle').textContent=titles[name]||'ContaLog';document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active')});if(name==='estoque')renderEstoque();if(name==='enderecos')renderEnd();if(name==='configuracoes')renderConfiguracoes();if(name==='inventario')renderInv();if(name==='tarefas')renderTarefas();if(name==='contagem')renderContagem();if(name==='visaoTarefas')renderVisaoTarefas();if(name==='conciliacao')renderConc();if(name==='dashboard')renderDash();if(name==='usuarios')renderUsers();if(typeof toggleMobileMenu==='function')toggleMobileMenu(false)}
+function go(name){if(usuarioAtual?.perfil==='CONTADOR'&&name!=='contagem'){toast('O perfil CONTADOR possui acesso exclusivo à tela de sua tarefa.',false);return}if(name==='visaoTarefas'&&usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode acessar a Visão de Tarefas.',false);return}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));let s=document.getElementById('s-'+name);if(s)s.classList.add('active');let titles={estoque:'Carga Estoque',enderecos:'Carga Endereços do Estoque',configuracoes:'Configurações Gerais',inventario:'Inventário',tarefas:'Tarefas de Contagem',contagem:'Contagem Operacional',visaoTarefas:'Controle do Inventário',conciliacao:'Conciliação',dashboard:'Dashboard',usuarios:'Usuários'};document.getElementById('tbTitle').textContent=titles[name]||'ContaLog';document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active')});updateTopNavState(name);if(name==='estoque')renderEstoque();if(name==='enderecos')renderEnd();if(name==='configuracoes')renderConfiguracoes();if(name==='inventario')renderInv();if(name==='tarefas')renderTarefas();if(name==='contagem')renderContagem();if(name==='visaoTarefas')renderVisaoTarefas();if(name==='conciliacao')renderConc();if(name==='dashboard')renderDash();if(name==='usuarios')renderUsers();if(typeof toggleMobileMenu==='function')toggleMobileMenu(false)}
+
+function inicializarTopNav(){
+  const nav=document.getElementById('topNav');if(!nav)return;
+  nav.querySelectorAll('.top-nav-parent').forEach(btn=>btn.addEventListener('click',function(e){
+    if(window.matchMedia('(max-width: 900px)').matches){
+      const g=this.closest('.top-nav-group');
+      nav.querySelectorAll('.top-nav-group').forEach(x=>{if(x!==g)x.classList.remove('mobile-open')});
+      g.classList.toggle('mobile-open');
+      e.preventDefault();
+    }
+  }));
+  atualizarMenuMobile();
+}
 function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleString('pt-BR')+' · YALOG'}setInterval(updateClock,1000);updateClock();
 function trocarLogo(){let f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=()=>{let r=new FileReader();r.onload=()=>{document.getElementById('logoBox').innerHTML='<img src="'+r.result+'">';localStorage.setItem('contalog_logo',r.result)};r.readAsDataURL(f.files[0])};f.click()}
 (()=>{let l=localStorage.getItem('contalog_logo');if(l)document.getElementById('logoBox').innerHTML='<img src="'+l+'">'})();
@@ -469,7 +556,7 @@ async function _exportarMapaEstoque(tipo){
     const tipoTxt=tipo==='backup'?'Backup da carga':'Mapa para WMS';
     const alerta=incompletos.length?` · ATENÇÃO: ${incompletos.length} registro(s) com campo obrigatório ausente`:' · validação OK';
     toast(`${tipoTxt} gerado · ${registros.length} registro(s) · ${file}${alerta}`,!incompletos.length);
-  }catch(e){console.error('[ContaLog Build 070] exportação mapa:',e);toast('Não foi possível gerar o arquivo Excel: '+(e?.message||e),false)}
+  }catch(e){console.error('[ContaLog Build 071] exportação mapa:',e);toast('Não foi possível gerar o arquivo Excel: '+(e?.message||e),false)}
 }
 function abrirMapaEstoqueExport(){
   const {base,registros}=_mapaEstoqueRegistrosAtivos();
@@ -3081,6 +3168,7 @@ async function bootContaLog(){
   setInterval(()=>{if(!usuarioAtual)return;if(document.getElementById('s-inventario')?.classList.contains('active'))renderInv();if(document.getElementById('s-tarefas')?.classList.contains('active'))renderTarefas();if(document.getElementById('s-dashboard')?.classList.contains('active'))renderDash();if(document.getElementById('s-visaoTarefas')?.classList.contains('active'))renderVisaoTarefas()},2000);
   setInterval(_syncRemote,30000);
 }
+window.addEventListener('DOMContentLoaded',()=>{inicializarTopNav();});
 window.addEventListener('DOMContentLoaded',bootContaLog);
 setTimeout(()=>{if(!window.__contalogBooted)bootContaLog()},4000);
 function liberarTarefa(invId,tid){if(usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode liberar tarefas.',false);return}let inv=DB.inventarios.find(x=>x.id===invId),t=inv?.tarefas.find(x=>x.id===tid);if(!t)return;if(t.status==='AGUARDANDO'||t.status==='AGUARDANDO_APROV')t.status='LIBERADA';save();renderTarefas();toast('Tarefa '+tid+' liberada')}
@@ -3159,7 +3247,7 @@ async function _gerarCargaFinalEstoque(invId,formato='xlsx'){
       XLSX.writeFile(wb,_invCargaFinalNome(inv,'xlsx'));
     }
     toast(`Carga final de estoque gerada · ${rows.length} registro(s) · ${formato.toUpperCase()} · sem alteração de dados`,true);
-  }catch(e){console.error('[ContaLog Build 070] carga final:',e);toast('Não foi possível gerar a carga final: '+(e?.message||e),false)}
+  }catch(e){console.error('[ContaLog Build 071] carga final:',e);toast('Não foi possível gerar a carga final: '+(e?.message||e),false)}
 }
 function abrirGerarCargaFinalEstoque(invId){
   if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
