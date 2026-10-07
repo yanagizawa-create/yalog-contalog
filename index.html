@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="contalog-version" content="v1.11.8">
+<meta name="contalog-version" content="v1.11.9">
 <meta name="contalog-build" content="078">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.8 · Build 078 · Sessão Persistente</title>
+<title>ContaLog · v1.11.9 · Build 079 · Sessão Persistente</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -275,7 +275,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('apuracao')"><span class="ni-ic">◎</span>Apuração</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.8<br>YALOG-CONTA-001 • Build 078 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.9<br>YALOG-CONTA-001 • Build 079 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
 <div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button></div></div>
 <div class="top-nav-group" data-nav-group="apuracao"><button class="top-nav-parent" type="button">Apuração</button><div class="top-subnav"><button type="button" data-nav="apuracao" onclick="go('apuracao')"><span class="sub-ic">◎</span>Visão de Apuração</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button><button type="button" data-nav="novoInventarioCarga" onclick="abrirNovoInv('CARGA')"><span class="sub-ic">＋</span>Novo Inventário por Carga</button><button type="button" data-nav="historicoApuracoes" onclick="go('inventario')"><span class="sub-ic">◷</span>Histórico de Apurações</button></div></div>
@@ -2072,10 +2072,18 @@ function _mostrarFimOnda(g){
 }
 function fecharFimOndaEEscolherProxima(){closeModal();ondaAtual=null;tarefaAtual=null;_clearContagemCampos();renderContagem();renderTarefas();renderDash();}
 function registrarEnderecoVazio(){let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();if(!nome||!g)return toast('Assuma uma onda primeiro.',false);let endereco=document.getElementById('mobEndereco').value.trim(),t=_getTaskByEndereco(endereco);if(!t){_alertOnda('ENDEREÇO NÃO É DA SUA TAREFA/ONDA!!','REPITA LANÇAMENTO');return}if(t.status!=='ANDAMENTO'||t.contador!==nome){return toast('Este endereço não está disponível para este contador.',false)}if((t.itens||[]).length)return toast('Este endereço possui produto cadastrado. Realize a contagem do SKU + LOTE.',false);let r=t.rodada||1;if(t.contagens?.some(c=>c.endereco===t.endereco&&c.rodada===r)){alert('CONTAGEM REALIZADA ANTERIORMENTE!!');return}let ms=Date.now();t.contagens=t.contagens||[];t.contagens.push({endereco:t.endereco,sku:'',lote:'',quantidade:0,rodada:r,nome,data:now(),ms,vazio:true});t.contagemVazia=t.contagemVazia||{};t.contagemVazia['q'+r]=0;t.contagemVazia['resp'+r]=nome;t.contagemVazia['data'+r]=now();t.contagemVazia['ms'+r]=ms;t.status='CONCLUIDO';t.concluidoEm=now();t.concluidoEmMs=Date.now();t.contador=null;const waveKeyAntes=ondaAtual?.key;save();_clearContagemCampos();renderTarefas();renderContagem();renderInv();renderDash();const g2=_getWaveGroupByKey(waveKeyAntes);if(g2)_mostrarFimOnda(g2);toast('Endereço '+t.endereco+' confirmado como VAZIO · 0')}
+/* BUILD 079 · CONTEXTO DE EXECUÇÃO NA 6ª ETAPA
+   A autorização usa a tarefa da onda em execução + identidade corrente/histórico.
+   Não remove a validação: apenas evita falso negativo após reidratação/atualização.
+*/
 function _enderecoPertenceAExecucaoAtual(t,g,nome){
   if(!t||!g||!nome)return false;
   const mesmaOnda=(g.ts||[]).some(x=>x===t||String(x.id||'')===String(t.id||''));
   if(!mesmaOnda)return false;
+  const ondaAtualKey=String(ondaAtual?.key||'').trim();
+  if(ondaAtualKey&&String(g.key||'').trim()!==ondaAtualKey)return false;
+  if(String(t.status||'').toUpperCase()!=='ANDAMENTO')return false;
+
   const n=String(nome).trim().toLowerCase();
   const uid=String(usuarioAtual?.id||'').trim();
   const login=String(usuarioAtual?.login||'').trim().toLowerCase();
@@ -2085,15 +2093,22 @@ function _enderecoPertenceAExecucaoAtual(t,g,nome){
   const designatedId=String(t.contadorDesignadoId||'').trim();
   const designatedLogin=String(t.contadorDesignadoLogin||'').trim().toLowerCase();
   const designatedName=String(t.contadorDesignado||'').trim().toLowerCase();
-  const emExecucao=t.status==='ANDAMENTO';
   const identidadeAtual=(uid&&currentId===uid)||(login&&currentLogin===login)||(n&&currentName===n);
   const identidadeDesignada=(uid&&designatedId===uid)||(login&&designatedLogin===login)||(n&&designatedName===n);
+
+  // A tarefa ativa mantém o vínculo com quem a iniciou. O histórico é usado
+  // somente como evidência de execução quando os campos correntes de identidade
+  // não estiverem disponíveis (ex.: reidratação/atualização da aplicação).
+  const hist=(t.contadorHistorico||[]).slice().reverse().find(h=>h&&((h.usuarioId!=null&&String(h.usuarioId).trim())||(h.login&&String(h.login).trim())||(h.nome&&String(h.nome).trim())));
+  const histId=String(hist?.usuarioId||'').trim();
+  const histLogin=String(hist?.login||'').trim().toLowerCase();
+  const histNome=String(hist?.nome||'').trim().toLowerCase();
+  const identidadeHistorico=(uid&&histId===uid)||(login&&histLogin===login)||(n&&histNome===n);
+
   const possuiIdentidadeExecucao=!!(currentId||currentLogin||currentName);
-  // A autorização deriva da própria tarefa/onda em execução. Se já existe
-  // identidade de execução, ela tem prioridade; a identidade designada é
-  // usada apenas quando a tarefa ainda não possui identidade corrente.
-  // Nenhum dado da tarefa é alterado nesta validação.
-  return emExecucao && (possuiIdentidadeExecucao?identidadeAtual:identidadeDesignada);
+  if(possuiIdentidadeExecucao)return identidadeAtual;
+  if(identidadeHistorico)return true;
+  return identidadeDesignada;
 }
 function registrarContagemMobile(){
   let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();
