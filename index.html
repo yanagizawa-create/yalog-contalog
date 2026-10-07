@@ -3171,9 +3171,11 @@ async function _restaurarSessaoContaLog(){
         if(ok){_markSessionValidated();return true}
       }
       if(sessaoModulo?.status==='invalid'){
-        // Token efetivamente revogado/expirado não é tratado como refresh.
-        // Nesse caso a autenticação precisa ser refeita.
-        _clearSession();return false;
+        // A não confirmação do token de módulo, isoladamente, não autoriza
+        // destruir a sessão persistida. Segue para a validação canônica da
+        // empresa/usuário; somente uma invalidação confirmada abaixo limpa.
+        console.warn('[YALog Session] token de módulo não confirmado; sessão preservada.');
+        ss={...ss,module_session_token:null,sso:false};
       }
       if(sessaoModulo?.status==='transient' && ['erro-validacao','sem-conexao'].includes(sessaoModulo.motivo)){
         return _restaurarSessaoLocalContaLog(ss,sessaoModulo.motivo);
@@ -3299,11 +3301,15 @@ async function _idbRemoverSessaoContaLog(){
   });
 }
 function _lerSessaoStorageContaLog(){
-  const chaves=[CONTALOG_SESSION_KEY,CONTALOG_PERSIST_SESSION_KEY,YALOG_AUTH_SESSION_KEY];
+  const chaves=[CONTALOG_SESSION_KEY,CONTALOG_PERSIST_SESSION_KEY,YALOG_AUTH_SESSION_KEY,'yalog_admin_session'];
   for(const chave of chaves){
     try{
       const raw=(chave===CONTALOG_SESSION_KEY?sessionStorage.getItem(chave):localStorage.getItem(chave));
-      if(raw){const parsed=JSON.parse(raw);if(parsed?.company_id&&parsed?.login)return parsed;}
+      if(!raw)continue;
+      const parsed=JSON.parse(raw);
+      const base=(chave==='yalog_admin_session'&&parsed?.user)?parsed.user:parsed;
+      const candidato=(chave==='yalog_admin_session')?{...base,perfil:base.perfil||base.role}:base;
+      if(candidato?.company_id&&candidato?.login)return candidato;
     }catch(e){}
   }
   try{
@@ -3328,7 +3334,7 @@ function _payloadSessaoContaLog(){
     login:usuarioAtual.login,
     perfil:usuarioAtual.perfil,
     ts:Date.now(),
-    module_session_token:usuarioAtual._moduleSessionToken||anterior?.module_session_token||null,
+    module_session_token:(usuarioAtual._moduleSessionToken!==undefined?usuarioAtual._moduleSessionToken:anterior?.module_session_token)||null,
     sso:!!usuarioAtual._sso,
     sessionValidatedAt:anterior?.sessionValidatedAt||null
   };
