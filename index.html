@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="contalog-version" content="v1.11.11">
-<meta name="contalog-build" content="082">
+<meta name="contalog-build" content="085">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
@@ -2010,7 +2010,7 @@ function getDescricaoMobile(){const m=document.getElementById('mobDescManual'),s
 function getUnidadeMobile(){const m=document.getElementById('mobUmManual'),s=document.getElementById('mobUm');return String(m?.style.display!=='none'?(m?.value||''):(s?.value||'')).trim()}
 function alternarCampoManualMobile(tipo){const isDesc=tipo==='desc',sel=document.getElementById(isDesc?'mobDesc':'mobUm'),man=document.getElementById(isDesc?'mobDescManual':'mobUmManual');if(!sel||!man)return;const manual=man.style.display==='none';sel.style.display=manual?'none':'block';man.style.display=manual?'block':'none';if(manual){man.focus();}else{sel.focus();}}
 function preencherUnidadesMobile(){const s=document.getElementById('mobUm');if(!s)return;const us=[...new Set((DB.estoque||[]).map(x=>String(x.UNIDADE_MEDIDA||'').trim()).filter(Boolean))];s.innerHTML='<option value="">SELECIONE A UNIDADE</option>'+us.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')}
-function prepararDadosProdutoMobile(){const g=_getOndaAtiva(),end=String(document.getElementById('mobEndereco')?.value||'').trim(),sku=String(document.getElementById('mobSku')?.value||'').trim(),lote=String(document.getElementById('mobLote')?.value||'').trim(),t=g?.ts.find(x=>String(x.endereco).trim()===end),it=t?.itens.find(x=>String(x.sku).trim()===sku&&String(x.lote).trim()===lote);if(!it)return;const ds=document.getElementById('mobDesc'),us=document.getElementById('mobUm');if(ds){ds.innerHTML='<option value="">SELECIONE A DESCRIÇÃO</option><option value="'+esc(it.descricao||'')+'">'+esc(it.descricao||'')+'</option>';ds.value=it.descricao||''}if(us){preencherUnidadesMobile();if(it.um&&!Array.from(us.options).some(o=>o.value===it.um)){us.innerHTML+='<option value="'+esc(it.um)+'">'+esc(it.um)+'</option>'}us.value=it.um||''}const dm=document.getElementById('mobDescManual'),um=document.getElementById('mobUmManual');if(dm){dm.value='';dm.style.display='none'}if(um){um.value='';um.style.display='none'}}
+function prepararDadosProdutoMobile(){/* CONTAGEM CEGA: SKU/LOTE não consultam nem revelam o cadastro esperado. Descrição e unidade são informadas pelo contador. */const ds=document.getElementById('mobDesc'),us=document.getElementById('mobUm'),dm=document.getElementById('mobDescManual'),um=document.getElementById('mobUmManual');if(ds){ds.value='';ds.style.display='none'}if(us){us.value='';us.style.display='none'}if(dm){dm.value='';dm.style.display='block';dm.focus()}if(um){um.value='';um.style.display='block'}}
 
 function mostrarOndaSelecionada(){
   _ensureWaveNumbers();
@@ -2138,8 +2138,13 @@ function registrarContagemMobile(){
   let sku=document.getElementById('mobSku').value.trim(),lote=document.getElementById('mobLote').value.trim(),desc=getDescricaoMobile(),um=getUnidadeMobile(),q=parseFloat(document.getElementById('mobQtd').value);
   const endRegs=g?.inv?.cargaEnderecosSnapshot||DB.enderecos;if(!(endRegs||[]).some(x=>String(x['ENDEREÇO']).trim()===endereco)){toast('Endereço inválido. Deve ser exatamente um endereço da tarefa.',false);return}
   if(!sku||!lote||!desc||!um||isNaN(q)||q<0){toast('Preencha endereço, SKU, lote, descrição, unidade e quantidade.',false);return}
-  let it=t.itens.find(x=>String(x.sku)===sku&&String(x.lote)===lote);if(!it){toast('SKU + LOTE não pertencem à tarefa.',false);return}it._countSku=sku;it._countLote=lote;it._countUm=um;
-  if(it.descricao!==desc){toast('A descrição deve corresponder ao cadastro do SKU.',false);return}
+  /* CONTAGEM CEGA: o endereço é a única chave operacional validada. SKU/LOTE/descrição/UM são resultado físico informado pelo contador. Se o item não existir no snapshot da tarefa, registra-se como item físico adicional, com saldo de sistema 0, para posterior apuração. */
+  let it=t.itens.find(x=>String(x.sku).trim()===sku&&String(x.lote).trim()===lote);
+  if(!it){
+    it={endereco:t.endereco,sku,lote,descricao:desc,qtdSistema:0,um, qtd1:null,qtd2:null,qtd3:null,resp1:null,resp2:null,resp3:null,data1:null,data2:null,data3:null,data1Ms:null,data2Ms:null,data3Ms:null,status:'PENDENTE',ajuste:null,contagemFisicaExtra:true};
+    t.itens.push(it);
+  }
+  it.descricao=desc;it.um=um;it._countSku=sku;it._countLote=lote;it._countUm=um;
   let r=Number(t.rodada||1);
   if(r===3&&usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode executar a 3ª contagem.',false);return;}
   if(r===2&&usuarioAtual?.perfil==='CONTADOR'&&_contadorJaContouEnderecoNasRodadas(t,usuarioAtual)){toast('Este contador não pode repetir o mesmo endereço em outra rodada.',false);return;}
