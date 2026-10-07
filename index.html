@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="contalog-version" content="v1.11.10">
-<meta name="contalog-build" content="080">
+<meta name="contalog-build" content="081">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.10 · Build 080 · Sessão Transversal Persistente</title>
+<title>ContaLog · v1.11.10 · Build 081 · Sessão Transversal Persistente</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -275,7 +275,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:none;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('apuracao')"><span class="ni-ic">◎</span>Apuração</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.10<br>YALOG-CONTA-001 • Build 080 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.10<br>YALOG-CONTA-001 • Build 081 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
 <div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button></div></div>
 <div class="top-nav-group" data-nav-group="apuracao"><button class="top-nav-parent" type="button">Apuração</button><div class="top-subnav"><button type="button" data-nav="apuracao" onclick="go('apuracao')"><span class="sub-ic">◎</span>Visão de Apuração</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button><button type="button" data-nav="novoInventarioCarga" onclick="abrirNovoInv('CARGA')"><span class="sub-ic">＋</span>Novo Inventário por Carga</button><button type="button" data-nav="historicoApuracoes" onclick="go('inventario')"><span class="sub-ic">◷</span>Histórico de Apurações</button></div></div>
@@ -3136,49 +3136,70 @@ async function _tentarSSOHandoffContaLog(){
 }
 
 async function _restaurarSessaoContaLog(){
+  /*
+     BUILD 081 — RESTORE-FIRST / NO DESTRUCTIVE BOOT
+     Regra: o bootstrap jamais transforma falha de validação em logout.
+     A sessão persistida é restaurada primeiro. A validação remota apenas
+     confirma ou, em caso de invalidação inequívoca, encerra a sessão.
+     REFRESH / RELOAD / DEPLOY / TIMEOUT / ERRO DE REDE = sessão preservada.
+  */
   try{
-    let ss=_lerSessaoStorageContaLog();
-    // Fallback canônico: refresh/publicação não pode depender exclusivamente
-    // do cache síncrono do navegador. Se ele estiver vazio, recupera a sessão
-    // persistida no IndexedDB e repõe as duas cópias síncronas.
+    let ss=await _lerSessaoPersistidaContaLog();
     if(!ss){
-      try{
-        const canonica=await _idbLerSessaoContaLog();
-        if(canonica){
-          ss=canonica;
-          const txt=JSON.stringify(canonica);
-          sessionStorage.setItem(CONTALOG_SESSION_KEY,txt);
-          localStorage.setItem(CONTALOG_PERSIST_SESSION_KEY,txt);
-        }
-      }catch(e){console.warn('[ContaLog Session] fallback IndexedDB:',e)}
+      console.warn('[YALog Session] BOOT: nenhuma sessão persistida encontrada.');
+      return false;
     }
-    if(!ss)return false;
-    if(!ss?.company_id||!ss?.login)return false;
+    if(!ss?.company_id||!ss?.login){
+      console.warn('[YALog Session] BOOT: sessão persistida incompleta; não será apagada.');
+      return false;
+    }
+
+    // PONTO CRÍTICO: restaura imediatamente a identidade existente.
+    // Nenhuma validação remota pode esconder/apagar a sessão antes de concluir.
+    _restaurarSessaoLocalContaLog(ss,'bootstrap refresh/reload');
+    console.info('[YALog Session] SESSION RESTORED LOCAL', {company_id:ss.company_id,login:ss.login});
+
     const _retryAsync=async(fn,tentativas=3)=>{
       let ultimo=null;
       for(let i=1;i<=tentativas;i++){
-        try{const v=await fn();if(v)return v;ultimo=v}catch(e){ultimo=null}
+        try{
+          const v=await fn();
+          if(v)return v;
+          ultimo=v;
+        }catch(e){ultimo=null}
         if(i<tentativas)await new Promise(r=>setTimeout(r,700*i));
       }
       return ultimo;
     };
 
-    // SSO: primeiro tenta validar o token. Falha transitória não é logout.
+    // SSO: tenta confirmar o token sem jamais tratá-lo sozinho como logout.
     if(ss.module_session_token){
+      console.info('[YALog Session] REMOTE VALIDATION START · module token');
       const sessaoModulo=await _retryAsync(()=>_validarSessaoModuloContaLog(ss.module_session_token),3);
+
       if(sessaoModulo?.status==='ok'){
         const ok=await _entrarContaLogPorSSO(sessaoModulo.identidade,ss.module_session_token);
-        if(ok){_markSessionValidated();return true}
+        if(ok){_markSessionValidated();console.info('[YALog Session] REMOTE VALIDATION OK · SSO');return true}
       }
+
+      if(sessaoModulo?.status==='transient'){
+        console.warn('[YALog Session] REMOTE VALIDATION TRANSIENT ERROR · SESSION PRESERVED',sessaoModulo.motivo);
+        return true;
+      }
+
       if(sessaoModulo?.status==='invalid'){
-        // A não confirmação do token de módulo, isoladamente, não autoriza
-        // destruir a sessão persistida. Segue para a validação canônica da
-        // empresa/usuário; somente uma invalidação confirmada abaixo limpa.
-        console.warn('[YALog Session] token de módulo não confirmado; sessão preservada.');
+        // O token de módulo pode ter perdido validade sem que a autenticação
+        // canônica do usuário tenha sido invalidada. Remove somente o vínculo
+        // SSO do payload em memória e segue para a validação canônica.
+        console.warn('[YALog Session] module token não confirmado; validando sessão canônica sem logout.');
         ss={...ss,module_session_token:null,sso:false};
-      }
-      if(sessaoModulo?.status==='transient' && ['erro-validacao','sem-conexao'].includes(sessaoModulo.motivo)){
-        return _restaurarSessaoLocalContaLog(ss,sessaoModulo.motivo);
+        try{
+          const txt=JSON.stringify(ss);
+          sessionStorage.setItem(CONTALOG_SESSION_KEY,txt);
+          localStorage.setItem(CONTALOG_PERSIST_SESSION_KEY,txt);
+          localStorage.setItem(YALOG_AUTH_SESSION_KEY,txt);
+          _idbGravarSessaoContaLog(ss).catch(()=>{});
+        }catch(e){}
       }
 
       const vrSSO=await _retryAsync(()=>_validarAcessoContaLog(ss.company_id),3);
@@ -3186,20 +3207,45 @@ async function _restaurarSessaoContaLog(){
         const uvSSO=await _retryAsync(()=>_validarUsuarioPersistido(ss),3);
         if(uvSSO?.ok){
           usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true,_sso:false};
-          _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;_saveSession();_markSessionValidated();
+          _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;
+          _saveSession();_markSessionValidated();
           await _loadRemote(ss.company_id);
           const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
-          document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();return true;
+          document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();
+          console.info('[YALog Session] REMOTE VALIDATION OK · canonical');
+          return true;
         }
-        if(['erro-validacao','sem-conexao'].includes(uvSSO?.motivo))return _restaurarSessaoLocalContaLog(ss,uvSSO.motivo);
-        _clearSession();return false;
+        if(['erro-validacao','sem-conexao'].includes(uvSSO?.motivo)){
+          console.warn('[YALog Session] USER VALIDATION TRANSIENT ERROR · SESSION PRESERVED');
+          return true;
+        }
+        if(uvSSO?.motivo==='inativo'||uvSSO?.motivo==='identidade-invalida'){
+          console.error('[YALog Session] AUTH INVALIDATED · REASON:',uvSSO.motivo);
+          _clearSession();usuarioAtual=null;return false;
+        }
+        // Ausência de registro não é suficiente, durante o bootstrap, para
+        // apagar uma sessão que já estava autenticada.
+        console.warn('[YALog Session] USER NOT CONFIRMED · SESSION PRESERVED',uvSSO?.motivo);
+        return true;
       }
-      if(['erro-validacao','sem-conexao'].includes(vrSSO?.motivo))return _restaurarSessaoLocalContaLog(ss,vrSSO.motivo);
-      // Token revogado/empresa/licença/módulo realmente inválido: encerra a sessão.
-      _clearSession();return false;
+
+      if(['erro-validacao','sem-conexao'].includes(vrSSO?.motivo)){
+        console.warn('[YALog Session] REMOTE VALIDATION TRANSIENT ERROR · SESSION PRESERVED');
+        return true;
+      }
+
+      if(['empresa-inativa','licenca-inativa','licenca-vencida','modulo-bloqueado'].includes(vrSSO?.motivo)){
+        console.error('[YALog Session] AUTH INVALIDATED · REASON:',vrSSO.motivo);
+        _clearSession();usuarioAtual=null;return false;
+      }
+
+      // Qualquer retorno não conclusivo permanece como sessão preservada.
+      console.warn('[YALog Session] ACCESS NOT CONFIRMED · SESSION PRESERVED',vrSSO?.motivo);
+      return true;
     }
 
-    // Login direto: validação remota é obrigatória quando disponível.
+    // Login direto: mesma regra — validar sem destruir a sessão por falha transitória.
+    console.info('[YALog Session] REMOTE VALIDATION START · canonical');
     const vr=await _retryAsync(()=>_validarAcessoContaLog(ss.company_id),3);
     if(vr?.ok){
       const uv=await _retryAsync(()=>_validarUsuarioPersistido(ss),3);
@@ -3208,17 +3254,30 @@ async function _restaurarSessaoContaLog(){
         _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;_saveSession();_markSessionValidated();
         await _loadRemote(ss.company_id);
         const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
-        document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();return true;
+        document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();
+        console.info('[YALog Session] REMOTE VALIDATION OK · canonical');
+        return true;
       }
-      if(['erro-validacao','sem-conexao'].includes(uv?.motivo))return _restaurarSessaoLocalContaLog(ss,uv.motivo);
-      _clearSession();return false;
+      if(['erro-validacao','sem-conexao'].includes(uv?.motivo))return true;
+      if(['inativo','identidade-invalida'].includes(uv?.motivo)){
+        console.error('[YALog Session] AUTH INVALIDATED · REASON:',uv.motivo);
+        _clearSession();usuarioAtual=null;return false;
+      }
+      return true;
     }
-    if(['erro-validacao','sem-conexao'].includes(vr?.motivo))return _restaurarSessaoLocalContaLog(ss,vr.motivo);
-    // Empresa/licença/módulo efetivamente inválidos continuam encerrando a sessão.
-    _clearSession();return false;
+    if(['erro-validacao','sem-conexao'].includes(vr?.motivo))return true;
+    if(['empresa-inativa','licenca-inativa','licenca-vencida','modulo-bloqueado'].includes(vr?.motivo)){
+      console.error('[YALog Session] AUTH INVALIDATED · REASON:',vr.motivo);
+      _clearSession();usuarioAtual=null;return false;
+    }
+    return true;
   }catch(e){
-    // Erro inesperado de leitura/rede NÃO deve converter refresh em logout.
-    try{const ss=await _lerSessaoPersistidaContaLog();if(_restaurarSessaoLocalContaLog(ss,'exceção transitória'))return true}catch(ignore){}
+    // ERRO DE BOOT/REDE nunca converte uma sessão persistida em logout.
+    console.warn('[YALog Session] BOOT ERROR · SESSION PRESERVED',e);
+    try{
+      const ss=await _lerSessaoPersistidaContaLog();
+      if(ss?.company_id&&ss?.login){_restaurarSessaoLocalContaLog(ss,'exceção transitória');return true;}
+    }catch(ignore){}
     return false;
   }
 }
