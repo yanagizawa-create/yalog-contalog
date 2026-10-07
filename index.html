@@ -249,18 +249,13 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
       return;
     }
 
-    // Nova versão detectada: preserva as sessões e faz somente um reload.
-    if(anterior!==atual && !jaRecarregou){
+    // Nova versão detectada: registrar a versão SEM provocar reload programático.
+    // Publicação/atualização nunca deve criar um segundo ciclo de bootstrap.
+    // O próprio F5/navegação para a nova versão já é suficiente.
+    if(anterior!==atual){
       sessionStorage.setItem(chaveReload,'1');
       localStorage.setItem(chaveVersao,atual);
-      if(temSessao){
-        // A sessão está em sessionStorage/localStorage e NÃO é limpa aqui.
-        // O boot normal fará a restauração da identidade após o reload.
-        try{console.info('[ContaLog Update] nova versão detectada; sessão preservada. Reload único.');}catch(e){}
-        window.location.reload();
-        return;
-      }
-      localStorage.setItem(chaveVersao,atual);
+      try{console.info('[ContaLog Update] nova versão detectada; sessão preservada; nenhum reload programático.');}catch(e){}
       return;
     }
 
@@ -3137,7 +3132,7 @@ async function _tentarSSOHandoffContaLog(){
 
 async function _restaurarSessaoContaLog(){
   /*
-     BUILD 081 — RESTORE-FIRST / NO DESTRUCTIVE BOOT
+     BUILD 082 — SESSION GATE / RESTORE-FIRST
      Regra: o bootstrap jamais transforma falha de validação em logout.
      A sessão persistida é restaurada primeiro. A validação remota apenas
      confirma ou, em caso de invalidação inequívoca, encerra a sessão.
@@ -3283,8 +3278,20 @@ async function _restaurarSessaoContaLog(){
 }
 
 function initLogin(clear=true){
+  // PROTEÇÃO FINAL DO BOOT: se existe qualquer sessão persistida, NÃO abrir
+  // o login. Refresh/reload/publicação jamais podem sobrescrever uma sessão
+  // já existente. Logout real/invalidação confirmada removem as cópias antes
+  // de chegar aqui, portanto continuam permitindo a tela de login.
+  try{
+    const sessaoExistente=_lerSessaoStorageContaLog();
+    if(sessaoExistente?.company_id&&sessaoExistente?.login){
+      _restaurarSessaoLocalContaLog(sessaoExistente,'initLogin bloqueado: sessão persistida encontrada');
+      return false;
+    }
+  }catch(e){}
   const ov=document.getElementById('loginOverlay');if(ov)ov.style.display='flex';
   if(clear)['loginCompany','loginUser','loginPass'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
+  return true;
 }
 /*
    Persistência canônica da sessão.
@@ -3538,16 +3545,24 @@ async function bootContaLog(){
     // A validação remota continua obrigatória quando disponível; falha de rede
     // é tratada como condição transitória, não como logout.
     const sessaoPersistida=await _lerSessaoPersistidaContaLog();
-    if(sessaoPersistida)_restaurarSessaoLocalContaLog(sessaoPersistida,'bootstrap refresh/reload');
-
-    const ready=await _waitSupabase();
-    // Sessão existente tem prioridade. Refresh/reload nunca deve depender
-    // de um novo login apenas porque a conexão ainda está inicializando.
-    if(await _restaurarSessaoContaLog()){
+    // GATE DE RESTAURAÇÃO: se existe sessão persistida, o bootstrap NÃO pode
+    // cair no caminho de login. A identidade é restaurada imediatamente e a
+    // validação remota ocorre em segundo plano.
+    if(sessaoPersistida?.company_id && sessaoPersistida?.login){
+      _restaurarSessaoLocalContaLog(sessaoPersistida,'bootstrap refresh/reload');
       renderEstoque();renderEnd();renderInv();renderUsers();renderDash();renderTarefas();
-      if(sessionStorage.getItem('contalog-update-reload:'+document.querySelector('meta[name="contalog-version"]')?.content+'|'+document.querySelector('meta[name="contalog-build"]')?.content)==='1')setTimeout(()=>toast('Módulo atualizado · sessão preservada · nenhuma nova autenticação necessária.','ok'),250);
+      const chaveUpdate='contalog-update-reload:'+document.querySelector('meta[name="contalog-version"]')?.content+'|'+document.querySelector('meta[name="contalog-build"]')?.content;
+      if(sessionStorage.getItem(chaveUpdate)==='1')setTimeout(()=>toast('Módulo atualizado · sessão preservada · nenhuma nova autenticação necessária.','ok'),250);
+      // Validação pós-bootstrap: erro transitório nunca derruba a sessão.
+      // Somente invalidação inequívoca já tratada por _restaurarSessaoContaLog
+      // poderá encerrar a sessão.
+      setTimeout(()=>{
+        _restaurarSessaoContaLog().catch(e=>console.warn('[YALog Session] background validation:',e));
+      },0);
       return;
     }
+
+    const ready=await _waitSupabase();
     if(ready && await _tentarSSOHandoffContaLog())return;
     if(!ready){_remoteStatus('● CONEXÃO ONLINE INDISPONÍVEL',false);initLogin(false);return;}
     initLogin(false);_remoteStatus('● ONLINE · AGUARDANDO LOGIN',true);
