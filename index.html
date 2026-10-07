@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="contalog-version" content="v1.11.3">
-<meta name="contalog-build" content="072">
+<meta name="contalog-version" content="v1.11.4">
+<meta name="contalog-build" content="074">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.3 · Build 072 · V045 Apuração + Inventário por Carga</title>
+<title>ContaLog · v1.11.4 · Build 074 · Sessão Contínua na Atualização</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -223,11 +223,59 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 @media(max-width:720px){.inv-control-toolbar{grid-template-columns:1fr}.inv-control-actions{justify-content:stretch}.inv-control-actions .btn{flex:1 1 160px}.inv-control-flow{grid-template-columns:repeat(2,minmax(120px,1fr))}.inv-flow-step::after{display:none!important}.inv-accuracy-grid{grid-template-columns:1fr}.inv-progress-value{font-size:26px}}
 </style>
 
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   BUILD 074 — ATUALIZAÇÃO SEM ENCERRAMENTO DA SESSÃO
+   Regra transversal: atualização do módulo != logout do usuário.
+   Uma nova versão pode provocar UM único reload por aba/sessão.
+   A sessão existente não é apagada nem substituída por login.
+   ═══════════════════════════════════════════════════════════════ */
+(function _contalogAtualizacaoSemLogout(){
+  try{
+    const metaV=document.querySelector('meta[name="contalog-version"]');
+    const metaB=document.querySelector('meta[name="contalog-build"]');
+    const versao=(metaV?.content||'').trim();
+    const build=(metaB?.content||'').trim();
+    const atual=versao+'|'+build;
+    const chaveVersao='contalog-app-version';
+    const chaveReload='contalog-update-reload:'+atual;
+    const anterior=localStorage.getItem(chaveVersao)||'';
+    const temSessao=!!(sessionStorage.getItem('contalog-session')||localStorage.getItem('contalog-session-persist'));
+    const jaRecarregou=sessionStorage.getItem(chaveReload)==='1';
+
+    // Primeiro acesso sem sessão: apenas registra a versão, sem reload.
+    if(!anterior){
+      localStorage.setItem(chaveVersao,atual);
+      return;
+    }
+
+    // Nova versão detectada: preserva as sessões e faz somente um reload.
+    if(anterior!==atual && !jaRecarregou){
+      sessionStorage.setItem(chaveReload,'1');
+      localStorage.setItem(chaveVersao,atual);
+      if(temSessao){
+        // A sessão está em sessionStorage/localStorage e NÃO é limpa aqui.
+        // O boot normal fará a restauração da identidade após o reload.
+        try{console.info('[ContaLog Update] nova versão detectada; sessão preservada. Reload único.');}catch(e){}
+        window.location.reload();
+        return;
+      }
+      localStorage.setItem(chaveVersao,atual);
+      return;
+    }
+
+    // Em qualquer cenário, a versão corrente fica registrada sem tocar na sessão.
+    localStorage.setItem(chaveVersao,atual);
+  }catch(e){
+    console.warn('[ContaLog Update] controle de atualização não afetou a sessão:',e);
+  }
+})();
+</script>
 </head><body>
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('apuracao')"><span class="ni-ic">◎</span>Apuração</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.3<br>YALOG-CONTA-001 • v1.11.3 Build 072 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.4<br>YALOG-CONTA-001 • v1.11.3 Build 072 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
 <div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button></div></div>
 <div class="top-nav-group" data-nav-group="apuracao"><button class="top-nav-parent" type="button">Apuração</button><div class="top-subnav"><button type="button" data-nav="apuracao" onclick="go('apuracao')"><span class="sub-ic">◎</span>Visão de Apuração</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button><button type="button" data-nav="novoInventarioCarga" onclick="abrirNovoInv('CARGA')"><span class="sub-ic">＋</span>Novo Inventário por Carga</button><button type="button" data-nav="historicoApuracoes" onclick="go('inventario')"><span class="sub-ic">◷</span>Histórico de Apurações</button></div></div>
@@ -3050,14 +3098,25 @@ async function _tentarSSOHandoffContaLog(){
 async function _restaurarSessaoContaLog(){
   try{
     const raw=sessionStorage.getItem(CONTALOG_SESSION_KEY)||localStorage.getItem(CONTALOG_PERSIST_SESSION_KEY);if(!raw)return false;
+    // Publicação/reload não é logout. Em uma atualização, a sessão pode ser
+    // restaurada enquanto o Supabase ainda inicializa. Repetimos a validação
+    // antes de considerar a sessão inválida e limpá-la.
+    const _retryAsync=async(fn,tentativas=3)=>{
+      let ultimo=null;
+      for(let i=1;i<=tentativas;i++){
+        try{const v=await fn();if(v)return v;ultimo=v}catch(e){ultimo=null}
+        if(i<tentativas)await new Promise(r=>setTimeout(r,700*i));
+      }
+      return ultimo;
+    };
     const ss=JSON.parse(raw);
     if(!ss?.company_id||!ss?.login)return false;
     if(ss.module_session_token){
-      const identidade=await _validarSessaoModuloContaLog(ss.module_session_token);
+      const identidade=await _retryAsync(()=>_validarSessaoModuloContaLog(ss.module_session_token),3);
       if(identidade)return await _entrarContaLogPorSSO(identidade,ss.module_session_token);
       // Se o token de módulo expirou, restaura a sessão pelo cadastro da plataforma, sem pedir senha novamente.
-      const vrSSO=await _validarAcessoContaLog(ss.company_id);
-      const uvSSO=vrSSO.ok?await _validarUsuarioPersistido(ss):false;
+      const vrSSO=await _retryAsync(()=>_validarAcessoContaLog(ss.company_id),3);
+      const uvSSO=vrSSO?.ok?await _retryAsync(()=>_validarUsuarioPersistido(ss),3):false;
       if(!vrSSO.ok||!uvSSO){_clearSession();return false;}
       usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true,_sso:false};
       _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;_saveSession();
@@ -3066,9 +3125,9 @@ async function _restaurarSessaoContaLog(){
       document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();return true;
     }
     // Sessão de login direto: restaura apenas na mesma aba/sessão do navegador.
-    const vr=await _validarAcessoContaLog(ss.company_id);
-    if(!vr.ok){_clearSession();return false;}
-    const uv=await _validarUsuarioPersistido(ss);
+    const vr=await _retryAsync(()=>_validarAcessoContaLog(ss.company_id),3);
+    if(!vr?.ok){_clearSession();return false;}
+    const uv=await _retryAsync(()=>_validarUsuarioPersistido(ss),3);
     if(!uv){_clearSession();return false;}
     usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true};
     _saveSession();
@@ -3165,7 +3224,7 @@ async function bootContaLog(){
     const ready=await _waitSupabase();
     if(!ready){_remoteStatus('● CONEXÃO ONLINE INDISPONÍVEL',false);initLogin(false);return;}
     if(await _tentarSSOHandoffContaLog())return;
-    if(await _restaurarSessaoContaLog()){renderEstoque();renderEnd();renderInv();renderUsers();renderDash();renderTarefas();return;}
+    if(await _restaurarSessaoContaLog()){renderEstoque();renderEnd();renderInv();renderUsers();renderDash();renderTarefas();if(sessionStorage.getItem('contalog-update-reload:'+document.querySelector('meta[name="contalog-version"]')?.content+'|'+document.querySelector('meta[name="contalog-build"]')?.content)==='1'){setTimeout(()=>toast('Módulo atualizado · sessão preservada · nenhuma nova autenticação necessária.','ok'),250)}return;}
     initLogin(false);_remoteStatus('● ONLINE · AGUARDANDO LOGIN',true);
   }catch(e){console.warn('[ContaLog Boot]',e);initLogin(false);_remoteStatus('● ERRO DE CONEXÃO · TENTE NOVAMENTE',false)}
   setInterval(()=>{if(!usuarioAtual)return;if(document.getElementById('s-inventario')?.classList.contains('active'))renderInv();if(document.getElementById('s-tarefas')?.classList.contains('active'))renderTarefas();if(document.getElementById('s-dashboard')?.classList.contains('active'))renderDash();if(document.getElementById('s-visaoTarefas')?.classList.contains('active'))renderVisaoTarefas()},2000);
