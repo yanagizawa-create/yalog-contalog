@@ -178,7 +178,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('conciliacao')"><span class="ni-ic">⚖</span>Conciliação</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.0<br>YALOG-CONTA-001 • v1.11.0 Build 069 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.0<br>YALOG-CONTA-001 • v1.11.0 Build 070 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar"><button class="mobile-menu-btn" aria-label="Abrir menu" onclick="toggleMobileMenu()">☰</button><div class="tb-title" id="tbTitle">Carga Estoque</div><div style="display:flex;gap:10px;align-items:center"><div id="remoteStatus" class="tb-date" style="color:#4ade80">● CONECTANDO SUPABASE...</div><div class="tb-date" id="clock"></div><div id="sessionUser" class="tb-date" style="color:var(--orange2)"></div><button class="btn btn-r" style="padding:7px 11px;font-size:9px" onclick="sairContaLog()">⎋ SAIR</button></div></div><div class="content">
 <section class="screen active" id="s-estoque"><div class="ph"><div><div class="ph-eye">ContaLog · Base</div><div class="ph-title">Carga <em>Estoque</em></div><div class="ph-sub">Importação e manutenção da base física que alimenta os inventários.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEstoque()">↓ Template Excel</button><button class="btn btn-a" onclick="abrirMapaEstoqueExport()">↓ Baixar Mapa de Estoque</button><label class="btn btn-p">＋ Importar Excel<input id="fileEstoque" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEstoque(event)"></label></div></div><div class="info">Padrão obrigatório: <b>SKU_CLIENTE | DESCRICAO | CLIENTE | SITE | NF_ENTRADA | LOTE | VALIDADE | QUANTIDADE | UNIDADE_MEDIDA | VALOR_UNIT | STATUS | OBS | TIPO_PALETE | ENDERECO | ID_PALETE_UZ</b>. A carga é a fonte para geração das tarefas.</div><div id="estoqueBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEstoque" onclick="document.getElementById('fileEstoque').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'estoque')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEstoque()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="estoqueKpis"></div><div class="tw"><table class="dt"><thead><tr><th>SKU CLIENTE</th><th>DESCRIÇÃO</th><th>CLIENTE</th><th>SITE</th><th>NF ENTRADA</th><th>LOTE</th><th>VALIDADE</th><th>QTD</th><th>UM</th><th>VALOR UNIT.</th><th>STATUS</th><th>TIPO PALETE</th><th>ENDEREÇO</th><th>ID PALETE UZ</th><th>AÇÕES</th></tr></thead><tbody id="estoqueBody"></tbody></table></div></section>
 <section class="screen" id="s-enderecos"><div class="ph"><div><div class="ph-eye">ContaLog · Base Física</div><div class="ph-title">Carga <em>Endereços</em> do Estoque</div><div class="ph-sub">O ENDEREÇO carregado aqui é a referência oficial para leitura física.</div></div><div class="acts"><button class="btn btn-b" onclick="baixarTemplateEnderecos()">↓ Template Excel</button><label class="btn btn-p">＋ Importar Excel<input id="fileEnderecos" hidden type="file" accept=".xlsx,.xls,.csv" onchange="importarEnderecos(event)"></label></div></div><div class="info">Padrão obrigatório: <b>RUA | LOCAÇÃO | NÍVEL | ÍMPAR/PAR | ENDEREÇO | LADO</b>. Opcionalmente, a carga pode trazer <b>SITE</b> e <b>CLIENTE</b> para separar estruturas entre operações/sites. No inventário, o endereço informado manualmente ou por câmera precisa existir exatamente nesta base.</div><div id="endBasePanel" style="margin:12px 0"></div><div class="upload-zone"><div class="drop-mini" id="dropEnderecos" onclick="document.getElementById('fileEnderecos').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'enderecos')">⇩ <b>Arraste o Excel aqui</b> ou clique para selecionar</div><button class="btn btn-r" onclick="limparEnderecos()" data-master-action>🗑 Limpar Carga</button></div><div class="kpis" id="endKpis"></div><div class="tw"><table class="dt"><thead><tr><th>RUA</th><th>LOCAÇÃO</th><th>NÍVEL</th><th>ÍMPAR/PAR</th><th>ENDEREÇO</th><th>LADO</th><th>USO</th><th>AÇÕES</th></tr></thead><tbody id="endBody"></tbody></table></div></section>
@@ -469,7 +469,7 @@ async function _exportarMapaEstoque(tipo){
     const tipoTxt=tipo==='backup'?'Backup da carga':'Mapa para WMS';
     const alerta=incompletos.length?` · ATENÇÃO: ${incompletos.length} registro(s) com campo obrigatório ausente`:' · validação OK';
     toast(`${tipoTxt} gerado · ${registros.length} registro(s) · ${file}${alerta}`,!incompletos.length);
-  }catch(e){console.error('[ContaLog Build 069] exportação mapa:',e);toast('Não foi possível gerar o arquivo Excel: '+(e?.message||e),false)}
+  }catch(e){console.error('[ContaLog Build 070] exportação mapa:',e);toast('Não foi possível gerar o arquivo Excel: '+(e?.message||e),false)}
 }
 function abrirMapaEstoqueExport(){
   const {base,registros}=_mapaEstoqueRegistrosAtivos();
@@ -3086,6 +3086,102 @@ setTimeout(()=>{if(!window.__contalogBooted)bootContaLog()},4000);
 function liberarTarefa(invId,tid){if(usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode liberar tarefas.',false);return}let inv=DB.inventarios.find(x=>x.id===invId),t=inv?.tarefas.find(x=>x.id===tid);if(!t)return;if(t.status==='AGUARDANDO'||t.status==='AGUARDANDO_APROV')t.status='LIBERADA';save();renderTarefas();toast('Tarefa '+tid+' liberada')}
 function cancelarTarefa(invId,tid){if(usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER.',false);return}let inv=DB.inventarios.find(x=>x.id===invId),t=inv?.tarefas.find(x=>x.id===tid);if(!t)return;if(!confirm('Cancelar esta contagem/tarefa?'))return;t.status='CANCELADO';t.canceladoEm=now();t.canceladoPor=usuarioAtual.nome;t.contador=null;save();renderTarefas();renderInv();renderDash();toast('Contagem específica cancelada')}
 
+/* ═════════════════════════════════════════════════════════════
+   BUILD 070 · CARGA FINAL DE ESTOQUE A PARTIR DO INVENTÁRIO
+   Exportação isolada: NÃO altera estoque, inventário ou persistência.
+   ═════════════════════════════════════════════════════════════ */
+function _invCargaFinalRows(inv){
+  if(!inv)return {rows:[],missing:[],source:null};
+  const base=_getBase('estoque',inv.cargaEstoqueId);
+  const sourceRows=Array.isArray(inv.cargaEstoqueSnapshot?.registros)?inv.cargaEstoqueSnapshot.registros:
+    (Array.isArray(base?.registros)?base.registros:[]);
+  const index=new Map();
+  sourceRows.forEach(r=>{
+    const key=[String(r?.ENDERECO??''),String(r?.SKU_CLIENTE??''),String(r?.LOTE??'')].join('¦');
+    if(!index.has(key))index.set(key,r);
+  });
+  const rows=[],missing=[];
+  (inv.tarefas||[]).filter(t=>t.status!=='FORA_CICLO'&&t.status!=='CANCELADO').forEach(t=>{
+    (t.itens||[]).forEach(it=>{
+      const latest=_latestCount(it);
+      const q=it.qtdAprovada!==null&&it.qtdAprovada!==undefined?it.qtdAprovada:(latest?.q??null);
+      if(q===null||q===undefined||q===''){
+        missing.push({endereco:it.endereco||t.endereco||'',sku:it.sku||'',lote:it.lote||''});
+        return;
+      }
+      const key=[String(it.endereco??t.endereco??''),String(it.sku??''),String(it.lote??'')].join('¦');
+      const src=index.get(key)||{};
+      const row={...src};
+      STOCK_COLS.forEach(c=>{if(!(c in row))row[c]='';});
+      row.SKU_CLIENTE=src.SKU_CLIENTE??it.sku??'';
+      row.DESCRICAO=src.DESCRICAO??it.descricao??'';
+      row.CLIENTE=src.CLIENTE??inv.cliente??'';
+      row.SITE=src.SITE??inv.site??'';
+      row.LOTE=src.LOTE??it.lote??'';
+      row.ENDERECO=src.ENDERECO??it.endereco??t.endereco??'';
+      row.UNIDADE_MEDIDA=src.UNIDADE_MEDIDA??it.um??'UN';
+      row.QUANTIDADE=q;
+      row.STATUS=src.STATUS??'ATIVO';
+      rows.push(row);
+    });
+  });
+  return {rows,missing,source:base||inv.cargaEstoqueSnapshot||null};
+}
+function _invCargaFinalAoA(rows){return [STOCK_COLS,...rows.map(r=>STOCK_COLS.map(c=>r?.[c]??''))];}
+function _invCargaFinalCSV(rows){
+  const escCsv=v=>{const s=String(v??'');return /[;"\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
+  return _invCargaFinalAoA(rows).map(r=>r.map(escCsv).join(';')).join('\r\n');
+}
+function _invCargaFinalNome(inv,ext){
+  const id=String(inv?.id||'INVENTARIO').replace(/[^A-Za-z0-9_-]+/g,'_');
+  const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
+  return `ContaLog_Carga_Final_Estoque_${id}_${stamp}.${ext}`;
+}
+async function _gerarCargaFinalEstoque(invId,formato='xlsx'){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER pode gerar a carga final de estoque.',false);
+  const inv=DB.inventarios.find(x=>x.id===invId);
+  if(!inv)return toast('Inventário não encontrado.',false);
+  if(inv.status!=='CONCLUIDO')return toast('A carga final só pode ser gerada após o inventário estar CONCLUÍDO/APROVADO.',false);
+  const {rows,missing}=_invCargaFinalRows(inv);
+  if(missing.length)return toast(`Carga final bloqueada · ${missing.length} item(ns) sem quantidade física final/aprovada.`,false);
+  if(!rows.length)return toast('Não há itens finais aprovados para gerar a carga de estoque.',false);
+  try{
+    if(formato==='csv'){
+      const blob=new Blob(['\\uFEFF'+_invCargaFinalCSV(rows)],{type:'text/csv;charset=utf-8;'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=_invCargaFinalNome(inv,'csv');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    }else{
+      await window.__loadContaLogXLSX();
+      if(!window.XLSX?.utils)throw new Error('Biblioteca Excel indisponível');
+      const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(_invCargaFinalAoA(rows));
+      ws['!cols']=[{wch:16},{wch:40},{wch:22},{wch:14},{wch:14},{wch:20},{wch:12},{wch:12},{wch:16},{wch:12},{wch:12},{wch:36},{wch:14},{wch:18},{wch:18}];
+      ws['!freeze']={xSplit:0,ySplit:1};
+      XLSX.utils.book_append_sheet(wb,ws,'CARGA_FINAL_ESTOQUE');
+      XLSX.writeFile(wb,_invCargaFinalNome(inv,'xlsx'));
+    }
+    toast(`Carga final de estoque gerada · ${rows.length} registro(s) · ${formato.toUpperCase()} · sem alteração de dados`,true);
+  }catch(e){console.error('[ContaLog Build 070] carga final:',e);toast('Não foi possível gerar a carga final: '+(e?.message||e),false)}
+}
+function abrirGerarCargaFinalEstoque(invId){
+  if(usuarioAtual?.perfil!=='MASTER')return toast('Somente MASTER.',false);
+  const inv=DB.inventarios.find(x=>x.id===invId);if(!inv)return toast('Inventário não encontrado.',false);
+  if(inv.status!=='CONCLUIDO')return toast('Finalize/aprove o inventário antes de gerar a carga final.',false);
+  const data=_invCargaFinalRows(inv);
+  if(data.missing.length)return toast(`Carga final não disponível · ${data.missing.length} item(ns) sem quantidade física final/aprovada.`,false);
+  document.getElementById('modalBody').innerHTML=`
+    <div class="mt">📦 Gerar Carga Final de Estoque</div>
+    <div class="ms">Inventário <b>${esc(inv.id)}</b> · arquivo para conferência/carga posterior.</div>
+    <div class="card" style="margin:12px 0;border-color:rgba(34,211,238,.25)">
+      <div class="sec-t">FONTE</div>
+      <div style="font-family:var(--mono);font-size:12px">${data.rows.length.toLocaleString('pt-BR')} registro(s) · quantidade física final/aprovada</div>
+      <div class="mini" style="margin-top:7px">Layout reutilizado: Carga Estoque (${STOCK_COLS.length} campos). Nenhum estoque será sobrescrito e nenhum dado será salvo nesta ação.</div>
+    </div>
+    <div class="g2">
+      <div class="card"><div class="ph-eye">Formato recomendado</div><div class="mt">XLSX</div><div class="mini" style="line-height:1.7;margin:8px 0 14px">Arquivo estruturado para conferência e posterior utilização como carga.</div><button class="btn btn-a" style="width:100%" onclick="_gerarCargaFinalEstoque('${esc(inv.id)}','xlsx');closeModal()">↓ GERAR CARGA — XLSX</button></div>
+      <div class="card"><div class="ph-eye">Formato alternativo</div><div class="mt">CSV</div><div class="mini" style="line-height:1.7;margin:8px 0 14px">Mesmo layout e mesma quantidade de registros, em CSV.</div><button class="btn btn-b" style="width:100%" onclick="_gerarCargaFinalEstoque('${esc(inv.id)}','csv');closeModal()">↓ GERAR CARGA — CSV</button></div>
+    </div>`;
+  openModal();
+}
+
 function renderInv(){const all=DB.inventarios||[];
   // BUILD 064: conciliações abertas com divergências mas sem tarefas são
   // reprocessadas antes de exibir a ação de liberação.
@@ -3109,6 +3205,7 @@ function renderInv(){const all=DB.inventarios||[];
       actions+=`<button class="btn btn-b" onclick="verTarefas('${iid}')">Tarefas</button> `;
       if(_ehConciliacao(inv))actions+=`<button class="btn btn-a" onclick="abrirVisualizacaoDivergencias('${iid}')">⌕ Divergências</button> `;
       actions+=`<button class="btn btn-p" onclick="_invRelatorioOficial('${iid}')">📊 Relatório Excel</button> `;
+      if(inv.status==='CONCLUIDO')actions+=`<button class="btn btn-a" onclick="abrirGerarCargaFinalEstoque('${iid}')">📦 Gerar Carga de Estoque</button> `;
       if(inv.status!=='CANCELADO'&&inv.status!=='CONCLUIDO')actions+=`<button class="btn btn-r" onclick="cancelarInventario('${iid}')">Cancelar</button> `;
       actions+=`<button class="btn btn-r" onclick="excluirInventario('${iid}')">Excluir</button>`;
     }else actions=`<button class="btn btn-b" onclick="verTarefas('${iid}')">Tarefas</button>`;
