@@ -2066,7 +2066,7 @@ function _mostrarFimOnda(g){
   document.getElementById('modalBody').innerHTML='<div class="wave-finished"><div class="big">✓ ESSA TAREFA/ONDA FOI FINALIZADA.</div><div class="small">Todos os '+p.total+' endereços da RUA '+esc(g.rua)+' · LADO '+esc(g.lado)+' · '+esc(_waveScopeLabel(g))+' foram visitados e finalizados na '+p.r+'ª contagem.</div>'+proxHtml+'<div class="mfoot" style="justify-content:center"><button class="btn btn-p" onclick="fecharFimOndaEEscolherProxima()">ESCOLHER PRÓXIMA TAREFA</button></div></div>';openModal();return true;
 }
 function fecharFimOndaEEscolherProxima(){closeModal();ondaAtual=null;tarefaAtual=null;_clearContagemCampos();renderContagem();renderTarefas();renderDash();}
-function registrarEnderecoVazio(){let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();if(!nome||!g)return toast('Assuma uma onda primeiro.',false);let endereco=document.getElementById('mobEndereco').value.trim(),t=_getTaskByEndereco(endereco);if(!t){_alertOnda('ENDEREÇO NÃO É DA SUA TAREFA/ONDA!!','REPITA LANÇAMENTO');return}if(t.status!=='ANDAMENTO'||t.contador!==nome){return toast('Este endereço não está disponível para este contador.',false)}if((t.itens||[]).length)return toast('Este endereço possui produto cadastrado. Realize a contagem do SKU + LOTE.',false);let r=t.rodada||1;if(t.contagens?.some(c=>c.endereco===t.endereco&&c.rodada===r)){alert('CONTAGEM REALIZADA ANTERIORMENTE!!');return}let ms=Date.now();t.contagens=t.contagens||[];t.contagens.push({endereco:t.endereco,sku:'',lote:'',quantidade:0,rodada:r,nome,data:now(),ms,vazio:true});t.contagemVazia=t.contagemVazia||{};t.contagemVazia['q'+r]=0;t.contagemVazia['resp'+r]=nome;t.contagemVazia['data'+r]=now();t.contagemVazia['ms'+r]=ms;t.status='CONCLUIDO';t.concluidoEm=now();t.concluidoEmMs=Date.now();t.contador=null;const waveKeyAntes=ondaAtual?.key;save();_clearContagemCampos();renderTarefas();renderContagem();renderInv();renderDash();const g2=_getWaveGroupByKey(waveKeyAntes);if(g2)_mostrarFimOnda(g2);toast('Endereço '+t.endereco+' confirmado como VAZIO · 0')}
+function registrarEnderecoVazio(){let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();if(!nome||!g)return toast('Assuma uma onda primeiro.',false);let endereco=document.getElementById('mobEndereco').value.trim(),t=_getTaskByEndereco(endereco);if(!t){_alertOnda('ENDEREÇO NÃO É DA SUA TAREFA/ONDA!!','REPITA LANÇAMENTO');return}_materializarExecucaoContador(t,g,nome);if(t.status!=='ANDAMENTO'||!_enderecoPertenceAExecucaoAtual(t,g,nome)){return toast('Este endereço não está disponível para este contador.',false)}if((t.itens||[]).length)return toast('Este endereço possui produto cadastrado. Realize a contagem do SKU + LOTE.',false);let r=t.rodada||1;if(t.contagens?.some(c=>c.endereco===t.endereco&&c.rodada===r)){alert('CONTAGEM REALIZADA ANTERIORMENTE!!');return}let ms=Date.now();t.contagens=t.contagens||[];t.contagens.push({endereco:t.endereco,sku:'',lote:'',quantidade:0,rodada:r,nome,data:now(),ms,vazio:true});t.contagemVazia=t.contagemVazia||{};t.contagemVazia['q'+r]=0;t.contagemVazia['resp'+r]=nome;t.contagemVazia['data'+r]=now();t.contagemVazia['ms'+r]=ms;t.status='CONCLUIDO';t.concluidoEm=now();t.concluidoEmMs=Date.now();t.contador=null;const waveKeyAntes=ondaAtual?.key;save();_clearContagemCampos();renderTarefas();renderContagem();renderInv();renderDash();const g2=_getWaveGroupByKey(waveKeyAntes);if(g2)_mostrarFimOnda(g2);toast('Endereço '+t.endereco+' confirmado como VAZIO · 0')}
 /* BUILD 079 · CONTEXTO DE EXECUÇÃO NA 6ª ETAPA
    A autorização usa a tarefa da onda em execução + identidade corrente/histórico.
    Não remove a validação: apenas evita falso negativo após reidratação/atualização.
@@ -2111,11 +2111,29 @@ function _enderecoPertenceAExecucaoAtual(t,g,nome){
   }
   return false;
 }
+function _materializarExecucaoContador(t,g,nome){
+  if(!t||!g||!nome)return false;
+  const uid=String(usuarioAtual?.id||'').trim(),login=String(usuarioAtual?.login||'').trim().toLowerCase(),n=String(nome).trim();
+  const assignedId=String(t.contadorDesignadoId||'').trim(),assignedLogin=String(t.contadorDesignadoLogin||'').trim().toLowerCase(),assignedName=String(t.contadorDesignado||'').trim().toLowerCase();
+  const autorizado=(uid&&assignedId===uid)||(login&&assignedLogin===login)||(n&&assignedName===n);
+  if(String(t.status||'').toUpperCase()==='LIBERADA'&&autorizado){
+    const stamp=now(),ms=Date.now();
+    t.contador=n;t.contadorId=uid||null;t.contadorLogin=login||null;t.contadorHistorico=t.contadorHistorico||[];
+    const ultimo=t.contadorHistorico[t.contadorHistorico.length-1];
+    const jaRegistrado=ultimo&&((uid&&String(ultimo.usuarioId||'')===uid)||(login&&String(ultimo.login||'').toLowerCase()===login)||(n&&String(ultimo.nome||'').trim().toLowerCase()===n))&&Number(ultimo.rodada||1)===Number(t.rodada||1);
+    if(!jaRegistrado)t.contadorHistorico.push({nome:n,usuarioId:uid||null,login:login||null,rodada:t.rodada||1,data:stamp,ms});
+    t.iniciadoEm=t.iniciadoEm||stamp;t.iniciadoEmMs=t.iniciadoEmMs||ms;t.rodadaInicioMs=t.rodadaInicioMs||ms;t.status='ANDAMENTO';
+    ondaAtual={key:g.key,inv:g.inv,rua:g.rua,lado:g.lado,nivel:g.nivel};tarefaAtual={inv:g.inv,t,onda:ondaAtual};
+    save();
+  }
+  return String(t.status||'').toUpperCase()==='ANDAMENTO';
+}
 function registrarContagemMobile(){
   let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();
   if(!nome||!g){toast('Assuma uma onda primeiro.',false);return}
   let endereco=document.getElementById('mobEndereco').value.trim(),t=_getTaskByEndereco(endereco);
   if(!t){_alertOnda('ENDEREÇO NÃO É DA SUA TAREFA/ONDA!!','REPITA LANÇAMENTO');return}
+  _materializarExecucaoContador(t,g,nome);
   if(!_enderecoPertenceAExecucaoAtual(t,g,nome)){toast('Este endereço não está disponível para este contador.',false);return}
   let sku=document.getElementById('mobSku').value.trim(),lote=document.getElementById('mobLote').value.trim(),desc=getDescricaoMobile(),um=getUnidadeMobile(),q=parseFloat(document.getElementById('mobQtd').value);
   const endRegs=g?.inv?.cargaEnderecosSnapshot||DB.enderecos;if(!(endRegs||[]).some(x=>String(x['ENDEREÇO']).trim()===endereco)){toast('Endereço inválido. Deve ser exatamente um endereço da tarefa.',false);return}
