@@ -2088,22 +2088,28 @@ function _enderecoPertenceAExecucaoAtual(t,g,nome){
   const designatedId=String(t.contadorDesignadoId||'').trim();
   const designatedLogin=String(t.contadorDesignadoLogin||'').trim().toLowerCase();
   const designatedName=String(t.contadorDesignado||'').trim().toLowerCase();
+
   const identidadeAtual=(uid&&currentId===uid)||(login&&currentLogin===login)||(n&&currentName===n);
   const identidadeDesignada=(uid&&designatedId===uid)||(login&&designatedLogin===login)||(n&&designatedName===n);
 
-  // A tarefa ativa mantém o vínculo com quem a iniciou. O histórico é usado
-  // somente como evidência de execução quando os campos correntes de identidade
-  // não estiverem disponíveis (ex.: reidratação/atualização da aplicação).
-  const hist=(t.contadorHistorico||[]).slice().reverse().find(h=>h&&((h.usuarioId!=null&&String(h.usuarioId).trim())||(h.login&&String(h.login).trim())||(h.nome&&String(h.nome).trim())));
-  const histId=String(hist?.usuarioId||'').trim();
-  const histLogin=String(hist?.login||'').trim().toLowerCase();
-  const histNome=String(hist?.nome||'').trim().toLowerCase();
-  const identidadeHistorico=(uid&&histId===uid)||(login&&histLogin===login)||(n&&histNome===n);
+  // A tarefa pode chegar ao contador com a identidade de execução ainda não
+  // completamente materializada nos campos contador/contadorId/contadorLogin.
+  // A designação da liberação é uma fonte válida de identidade e deve autorizar
+  // a execução quando coincidir com o usuário corrente.
+  if(identidadeAtual||identidadeDesignada)return true;
 
+  // O histórico só é fallback quando não existe identidade corrente na tarefa.
+  // Isso evita que um contador antigo continue autorizado após uma reatribuição.
   const possuiIdentidadeExecucao=!!(currentId||currentLogin||currentName);
-  if(possuiIdentidadeExecucao)return identidadeAtual;
-  if(identidadeHistorico)return true;
-  return identidadeDesignada;
+  if(!possuiIdentidadeExecucao){
+    const hist=(t.contadorHistorico||[]).slice().reverse().find(h=>h&&((h.usuarioId!=null&&String(h.usuarioId).trim())||(h.login&&String(h.login).trim())||(h.nome&&String(h.nome).trim())));
+    const histId=String(hist?.usuarioId||'').trim();
+    const histLogin=String(hist?.login||'').trim().toLowerCase();
+    const histNome=String(hist?.nome||'').trim().toLowerCase();
+    const identidadeHistorico=(uid&&histId===uid)||(login&&histLogin===login)||(n&&histNome===n);
+    if(identidadeHistorico)return true;
+  }
+  return false;
 }
 function registrarContagemMobile(){
   let nome=document.getElementById('contadorNome').value.trim(),g=_getOndaAtiva();
