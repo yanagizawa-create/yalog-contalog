@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="contalog-version" content="v1.11.10">
-<meta name="contalog-build" content="081">
+<meta name="contalog-version" content="v1.11.11">
+<meta name="contalog-build" content="082">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.10 · Build 081 · Sessão Transversal Persistente</title>
+<title>ContaLog · v1.11.11 · Build 082 · Sessão Transversal Persistente</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -270,7 +270,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:none;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('apuracao')"><span class="ni-ic">◎</span>Apuração</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.10<br>YALOG-CONTA-001 • Build 081 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.11<br>YALOG-CONTA-001 • Build 082 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
 <div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button></div></div>
 <div class="top-nav-group" data-nav-group="apuracao"><button class="top-nav-parent" type="button">Apuração</button><div class="top-subnav"><button type="button" data-nav="apuracao" onclick="go('apuracao')"><span class="sub-ic">◎</span>Visão de Apuração</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button><button type="button" data-nav="novoInventarioCarga" onclick="abrirNovoInv('CARGA')"><span class="sub-ic">＋</span>Novo Inventário por Carga</button><button type="button" data-nav="historicoApuracoes" onclick="go('inventario')"><span class="sub-ic">◷</span>Histórico de Apurações</button></div></div>
@@ -530,7 +530,7 @@ function atualizarMenuMobile(){
   document.querySelectorAll('.top-nav [data-master-only]').forEach(e=>e.style.display=master?'flex':'none');
 }
 function toggleMobileMenu(force){const sb=document.querySelector('.sb'),bd=document.getElementById('mobileBackdrop');if(!sb||!bd)return;const open=typeof force==='boolean'?force:!sb.classList.contains('mobile-open');sb.classList.toggle('mobile-open',open);bd.classList.toggle('mobile-open',open)}
-function go(name){if(usuarioAtual?.perfil==='CONTADOR'&&name!=='contagem'){toast('O perfil CONTADOR possui acesso exclusivo à tela de sua tarefa.',false);return}if(name==='visaoTarefas'&&usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode acessar a Visão de Tarefas.',false);return}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));let s=document.getElementById('s-'+name);if(s)s.classList.add('active');let titles={estoque:'Carga Estoque',enderecos:'Carga Endereços do Estoque',configuracoes:'Configurações Gerais',inventario:'Inventário',tarefas:'Tarefas de Contagem',contagem:'Contagem Operacional',visaoTarefas:'Controle do Inventário',apuracao:'Apuração',conciliacao:'Conciliação',dashboard:'Dashboard',usuarios:'Usuários'};document.getElementById('tbTitle').textContent=titles[name]||'ContaLog';document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active')});updateTopNavState(name);if(name==='estoque')renderEstoque();if(name==='enderecos')renderEnd();if(name==='configuracoes')renderConfiguracoes();if(name==='inventario')renderInv();if(name==='tarefas')renderTarefas();if(name==='contagem')renderContagem();if(name==='visaoTarefas')renderVisaoTarefas();if(name==='conciliacao')renderConc();if(name==='dashboard')renderDash();if(name==='usuarios')renderUsers();if(typeof toggleMobileMenu==='function')toggleMobileMenu(false)}
+function go(name){if(usuarioAtual?.perfil==='CONTADOR'&&name!=='contagem'){toast('O perfil CONTADOR possui acesso exclusivo à tela de sua tarefa.',false);return}if(name==='visaoTarefas'&&usuarioAtual?.perfil!=='MASTER'){toast('Somente MASTER pode acessar a Visão de Tarefas.',false);return}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));let s=document.getElementById('s-'+name);if(s)s.classList.add('active');let titles={estoque:'Carga Estoque',enderecos:'Carga Endereços do Estoque',configuracoes:'Configurações Gerais',inventario:'Inventário',tarefas:'Tarefas de Contagem',contagem:'Contagem Operacional',visaoTarefas:'Controle do Inventário',apuracao:'Apuração',conciliacao:'Conciliação',dashboard:'Dashboard',usuarios:'Usuários'};const _tbTitle=document.getElementById('tbTitle');if(_tbTitle)_tbTitle.textContent=titles[name]||'ContaLog';document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active')});updateTopNavState(name);if(name==='estoque')renderEstoque();if(name==='enderecos')renderEnd();if(name==='configuracoes')renderConfiguracoes();if(name==='inventario')renderInv();if(name==='tarefas')renderTarefas();if(name==='contagem')renderContagem();if(name==='visaoTarefas')renderVisaoTarefas();if(name==='conciliacao')renderConc();if(name==='dashboard')renderDash();if(name==='usuarios')renderUsers();if(typeof toggleMobileMenu==='function')toggleMobileMenu(false)}
 
 function inicializarTopNav(){
   const nav=document.getElementById('topNav');if(!nav)return;
@@ -3282,13 +3282,14 @@ function initLogin(clear=true){
   // o login. Refresh/reload/publicação jamais podem sobrescrever uma sessão
   // já existente. Logout real/invalidação confirmada removem as cópias antes
   // de chegar aqui, portanto continuam permitindo a tela de login.
-  try{
-    const sessaoExistente=_lerSessaoStorageContaLog();
-    if(sessaoExistente?.company_id&&sessaoExistente?.login){
-      _restaurarSessaoLocalContaLog(sessaoExistente,'initLogin bloqueado: sessão persistida encontrada');
-      return false;
-    }
-  }catch(e){}
+  let sessaoExistente=null;
+  try{sessaoExistente=_lerSessaoStorageContaLog();}catch(e){}
+  if(sessaoExistente?.company_id&&sessaoExistente?.login){
+    // A existência da sessão decide; uma falha de renderização não é logout.
+    try{_restaurarSessaoLocalContaLog(sessaoExistente,'initLogin bloqueado: sessão persistida encontrada');}
+    catch(e){console.warn('[YALog Session] falha de interface na restauração · sessão preservada:',e);}
+    return false;
+  }
   const ov=document.getElementById('loginOverlay');if(ov)ov.style.display='flex';
   if(clear)['loginCompany','loginUser','loginPass'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
   return true;
@@ -3556,16 +3557,18 @@ async function bootContaLog(){
       // Validação pós-bootstrap: erro transitório nunca derruba a sessão.
       // Somente invalidação inequívoca já tratada por _restaurarSessaoContaLog
       // poderá encerrar a sessão.
-      setTimeout(()=>{
-        _restaurarSessaoContaLog().catch(e=>console.warn('[YALog Session] background validation:',e));
-      },0);
-      return;
+      _waitSupabase().catch(()=>false).then(()=>_restaurarSessaoContaLog())
+        .then(ok=>{
+          // Somente invalidação CONFIRMADA (sessão já removida por _restaurarSessaoContaLog) leva ao login.
+          if(ok===false&&!usuarioAtual){initLogin(true);_remoteStatus('● SESSÃO ENCERRADA · ACESSO INVALIDADO',false);}
+        })
+        .catch(e=>console.warn('[YALog Session] background validation:',e));
+    }else{
+      const ready=await _waitSupabase();
+      if(ready && await _tentarSSOHandoffContaLog())return;
+      if(!ready){_remoteStatus('● CONEXÃO ONLINE INDISPONÍVEL',false);initLogin(false);return;}
+      initLogin(false);_remoteStatus('● ONLINE · AGUARDANDO LOGIN',true);
     }
-
-    const ready=await _waitSupabase();
-    if(ready && await _tentarSSOHandoffContaLog())return;
-    if(!ready){_remoteStatus('● CONEXÃO ONLINE INDISPONÍVEL',false);initLogin(false);return;}
-    initLogin(false);_remoteStatus('● ONLINE · AGUARDANDO LOGIN',true);
   }catch(e){console.warn('[ContaLog Boot]',e);initLogin(false);_remoteStatus('● ERRO DE CONEXÃO · TENTE NOVAMENTE',false)}
   setInterval(()=>{if(!usuarioAtual)return;if(document.getElementById('s-inventario')?.classList.contains('active'))renderInv();if(document.getElementById('s-tarefas')?.classList.contains('active'))renderTarefas();if(document.getElementById('s-dashboard')?.classList.contains('active'))renderDash();if(document.getElementById('s-visaoTarefas')?.classList.contains('active'))renderVisaoTarefas()},2000);
   setInterval(_syncRemote,30000);
