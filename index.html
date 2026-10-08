@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="contalog-version" content="v1.11.11">
-<meta name="contalog-build" content="085">
+<meta name="contalog-build" content="086">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0F1221"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.webmanifest">
-<title>ContaLog · v1.11.11 · Build 082 · Sessão Transversal Persistente</title>
+<title>ContaLog · v1.11.11 · Build 086 · Sessão Transversal Persistente</title>
 
 <style>
 :root{--bg:#0F1221;--bg2:#12162B;--bg3:#1A1F38;--bg4:#20274A;--panel:#1A1F38;--border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.14);--orange:#FB923C;--orange2:#FDBA74;--green:#22C55E;--red:#EF4444;--amber:#FBBF24;--blue:#3B82F6;--teal:#0d9488;--w:#FFF;--w70:#A9B1D6;--w40:rgba(169,177,214,.55);--w06:rgba(255,255,255,.04);--serif:'Plus Jakarta Sans',sans-serif;--sans:Inter,Arial,sans-serif;--mono:'JetBrains Mono',Consolas,monospace;--radius-lg:20px;--radius-md:14px;--radius-sm:10px}
@@ -270,7 +270,7 @@ body.contador-restrito .onda-alvo-mobile strong{font-size:24px!important;line-he
 <div id="loginOverlay" style="position:fixed;inset:0;background:var(--bg);z-index:500;display:none;align-items:center;justify-content:center;padding:20px"><div style="width:min(420px,94vw);background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:32px"><div style="font:italic 28px var(--serif);margin-bottom:4px">Conta<em style="color:var(--orange);font-style:normal">Log</em></div><div style="font:9px var(--mono);letter-spacing:.15em;color:var(--w40);text-transform:uppercase;margin-bottom:24px">Acesso seguro · empresa + credencial obrigatória</div><div class="fg"><label>ID DA EMPRESA</label><input id="loginCompany" type="text" placeholder="Digite o ID da empresa" autocomplete="organization" autocapitalize="characters" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Usuário</label><input id="loginUser" type="text" placeholder="Digite o nome cadastrado" autocomplete="username" autocapitalize="words" spellcheck="false"></div><div class="fg" style="margin-top:12px"><label>Senha</label><input id="loginPass" type="password" placeholder="Digite a senha" autocomplete="current-password"></div><button id="loginEnterBtn" class="btn btn-p" style="width:100%;margin-top:18px" onclick="entrarContaLog()" disabled>PREPARANDO ACESSO...</button><div class="mini" style="margin-top:12px">MASTER: gestão, liberação, conciliação e acompanhamento. CONTADOR: somente tarefas e contagem.<br><b id="loginGateStatus" style="color:#fbbf24">PREPARANDO ACESSO ONLINE · CONEXÃO SEGURA</b></div></div></div><div id="mobileBackdrop" class="mobile-backdrop" onclick="toggleMobileMenu(false)"></div><div class="shell"><aside class="sb"><div class="sb-logo"><div class="sb-logo-row" onclick="trocarLogo()"><div class="sb-img" id="logoBox">🏭</div><div><div class="sb-name" id="sysName">ContaLog</div><div class="sb-sub">Inventory Control</div></div></div><div class="sb-change" onclick="trocarLogo()">✎ Trocar Logo</div></div><nav class="sb-nav">
 <div class="nav-grp">Operação</div><div class="ni active" onclick="go('estoque')"><span class="ni-ic">📦</span>Carga Estoque</div><div class="ni" onclick="go('enderecos')"><span class="ni-ic">▦</span>Carga Endereços do Estoque</div><div class="ni" onclick="go('inventario')"><span class="ni-ic">📋</span>Inventário</div><div class="ni" onclick="go('tarefas')"><span class="ni-ic">✓</span>Tarefas de Contagem</div><div class="ni" onclick="go('contagem')"><span class="ni-ic">📱</span>Contagem</div><div class="ni" data-master-only onclick="go('visaoTarefas')"><span class="ni-ic">👁</span>Visão de Tarefas</div>
 <div class="nav-grp">Gestão</div><div class="ni" data-master-only onclick="go('configuracoes')"><span class="ni-ic">⚙</span>Configurações Gerais</div><div class="ni" onclick="go('apuracao')"><span class="ni-ic">◎</span>Apuração</div><div class="ni" onclick="go('dashboard')"><span class="ni-ic">📊</span>Dashboard</div><div class="ni" onclick="go('usuarios')"><span class="ni-ic">👤</span>Usuários</div>
-</nav><div class="sb-foot">ContaLog • v1.11.11<br>YALOG-CONTA-001 • Build 082 · ONLINE • MULTIUSUÁRIO</div></aside>
+</nav><div class="sb-foot">ContaLog • v1.11.11<br>YALOG-CONTA-001 • Build 086 · ONLINE • MULTIUSUÁRIO</div></aside>
 <main class="main"><div class="topbar" id="appTopbar"><div class="topbar-brand"><div class="yb">YALog<em>•</em></div><div class="ca">ContaLog</div></div><button class="top-nav-toggle" aria-label="Abrir menu" aria-expanded="false" onclick="toggleTopNav()">☰ MENU</button><nav class="top-nav" id="topNav" aria-label="Navegação principal">
 <div class="top-nav-group" data-nav-group="inventario"><button class="top-nav-parent" type="button">Inventário</button><div class="top-subnav"><button type="button" data-nav="inventario" onclick="go('inventario')"><span class="sub-ic">📋</span>Inventários</button><button type="button" data-nav="visaoTarefas" data-master-only onclick="go('visaoTarefas')"><span class="sub-ic">👁</span>Visão de Tarefas</button><button type="button" data-nav="contagem" onclick="go('contagem')"><span class="sub-ic">📱</span>Contagem</button></div></div>
 <div class="top-nav-group" data-nav-group="apuracao"><button class="top-nav-parent" type="button">Apuração</button><div class="top-subnav"><button type="button" data-nav="apuracao" onclick="go('apuracao')"><span class="sub-ic">◎</span>Visão de Apuração</button><button type="button" data-nav="conciliacao" onclick="go('conciliacao')"><span class="sub-ic">⚖</span>Conciliação</button><button type="button" data-nav="novoInventarioCarga" onclick="abrirNovoInv('CARGA')"><span class="sub-ic">＋</span>Novo Inventário por Carga</button><button type="button" data-nav="historicoApuracoes" onclick="go('inventario')"><span class="sub-ic">◷</span>Histórico de Apurações</button></div></div>
@@ -386,6 +386,22 @@ const CONTALOG_TABLE='contalog_kv_store';
 const CONTALOG_STATE_KEY='contalog-main';
 const CONTALOG_SESSION_KEY='contalog-session';
 const CONTALOG_PERSIST_SESSION_KEY='contalog-session-persist';
+/* BUILD 086 · TRAVA DE LOGOUT EXPLÍCITO
+   Ciclo de vida da página (F5/reload/deploy) preserva a sessão.
+   SAIR + OK é intenção do usuário e tem prioridade absoluta sobre qualquer
+   restauração/validação/SSO assíncrono iniciado antes do clique. */
+const CONTALOG_LOGOUT_MARK_KEY='contalog-logout-explicito';
+window.__contalogLogoutIntent=false;
+window.__contalogSessionGeneration=window.__contalogSessionGeneration||0;
+function _cicloSessaoObsoleto(g){
+  const obsoleto=window.__contalogLogoutIntent===true||g!==window.__contalogSessionGeneration;
+  if(obsoleto&&window.__contalogLogoutIntent===true)_remoteReady=false;
+  return obsoleto;
+}
+function _iniciarNovoCicloSessaoContaLog(){
+  window.__contalogLogoutIntent=false;window.__contalogSessionGeneration++;
+  try{localStorage.removeItem(CONTALOG_LOGOUT_MARK_KEY)}catch(e){}
+}
 const STOCK_COLS=['SKU_CLIENTE','DESCRICAO','CLIENTE','SITE','NF_ENTRADA','LOTE','VALIDADE','QUANTIDADE','UNIDADE_MEDIDA','VALOR_UNIT','STATUS','OBS','TIPO_PALETE','ENDERECO','ID_PALETE_UZ'];
 const END_COLS=['RUA','LOCAÇÃO','NÍVEL','ÍMPAR/PAR','ENDEREÇO','LADO'];
 const DEFAULT_DB={estoque:[],enderecos:[],basesEstoque:[],basesEnderecos:[],clientesOperacoes:[],inventarios:[],usuarios:[{nome:'Admin',perfil:'MASTER',ativo:true,ultimoAcesso:null}],tarifas:{c1:1,c2:1.5,c3:2,bonus:0.5}};
@@ -3118,6 +3134,8 @@ async function _validarSessaoModuloContaLog(token){
 
 async function _entrarContaLogPorSSO(identidade,moduleSessionToken){
   if(!identidade||!moduleSessionToken)return false;
+  if(window.__contalogLogoutIntent===true)return false;
+  const _g=window.__contalogSessionGeneration;
   const perfilBruto=String(identidade.perfil||'').toUpperCase();
   const perfil=['MASTER','ADMIN','ADMINISTRADOR'].includes(perfilBruto)?'MASTER':'CONTADOR';
   usuarioAtual={
@@ -3135,6 +3153,7 @@ async function _entrarContaLogPorSSO(identidade,moduleSessionToken){
   window.contalogCompanyId=identidade.company_id;
   _saveSession();
   await _loadRemote(identidade.company_id);
+  if(_cicloSessaoObsoleto(_g))return false;
   document.getElementById('loginOverlay').style.display='none';
   document.getElementById('loginPass').value='';
   const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+identidade.company_id;
@@ -3155,6 +3174,7 @@ async function _tentarSSOHandoffContaLog(){
     const identidade=Array.isArray(data)?(data[0]||null):null;
     if(!identidade?.module_session_token)return false;
     try{history.replaceState({},document.title,location.origin+location.pathname)}catch(e){}
+    _iniciarNovoCicloSessaoContaLog();
     return await _entrarContaLogPorSSO(identidade,identidade.module_session_token);
   }catch(e){console.warn('[ContaLog SSO] exceção handoff:',e);return false}
 }
@@ -3167,8 +3187,11 @@ async function _restaurarSessaoContaLog(){
      confirma ou, em caso de invalidação inequívoca, encerra a sessão.
      REFRESH / RELOAD / DEPLOY / TIMEOUT / ERRO DE REDE = sessão preservada.
   */
+  const _g=window.__contalogSessionGeneration;
+  if(window.__contalogLogoutIntent===true)return false;
   try{
     let ss=await _lerSessaoPersistidaContaLog();
+    if(_cicloSessaoObsoleto(_g))return false;
     if(!ss){
       console.warn('[YALog Session] BOOT: nenhuma sessão persistida encontrada.');
       return false;
@@ -3200,6 +3223,7 @@ async function _restaurarSessaoContaLog(){
     if(ss.module_session_token){
       console.info('[YALog Session] REMOTE VALIDATION START · module token');
       const sessaoModulo=await _retryAsync(()=>_validarSessaoModuloContaLog(ss.module_session_token),3);
+      if(_cicloSessaoObsoleto(_g))return false;
 
       if(sessaoModulo?.status==='ok'){
         const ok=await _entrarContaLogPorSSO(sessaoModulo.identidade,ss.module_session_token);
@@ -3227,13 +3251,16 @@ async function _restaurarSessaoContaLog(){
       }
 
       const vrSSO=await _retryAsync(()=>_validarAcessoContaLog(ss.company_id),3);
+      if(_cicloSessaoObsoleto(_g))return false;
       if(vrSSO?.ok){
         const uvSSO=await _retryAsync(()=>_validarUsuarioPersistido(ss),3);
+        if(_cicloSessaoObsoleto(_g))return false;
         if(uvSSO?.ok){
           usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true,_sso:false};
           _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;
           _saveSession();_markSessionValidated();
           await _loadRemote(ss.company_id);
+          if(_cicloSessaoObsoleto(_g))return false;
           const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
           document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();
           console.info('[YALog Session] REMOTE VALIDATION OK · canonical');
@@ -3271,12 +3298,15 @@ async function _restaurarSessaoContaLog(){
     // Login direto: mesma regra — validar sem destruir a sessão por falha transitória.
     console.info('[YALog Session] REMOTE VALIDATION START · canonical');
     const vr=await _retryAsync(()=>_validarAcessoContaLog(ss.company_id),3);
+    if(_cicloSessaoObsoleto(_g))return false;
     if(vr?.ok){
       const uv=await _retryAsync(()=>_validarUsuarioPersistido(ss),3);
+      if(_cicloSessaoObsoleto(_g))return false;
       if(uv?.ok){
         usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true};
         _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;_saveSession();_markSessionValidated();
         await _loadRemote(ss.company_id);
+        if(_cicloSessaoObsoleto(_g))return false;
         const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
         document.getElementById('loginOverlay').style.display='none';aplicarPermissoes();
         console.info('[YALog Session] REMOTE VALIDATION OK · canonical');
@@ -3300,6 +3330,7 @@ async function _restaurarSessaoContaLog(){
     console.warn('[YALog Session] BOOT ERROR · SESSION PRESERVED',e);
     try{
       const ss=await _lerSessaoPersistidaContaLog();
+      if(_cicloSessaoObsoleto(_g))return false;
       if(ss?.company_id&&ss?.login){_restaurarSessaoLocalContaLog(ss,'exceção transitória');return true;}
     }catch(ignore){}
     return false;
@@ -3313,7 +3344,7 @@ function initLogin(clear=true){
   // de chegar aqui, portanto continuam permitindo a tela de login.
   let sessaoExistente=null;
   try{sessaoExistente=_lerSessaoStorageContaLog();}catch(e){}
-  if(sessaoExistente?.company_id&&sessaoExistente?.login){
+  if(window.__contalogLogoutIntent!==true&&sessaoExistente?.company_id&&sessaoExistente?.login){
     // A existência da sessão decide; uma falha de renderização não é logout.
     try{_restaurarSessaoLocalContaLog(sessaoExistente,'initLogin bloqueado: sessão persistida encontrada');}
     catch(e){console.warn('[YALog Session] falha de interface na restauração · sessão preservada:',e);}
@@ -3358,8 +3389,9 @@ function _idbAbrirSessaoContaLog(){
   });
 }
 async function _idbGravarSessaoContaLog(sessao){
-  if(!_idbSessaoContaLogDisponivel()||!sessao)return false;
+  if(!_idbSessaoContaLogDisponivel()||!sessao||window.__contalogLogoutIntent===true)return false;
   const db=await _idbAbrirSessaoContaLog();if(!db)return false;
+  if(window.__contalogLogoutIntent===true){try{db.close()}catch(e){}return false;}
   return new Promise(resolve=>{
     try{
       const tx=db.transaction(CONTALOG_SESSION_IDB_STORE,'readwrite');
@@ -3397,7 +3429,9 @@ async function _idbRemoverSessaoContaLog(){
   });
 }
 function _lerSessaoStorageContaLog(){
-  const chaves=[CONTALOG_SESSION_KEY,CONTALOG_PERSIST_SESSION_KEY,YALOG_AUTH_SESSION_KEY,'yalog_admin_session'];
+  if(window.__contalogLogoutIntent===true)return null;
+  let _logoutExplicito=false;try{_logoutExplicito=!!localStorage.getItem(CONTALOG_LOGOUT_MARK_KEY)}catch(e){}
+  const chaves=[CONTALOG_SESSION_KEY,CONTALOG_PERSIST_SESSION_KEY,YALOG_AUTH_SESSION_KEY].concat(_logoutExplicito?[]:['yalog_admin_session']);
   for(const chave of chaves){
     try{
       const raw=(chave===CONTALOG_SESSION_KEY?sessionStorage.getItem(chave):localStorage.getItem(chave));
@@ -3415,6 +3449,7 @@ function _lerSessaoStorageContaLog(){
   return null;
 }
 async function _lerSessaoPersistidaContaLog(){
+  if(window.__contalogLogoutIntent===true)return null;
   const local=_lerSessaoStorageContaLog();
   if(local)return local;
   return await _idbLerSessaoContaLog();
@@ -3437,11 +3472,12 @@ function _payloadSessaoContaLog(){
   return payload;
 }
 function _gravarSessaoCanonicaContaLog(payload){
-  if(!payload)return;
+  if(!payload||window.__contalogLogoutIntent===true)return;
   try{const txt=JSON.stringify(payload);localStorage.setItem(YALOG_AUTH_SESSION_KEY,txt)}catch(e){console.warn('[YALog Session] localStorage canônico indisponível:',e)}
   _idbGravarSessaoContaLog(payload).catch(()=>{});
 }
 function _saveSession(){
+  if(window.__contalogLogoutIntent===true)return;
   const payload=_payloadSessaoContaLog();if(!payload)return;
   try{
     const txt=JSON.stringify(payload);
@@ -3451,6 +3487,7 @@ function _saveSession(){
   _gravarSessaoCanonicaContaLog(payload);
 }
 function _markSessionValidated(){
+  if(window.__contalogLogoutIntent===true)return;
   const payload=_lerSessaoStorageContaLog();if(!payload)return;
   payload.sessionValidatedAt=Date.now();
   try{
@@ -3470,6 +3507,7 @@ function _clearSession(){
 function _restaurarSessaoLocalContaLog(ss,motivo=''){
   // Não existe TTL artificial. A validade real é determinada pela autenticação.
   if(!ss?.company_id||!ss?.login)return false;
+  if(window.__contalogLogoutIntent===true)return false;
   usuarioAtual={id:ss.id,nome:ss.nome,login:ss.login,perfil:ss.perfil,company_id:ss.company_id,ativo:true,_sso:!!ss.sso,_moduleSessionToken:ss.module_session_token||null};
   _companyIdLocalAtual=ss.company_id;window.contalogCompanyId=ss.company_id;
   const su=document.getElementById('sessionUser');if(su)su.textContent=usuarioAtual.nome+' · '+ss.company_id;
@@ -3517,6 +3555,7 @@ async function entrarContaLog(){
       const m={'inativo':'Usuário desativado.','senha-invalida':'Senha incorreta.','nao-encontrado':'Usuário não encontrado.','erro-consulta':'Não foi possível consultar o usuário no Supabase.','sem-conexao':'Sem conexão com o Supabase.','perfil-nao-autorizado':'Perfil não autorizado.'};
       toast(m[auth.motivo]||'Não foi possível entrar.',false);return;
     }
+    _iniciarNovoCicloSessaoContaLog();
     usuarioAtual=auth.usuario;window.contalogCompanyId=empresa;_companyIdLocalAtual=empresa;_saveSession();
     await _loadRemote(empresa);
     try{await _listarUsuariosPlatform()}catch(e){}
@@ -3537,12 +3576,17 @@ async function entrarContaLog(){
 async function sairContaLog(){
   if(!usuarioAtual)return;
   if(!confirm('Deseja sair do ContaLog?'))return;
+  // Intenção explícita: invalida todo ciclo assíncrono pendente ANTES de qualquer await.
+  const token=usuarioAtual?._moduleSessionToken||(()=>{try{return JSON.parse(sessionStorage.getItem(CONTALOG_SESSION_KEY)||'{}')?.module_session_token}catch(e){return null}})();
+  window.__contalogLogoutIntent=true;window.__contalogSessionGeneration++;
+  try{localStorage.setItem(CONTALOG_LOGOUT_MARK_KEY,String(Date.now()))}catch(e){}
   try{
-    const token=usuarioAtual._moduleSessionToken||JSON.parse(sessionStorage.getItem(CONTALOG_SESSION_KEY)||'{}')?.module_session_token;
     if(token){const c=_supabaseClient();if(c)await c.rpc('revogar_sessao_modulo',{p_token:token})}
   }catch(e){console.warn('[ContaLog SSO] revogação:',e)}
   _clearSession();usuarioAtual=null;window.contalogCompanyId=null;_companyIdLocalAtual=null;_remoteReady=false;ondaAtual=null;tarefaAtual=null;
-  const su=document.getElementById('sessionUser');if(su)su.textContent='';initLogin(true);_remoteStatus('● AGUARDANDO LOGIN',true);toast('Sessão encerrada');
+  const su=document.getElementById('sessionUser');if(su)su.textContent='';
+  document.querySelectorAll('.screen.active').forEach(e=>e.classList.remove('active'));
+  initLogin(true);_remoteStatus('● AGUARDANDO LOGIN',true);toast('Sessão encerrada');
 }
 function _abrirPaginaInicialPorPerfil(){
   if(usuarioAtual?.perfil==='MASTER') go('dashboard');
@@ -3589,7 +3633,7 @@ async function bootContaLog(){
       _waitSupabase().catch(()=>false).then(()=>_restaurarSessaoContaLog())
         .then(ok=>{
           // Somente invalidação CONFIRMADA (sessão já removida por _restaurarSessaoContaLog) leva ao login.
-          if(ok===false&&!usuarioAtual){initLogin(true);_remoteStatus('● SESSÃO ENCERRADA · ACESSO INVALIDADO',false);}
+          if(ok===false&&!usuarioAtual&&window.__contalogLogoutIntent!==true){initLogin(true);_remoteStatus('● SESSÃO ENCERRADA · ACESSO INVALIDADO',false);}
         })
         .catch(e=>console.warn('[YALog Session] background validation:',e));
     }else{
